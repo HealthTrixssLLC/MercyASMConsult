@@ -1,7 +1,9 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Compass, Users, Building2, Workflow } from "lucide-react";
+import { Compass, Users, Building2, Workflow, CalendarRange, Repeat } from "lucide-react";
 import lifecycleDiagram from "@assets/image_1782278717142.png";
+import { DiscoveryProcess } from "@/components/DiscoveryProcess";
+import { DiscoveryCadence } from "@/components/DiscoveryCadence";
 
 const STAKEHOLDERS = [
   {
@@ -48,6 +50,8 @@ export default function Kickoff() {
               { id: "overview", label: "Overview", icon: Compass },
               { id: "lifecycle", label: "Submission Lifecycle Flow", icon: Workflow },
               { id: "stakeholders", label: "Stakeholders", icon: Users },
+              { id: "timeline", label: "Timeline", icon: CalendarRange },
+              { id: "cadence", label: "Discovery Cadence", icon: Repeat },
             ].map((tab) => (
               <TabsTrigger
                 key={tab.id}
@@ -153,6 +157,26 @@ export default function Kickoff() {
               </CardContent>
             </Card>
           ))}
+        </TabsContent>
+
+        <TabsContent value="timeline" className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <div>
+            <h2 className="font-serif text-2xl text-foreground mb-1">4-Week Discovery Process</h2>
+            <p className="text-sm text-muted-foreground">
+              Jun 8 – Jul 3, 2026 — weekly focus, the inputs needed from Mercy, and the outcome each week delivers.
+            </p>
+          </div>
+          <DiscoveryProcess />
+        </TabsContent>
+
+        <TabsContent value="cadence" className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <div>
+            <h2 className="font-serif text-2xl text-foreground mb-1">Discovery Cadence</h2>
+            <p className="text-sm text-muted-foreground">
+              How the engagement runs week to week, and the working assumptions it depends on.
+            </p>
+          </div>
+          <DiscoveryCadence />
         </TabsContent>
       </Tabs>
     </div>
