@@ -1,0 +1,274 @@
+ASM Consultant Summary – Discovery Kickoff Planning Discussion
+
+From an ASM consulting perspective, this kickoff was less about project logistics and more about establishing the true scope, operating context, and assessment boundaries for the engagement. The discussion surfaced several critical realities that materially affect how the review should be conducted.
+
+1. This Is Not a Traditional Current-State Assessment
+
+The single most important takeaway is that Mercy's ASM environment is currently in transition.
+
+Sandra clarified that Mercy is simultaneously:
+
+Migrating from Oracle to Azure/Databricks
+Redesigning the data curation layer
+Building a new validation framework around ASM submissions
+Evolving operational processes and tooling
+
+As a result, the engagement cannot focus solely on documenting the historical process. The review must evaluate both:
+
+The current operational process
+The future-state architecture Mercy is actively implementing
+
+Sandra explicitly stated that the team should assess "the process we're working toward" because it will differ from the historical implementation.
+
+Consulting Interpretation
+
+This becomes a:
+
+Current State + Transitional Future State Assessment
+
+rather than a pure current-state review.
+
+2. Scope Includes the Entire ASM/Sweeps Lifecycle
+
+A key clarification occurred early.
+
+Samir asked whether the engagement was focused on supplemental encounter submission.
+
+Sandra clarified:
+
+"It's the whole process ... it's the sweeps process" and should include the full validation process.
+
+This significantly expands scope.
+
+The review should cover:
+
+Upstream
+Source systems
+Data extraction
+Incremental identification logic
+Diagnosis selection
+Middle
+ASM file generation
+Payer-specific formatting
+Submission process
+Validation controls
+Downstream
+Health plan acknowledgements
+Rejections
+CMS return files
+MAO processing
+Acceptance tracking
+
+This aligns closely with a full ASM operating model review rather than simply reviewing outbound file formats.
+
+3. All Medicare Advantage Plans Are In Scope
+
+The original question was whether one payer would be reviewed or all payers.
+
+Sandra's answer was clear:
+
+The assessment should cover all payers because part of the review is ensuring alignment with payer requirements.
+
+United Healthcare was identified as the largest plan and likely the initial walkthrough candidate.
+
+Known plans discussed included:
+
+United Healthcare
+Humana
+Aetna
+BCBS Arkansas
+BCBS Oklahoma / Anthem
+Essence
+(Global Health historically but no longer active)
+Consulting Implication
+
+Recommendations must work across all participating health plans, not just UHC.
+
+4. Oracle Is Explicitly Out of Scope
+
+One of the strongest scope decisions was that Mercy does not want the assessment focused on the legacy Oracle implementation.
+
+Sandra stated:
+
+"I don't think it makes sense to look at the old stuff because we're going to be using the new stuff."
+
+The review will focus on:
+
+Databricks notebooks
+Migrated SQL logic
+Future-state architecture
+Current output files
+Design documentation
+
+rather than Oracle stored procedures.
+
+Consulting Observation
+
+While reasonable from a future-state perspective, this introduces migration risk because historical logic validation becomes harder.
+
+5. Validation Is a Major Strategic Focus
+
+Sandra repeatedly emphasized the new validation process.
+
+She noted that:
+
+Validation capabilities are currently being developed
+A dedicated data quality engineer is involved
+Validation is considered a critical component of the future state
+
+Discussion later expanded validation beyond simple outbound QA into:
+
+Submission Validation
+File format validation
+Payer compliance validation
+Acceptance Validation
+Health plan acknowledgements
+Rejection processing
+CMS Validation
+CMS return files
+MAO files
+Acceptance monitoring
+Diagnosis-level traceability
+
+The team discussed the need to determine whether Mercy currently validates through:
+
+MAO-002
+MAO-004
+Health plan reject files
+CMS return files
+
+and how acceptance is tracked.
+
+Consulting Interpretation
+
+Validation and reconciliation are likely the largest maturity opportunity area.
+
+6. Payer-Specific Complexity Is Significant
+
+The discussion confirmed a common ASM challenge:
+
+Every payer has unique requirements.
+
+Examples mentioned:
+
+Different file layouts
+Different field positions
+Different acceptance methods
+Different acknowledgement mechanisms
+Different error reporting processes
+
+Sandra also noted:
+
+Payers communicate receipt and errors differently.
+
+Consulting Implication
+
+This strongly supports a future-state architecture that separates:
+
+Canonical Mercy ASM data
+Payer-specific export formatting
+
+rather than embedding payer logic throughout the extraction process.
+
+7. Opportunity for Monthly ASM Submission Cadence
+
+A notable best-practice discussion emerged.
+
+Kate indicated:
+
+Mercy currently performs sweeps several times per year.
+Other organizations perform monthly ASM submissions.
+Monthly cadence improves monitoring and acceptance management.
+
+Sandra agreed that monthly processing would:
+
+Be easier to manage
+Improve acceptance monitoring
+Provide more time to react to rejections
+Opportunity
+
+Evaluate moving from periodic sweep cycles to a monthly ASM submission model.
+
+8. Data Traceability Was Identified as a Key Need
+
+The team discussed adding stronger tracking fields to improve matching and reconciliation.
+
+Kate recommended considering ICN-level traceability even when optional.
+
+The goal is to:
+
+Reduce member matching errors
+Improve claim traceability
+Strengthen reconciliation accuracy
+
+Sandra noted this could help eliminate member-patient matching issues.
+
+Consulting Interpretation
+
+This supports future recommendations around submission inventory management and closed-loop reconciliation.
+
+9. Future-State Architecture Includes a Curated Data Layer
+
+One of the most important architecture discussions occurred later in the meeting.
+
+Current state:
+
+ASM extracts originate from 20+ source tables in Oracle.
+
+Future state:
+
+Same source content
+Curated into a standardized semantic layer
+Single reusable source for ASM generation
+
+Sandra explained the goal is:
+
+Robustness
+Efficiency
+Accuracy
+Reduced complexity
+Risk Identified
+
+Samir appropriately highlighted a major risk:
+
+If data is lost during transformation from the source tables into the curated layer, that becomes a critical failure point.
+
+This should be formally documented as:
+
+Migration / Data Conversion Risk
+
+10. Knowledge Concentration Risk Exists
+
+Aaron Peterson was identified as a key contributor to the ASM process.
+
+However:
+
+Aaron was beginning paternity leave
+He would be unavailable for most of the engagement
+
+Sandra indicated this could delay answers to detailed process questions.
+
+Risk
+
+Knowledge appears concentrated among a small number of individuals.
+
+This raises concerns around:
+
+Documentation completeness
+Operational continuity
+Future supportability
+Consultant Assessment
+
+If I were documenting the engagement after this discussion, my executive takeaway would be:
+
+Mercy is not asking for a review of a mature, stable ASM operation. Mercy is asking for validation that an evolving ASM operating model—consisting of a Databricks migration, a new curated data architecture, and a developing validation framework—will support scalable, compliant, and traceable Medicare Advantage supplemental encounter submissions across all participating health plans.
+
+The highest-value areas for the assessment appear to be:
+
+Validation framework design
+Payer-specific export governance
+Data lineage and traceability
+Response-file reconciliation
+Migration risk mitigation
+Operational controls and auditability
+Future-state ASM architecture readiness

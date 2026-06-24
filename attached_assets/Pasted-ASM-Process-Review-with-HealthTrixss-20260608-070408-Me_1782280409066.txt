@@ -1,0 +1,1991 @@
+ASM Process Review with HealthTrixss-20260608_070408-Meeting Recording
+
+June 8, 2026, 2:04PM
+
+1h 8m 33s
+
+
+
+Samir Rawat started transcription
+
+
+
+Samir Rawat   0:03
+Linda, you are going first to walk us through the current ASM process on the on United.
+
+
+
+Reed, Linda   0:12
+I'm not really sure because I just got back in from vacation and I have not had a chance to review or see what's going on. But I handle all the sweeps, including United Healthcare. So what are you needing?
+
+
+
+Samir Rawat   0:31
+All right, so...
+So we are going through.
+ASM process review end to end for and this is our first week for the four week review session. We are trying to understand how the ASM files are created and submitted and what are the QA processes and then reconciliation processes.
+
+
+
+Weiler, Sandra   0:46
+Yip.
+
+
+
+Samir Rawat   0:59
+Around it, right? So, and...
+
+
+
+Weiler, Sandra   1:00
+Yip.
+I'm sorry, Samir, I didn't mean to interrupt you. I'm just thinking it might be good to kind of circle back to the detail that you presented during the kickoff meeting, since Linda is the key contributor here and wasn't able to attend that meeting.
+
+
+
+Samir Rawat   1:20
+Sure.
+So...
+And Linda, I'll just quickly go through the our first review session that we had on 6th first on the on the Kit. So, our mercy is currently evaluating the ASM direct submission operating model right now, at the same time when you when you guys are going through the data bricks migration from your current process to the...
+new process. It's evaluating what is the current process, what are the gaps in it, right? And if there is a gap or if there are any best practices yet to be followed. So basically, we, Healthrix, as a vendor here, coming in and trying to evaluate your, you know,
+process end to end and see if we can add value. Maybe there is no, it's already at a perfect stage or we may be adding some best practices on the things that needs to be done while submitting the data to the health plan or while receiving the data from the health plan and reconciling it.
+Right, so that's the whole goal, so...
+We are in this process, we are not reviewing the regular submission channel, that is the claims channel where the claims is created, goes to the help plan through the clearinghouse. But what we are reviewing is the channel that is for the ASM, alternative submission method.
+File, and that's related to the chart review, direct submission, add, add, delete, or any scoops that you do from the EMR side. We we want to understand that file on how you generate the do the ESM file submission, how do you convert the data to the helpline file format, and then...
+What is the process to submitting it to the health plan? And once you receive the response from the health plan side, how do you take the accepts, rejects, either from the health plan or from CMS, and then take it back and evaluate whether it has been submitted or not?
+Right, and then investigate on the edits at a member level, at a submission level, or at a member SCC level, and and how do, what are your processes around, you know, addressing the error edits, and all of that, right? So, we basically want to understand this yellow process.
+that is highlighted yellow in the workflow end to end. And the discussion in the last meeting was that we will start this starting with United as a typical pass for the first time, but we will the goal is to cover the the all the health plans for under this review.
+Uh, I'll quickly jump into the the stack where we we.
+four weeks health plan, sorry, four week process where the first week is basically all about current state discovery. And we have three meetings scheduled for this week. And other than that, we will be doing 3 working session, like 3 hours working session meeting that has been scheduled for Monday.
+Wednesday and Friday, and other than that, we will be scheduling dedicated person-to-person meeting if we need to go into a particular artifact review or a particular exception workflow review or so, right? But this is our high level work.
+So, that's where we are in the meeting today to discuss the first part of the stakeholder interviews and going through the current ASM workflow and process documentation and so on. So, the ask here is who is involved with United will has to walk through.
+The basic ASM workload process and documentation to us.
+
+
+
+Reed, Linda   5:19
+Okay, for, well, basically all this is for what I do is that we have queries created. I have queries, I'm not saying we. I have queries that are created that we, I keep on saying we, that I run for the data service that is required for.
+
+
+
+Samir Rawat   5:37
+The.
+
+
+
+Reed, Linda   5:38
+at that point in time.
+Those queries are ran. They're Oracle-based queries that we created, and those are ran, and we put those basically in whatever format they require, and we send it over to the payer. And the payer on United Healthcare only allows 100,000 rows per.
+sheet or per submission and those are sent over to them for we have a separate one for institutional and a separate one for ambulatory.
+Queries, and that's...
+
+
+
+Samir Rawat   6:19
+Mhm.
+
+
+
+Reed, Linda   6:21
+Pretty much it.
+
+
+
+Samir Rawat   6:24
+Okay, so this United must have a...
+file layout, right? And there has to be a process between, yeah.
+
+
+
+Reed, Linda   6:33
+All payers, all payers have a layout that they've submitted to us, and we have that, and that's what they require us to submit over. That's what the queries are based on.
+
+
+
+Samir Rawat   6:42
+Okay, so there are two parts that must happen in that query. One is the layout conversion part, right, where you are confirming the data to the United Healthcare's data layout. But right before that, you were actually establishing what data needs to be converted from, what data needs to be submitted.
+
+
+
+Reed, Linda   6:43
+Mhm.
+
+
+
+Samir Rawat   7:03
+Right, so...
+
+
+
+Reed, Linda   7:04
+Already had that established. That's already established in the query. The queries, unless United Healthcare comes back and says, hey, Linda, we need this instead of this, or we need, you know, or let's remove that. There is no changes being made. It is standard query for institutional standard query for ambulatory.
+Those are ran for the data services required at that point in time, like we were coming up on the initial 2027, which the data services are 71 of 2025 to 630 of 2026.
+
+
+
+Kate McClure   7:37
+So Linda, if I'm understanding correctly, you have a query that you just put in the parameters of the date and the payer and run it to get your data set. So you use the same query for all of the insurances? Okay.
+
+
+
+Reed, Linda   7:44
+You got it. Yes.
+No, ma'am.
+No, ma'am. This is each payer has their own, yep, own unique queries. So since, I apologize, since we started with UnitedHealth, that's why I just said we have a standard query.
+
+
+
+Kate McClure   7:53
+They have their own query? Okay.
+Yip.
+No, that's fine.
+I just wanted to make that clarification. So, Samir, it sounds like you guys would want to review the query parameters to make sure and understand what it's pulling, and then also get that data dictionary from the payer, in this case, United Healthcare, to make sure the specs and the layout was correct.
+
+
+
+Reed, Linda   8:07
+Yeah, sorry.
+
+
+
+Samir Rawat   8:16
+Yip.
+Yeah.
+Yeah, we'll need the those queries for all the help plans and then the all the layout for all the all the help plans, right? So queries and layout both, though we'll start starting with it with united. One question here, Linda, is that in that query that you have, this the logic of separating the...
+As versus delete, but do you guys?
+
+
+
+Reed, Linda   8:47
+That is not in that. That is not in that. That is totally separate. And I do not do, only time I do the adds and deletes is when Amber's team, well, it used to be Amber's team would send that to us. So this has nothing to do with what I'm doing right now for adds and deletes.
+
+
+
+Samir Rawat   8:50
+Oh.
+
+
+
+Kate McClure   8:59
+Yeah.
+These would all be ads, Samir.
+
+
+
+Reed, Linda   9:05
+I used to get a...
+
+
+
+Samir Rawat   9:08
+Say that again.
+
+
+
+Reed, Linda   9:08
+Sorry.
+
+
+
+Kate McClure   9:09
+They would all be ads. So this is grabbing the codes that are 13 in slot 13 and beyond and submitting them to the payer for submission to CMS. So they would all be ads in this case, only when we do a retro review.
+
+
+
+Reed, Linda   9:23
+Actually.
+Yeah, there we go. I was going to say, actually, hang on.
+
+
+
+Kate McClure   9:26
+With...
+Yeah, only when we do a retro review would we do adds and would we do deletes, but that is generally separate from the the sweeps.
+
+
+
+Reed, Linda   9:31
+Right, and that's right.
+And so also, this ads are separate from the sweeps if you're adding something. So to me, there's three, actually 3 files that you're going to be, that we, well, I haven't done the deletes and the ads in a long time because the lady that I used to get to get them from is no longer with.
+
+
+
+Samir Rawat   9:44
+Mhm.
+
+
+
+Kate McClure   9:44
+True.
+
+
+
+Reed, Linda   10:00
+with Mercy, but there is a separate and there is it's not a query that is ran for the adds and deletes. It's basically I receive a file form from the claims team and then I would put that in the format that let's say we're since we're talking about United Healthcare.
+that we would send over to United Healthcare. Sweeps is total everything that's out there during that data service that we're running at that point in time.
+Yep, muddy it a little bit more.
+
+
+
+Samir Rawat   10:36
+So, what's the difference between the two? Isn't the sweep data the same data that you're coming that you're generating from chart reviews and all, other than the other than the other original submission method that goes to the clearinghouse? Wouldn't the sweep data include everything that you just said from a chart review?
+
+
+
+Kate McClure   10:45
+Just.
+True.
+
+
+
+Samir Rawat   10:57
+Whether it's all.
+
+
+
+Reed, Linda   10:57
+Yeah.
+
+
+
+Kate McClure   10:57
+Well, so we're not doing chart reviews for sweeps, Samir. It's on the original claim that goes to the clearinghouse, you only get codes one through 12 on the claim. So this sweeps process is to make sure we get 13 and beyond and that gets submitted as well. When we do
+
+
+
+Reed, Linda   10:59
+No.
+
+
+
+Samir Rawat   11:07
+Okay.
+Okay.
+
+
+
+Kate McClure   11:17
+a retro review or a chart review, then we would use the same format because it's an alternative submission to do any adds or deletes. Jennifer, I wanted to ask one further question and muddy the waters a little bit more, because I know when you do a retro or you do a change,
+
+
+
+Samir Rawat   11:24
+Yip.
+
+
+
+Kate McClure   11:36
+Those don't necessarily get added. I'm asking, do they get changed in your database so that when you do pull your query next time, any changes that you previously made on a retro are also captured or would those be then overwritten in the original would be pulled?
+if you followed me.
+
+
+
+Reed, Linda   11:59
+Who are you asking that question to? You said Jennifer? Or are you meaning Linda? Okay, go ahead.
+
+
+
+Kate McClure   12:02
+Yip.
+I'm sorry, Linda. Sorry. Linda or Jennifer, either of you.
+
+
+
+Reed, Linda   12:05
+No, I.
+I was like, not sure who we're talking, who you were talking to. No, what it'll do is if what it, well, let me just put it up, put it this way. Whatever's out there is what gets pulled. So if there was a change made, if it's out there as a.
+part of the sweeps process that we go through and it's out there, it gets picked up. If it hasn't been removed or let's say a new one, new diagnosis is put out there and when we sweep through it, as a pun of sweeps, sorry.
+
+
+
+Kate McClure   12:45
+Mhm.
+
+
+
+Reed, Linda   12:46
+We would pick it up.
+
+
+
+Kate McClure   12:48
+So if you did process a delete and send it through, the original data gets corrected so that next time you would pull it through, it wouldn't be there. Is that correct? Okay.
+
+
+
+Reed, Linda   12:52
+Mhm.
+It shouldn't be there. That's correct.
+
+
+
+Samir Rawat   13:02
+So, Linda, how do you how do you do a net net impact analysis as you create this?
+The the submissions, like, for example, let's say you are doing a September sweep submission still, so you is your parameter tied to September sweep date of service that is July 1 to June 30, and then you, and then you do a comparative analysis on, OK, hey, there are.
+This many members with this many average diagnosis before submission, and then after including this direction mission file that I have, I am now about to add, this is the net increase in diagnosis per member rate. Do you do analysis like that so that you can make sure that...
+All the, the, you can do a sanity check that the, there's no sudden increase or decrease that is not planned on a, on a, you know, when you submit that file.
+
+
+
+Reed, Linda   14:04
+There's always a sanity check. You have to do that, especially when we're sending this over to our payers. So once a file is ran, I go in through it. I do it, definitely do a row count. I definitely go through and spot check.
+the members and go back through our system of record, which is Epic, and make sure that my information matches back and then we do submit the file.
+I'm assuming that's what you were asking me. Okay.
+
+
+
+Samir Rawat   14:38
+Yes, so do you do like, I have 10 members, I had...
+I had 15 diagnosis for this 10 member before the submission and I have 25 diagnosis for this after the submission. Is that what is that diagnosis? OK.
+
+
+
+Reed, Linda   14:50
+Yip.
+Right. Yeah, well, I have to, yeah, I, that's basically, well, I apologize. When you see the query, you'll see, it'll make sense. It'll make perfect sense. You'll see the diagnosis and you're going, oh, okay, she's going to look at that member. She's going to look at that member's member ID. And I apologize, I can't think of all of it at the top of my head.
+
+
+
+Samir Rawat   15:00
+Okay.
+
+
+
+Reed, Linda   15:14
+because each payer's queries are different and they do ask for different information. But you'll see a full line of diagnosis codes. And I can't remember certain like.
+Throwing this out there, it is probably going to be confusing, but Global Health, let's just throw them out. They only require, they only allow us to do 1 diagnosis per line for that member. United Healthcare, I think they allow, for ambulatory, it's different than it is for institutionals. So they only allow so many lines for diagnosis because then
+we have to drop down to another line to finish putting in those diagnosis codes. So yes, I have to, that is what I view.
+
+
+
+Samir Rawat   15:56
+Mhm.
+
+
+
+Reed, Linda   16:02
+and make sure that I am pulling in the correct information.
+
+
+
+Samir Rawat   16:06
+Okay, so yeah, so my understanding is that, and Sandra, you correct me here, we are migrating towards the Databricks, right? So do you have the queries ready?
+
+
+
+Reed, Linda   16:07
+Okay.
+Mm-hmm.
+Mhm.
+
+
+
+Samir Rawat   16:25
+where you have, where you generate the ASM file from the databricks, putting the parameters that you need to create the submission.
+
+
+
+Reed, Linda   16:37
+I have some that I created using the data bricks and used the clarity tables in there. Yes, I do have those. I've been going through and making sure that my information matches up that was sent out for the final 2025. Sorry.
+
+
+
+Samir Rawat   16:48
+Ohh.
+
+
+
+Reed, Linda   16:59
+I get behind. It gets confusing with what sweeps I'm in. Sorry. And yes, I have been playing with that and setting those up. And then I you then we also on those you'll see that we have.
+
+
+
+Samir Rawat   17:09
+Yip.
+
+
+
+Reed, Linda   17:19
+The CMS list that are not of CPT hit because they're not allowed and that's also in the query. The hospitals are in the query because some require that we send out
+per hospital, per mercy hospital, per groups. Some don't care. I mean, there's a lot of different things that go on per payer. It's not like, oh, this is all one thing. We could probably pull some standard information, but.
+
+
+
+Samir Rawat   17:49
+Cool.
+
+
+
+Reed, Linda   17:57
+Some of them require a different.
+type of information, I'm trying to think. Some require the, want the claim ID, some don't, which is not that big of a deal, but I always leave that information on there for me. And this is, that's my sanity check. I've got that information and I can go out and review and then I remove it and send it out.
+
+
+
+Samir Rawat   18:20
+So, in there.
+
+
+
+Reed, Linda   18:22
+you gotta have something to be able to go back and do a check. So yeah, it's...
+It's A lot.
+
+
+
+Samir Rawat   18:30
+So, it is it what what what gets what triggers the process? Like, so is there a calendar that you follow that, okay, this is when I'm...
+
+
+
+Reed, Linda   18:36
+What do you mean?
+Yes, we get them, we get the information from the vendor, excuse me, from the payers telling us when sweeps are due. The, like I stated, the first, the next sweep that is due is the initial for 2027, which are dates of service, 71 of 2025 to 630 of 2026.
+
+
+
+Samir Rawat   18:49
+Okay.
+Yes.
+
+
+
+Reed, Linda   19:02
+And we will be running those in July and doing also doing a comparison to our Oracle queries to make sure that we match up.
+
+
+
+Samir Rawat   19:13
+Okay, so you do sweep to sweep submission. So for September sweep, you start preparing starting July, August. So it's not a continuous submission, it's a sweep to sweep basic submission, correct?
+
+
+
+Reed, Linda   19:14
+OK.
+No.
+It they the CMS does tells us tells the payer when they are required, the payer tells us when they want it so they can review the files before they submit to CMS.
+
+
+
+Kate McClure   19:44
+Linda, do you know if your payers would accept a monthly file if you did it on a continuous basis, like not just sweeps?
+
+
+
+Reed, Linda   19:45
+Yes.
+We have talked to some and they were in agreement. Then others were like, we're not sure. We don't know if we can do that yet. So, I mean, I can say some would probably say yes, which would make things a lot easier. But then I've got some that are not. And they are
+the ones that send us out the dates that they require the information. So I have talked to our payers probably.
+
+
+
+Kate McClure   20:15
+Okay.
+
+
+
+Samir Rawat   20:17
+Yeah.
+
+
+
+Reed, Linda   20:20
+Less than a month ago.
+
+
+
+Kate McClure   20:22
+Mm.
+
+
+
+Reed, Linda   20:23
+And because there was a rumor going around about some CMS changes and asked them, you know, what were their thoughts and basically the ones that actually do get back with me said no CMS changes that they've heard of.
+
+
+
+Kate McClure   20:28
+Mhm.
+
+
+
+Reed, Linda   20:41
+And at this point in time, they were, they would be open, but not at this point. So, you know.
+
+
+
+Kate McClure   20:49
+Okay, because I've heard it, like it's the bigger ones, like Humana and UHC that would accept a monthly one, but I can imagine some of the smaller ones.
+
+
+
+Reed, Linda   20:53
+Yip.
+Right.
+Thank you. Yeah, you're absolutely right. I appreciate that. But yeah, and even United Healthcare was a little standoffish on that a little bit. I'm not sure, but yeah. And then I haven't, I apologize, I haven't made it through all my emails, but I have a couple of emails from a couple of payers that I need to review and see if there was something that they were needing.
+
+
+
+Kate McClure   20:59
+Okay.
+
+
+
+Reed, Linda   21:20
+before our initial 2027 sweeps, which I'll be running those in July.
+
+
+
+Kate McClure   21:26
+OK. Thank you.
+
+
+
+Reed, Linda   21:27
+Okay.
+You're welcome.
+
+
+
+Samir Rawat   21:30
+Then, Linda, my our understanding with Sandra is that we will not be reviewing the Oracle process, and the assumption is...
+
+
+
+Reed, Linda   21:31
+Yes.
+My director has stated very adamantly that we will be doing the Oracle matching it up to whatever's in IDP. So I have to go with him until he returns.
+And that'll be Aaron.
+
+
+
+Samir Rawat   21:57
+Okay.
+
+
+
+Reed, Linda   21:58
+Okay.
+
+
+
+Samir Rawat   22:01
+Uh, Sender, you, you there?
+
+
+
+Weiler, Sandra   22:02
+So Samir, with that being said, just know that Linda's in the process of migration. So the logic that's used, and Linda, correct me if I'm wrong, will be the same. So whether you're reviewing the logic that's used,
+
+
+
+Samir Rawat   22:09
+Mhm.
+Mhm.
+
+
+
+Weiler, Sandra   22:21
+to submit from the Oracle platform or the logic that you use to submit from what we refer to as our IDP, the logic will be the same. And I think that's what you're most interested in, correct?
+
+
+
+Samir Rawat   22:30
+Mhm.
+Yes.
+
+
+
+Weiler, Sandra   22:39
+Very good.
+
+
+
+Samir Rawat   22:42
+All right, so Linda, would you be able to open up, you know, the Notepad or SQL behind United and start, you know, basically walking us through the first process? First thing you do, how do you set the parameter? How do you establish the and go through the logic one by one or?
+Would you just see it as the script to us and then let us come back to the questions?
+
+
+
+Reed, Linda   23:08
+How about if I send you the script and you come back with the questions? That would be the easiest because again, it's straight SQL. There's nothing in there that does not make, that might not make sense to you, but it makes perfect sense to me. I've done this for over 4 years. So, and I've made changes throughout. But yes, it is, if you know SQL,
+
+
+
+Samir Rawat   23:16
+Mm.
+Yip.
+
+
+
+Reed, Linda   23:31
+you'll be able to read this with no issues. This is also based on, again, our Epic, what we have out in Epic. So it's based there. It's also, I call it my production database. I guess you guys, whoever calls it on-prem, it does, whichever, it doesn't make any difference to me. It's all clarity.
+So that's the database which I use and the only difference that I've seen doing this in the IDP is really nothing. Because I've looked at Aetna and what was the other one I looked at? Humana. So I've looked at those and
+All the tables that I needed are in there and everything runs. Some matches up to my 2025 submission. So I was pretty happy about that. So I can send you the SQL for United Healthcare again. You had to realize it's ambulatory and institutional because they're different tables that run and that'll be the information. So that's why they are ran separately.
+
+
+
+Samir Rawat   24:36
+Okay.
+
+
+
+Reed, Linda   24:36
+The data has to be pulled separately.
+
+
+
+Samir Rawat   24:38
+Yeah.
+
+
+
+Reed, Linda   24:39
+is what I'm trying to explain, sorry.
+
+
+
+Samir Rawat   24:52
+So let's talk about the, you know, you create the files.
+and then you send the data to health plan. How does the health plan, and assuming every different health plan have different ways to accept the data, imagine that's through their provider portal or accept TP. How do they send you notification on whether that has been accepted or if all of the file has been accepted or if?
+half of the file is being accepted. What's the process around that?
+
+
+
+Reed, Linda   25:24
+And they basically send an email stating whether or not there were errors or if there is an issue. And they send it to me quick enough to where if there is an issue, I can go in. And if it's something that we can solve on our end, we'll take care of it. If it happens to be something that's an epic that we differ from what the payer says, there is nothing that I can do.
+
+
+
+Samir Rawat   25:55
+And is there is there any member level reconciliation that you do that as a response from that on your side to identify the region for the rejects or so at your end or?
+
+
+
+Reed, Linda   26:08
+I'm so sorry, could you repeat that again? I'm miss.
+
+
+
+Samir Rawat   26:10
+So, so let's say, let's say there is some region that the health plan rejects the file, right? So, how do you do?
+
+
+
+Reed, Linda   26:20
+Go ahead. I'm sorry. I didn't mean to interrupt. My apologies.
+
+
+
+Samir Rawat   26:24
+Yeah, yeah, how do you take that reduction and then process or establish your end of, you know, issue in the current process?
+
+
+
+Reed, Linda   26:34
+Only time that I've ever had a whole file rejected is, let's say...
+It was.
+Wrong row count, because some of them require a row count at the bottom. Okay, they'll reject it and send it back. I fix it, send it right back, and we're good to go.
+
+
+
+Samir Rawat   26:49
+Mhm.
+
+
+
+Reed, Linda   26:56
+Now, they really do accept the file, and if they see any errors, it would be per the member. There's an issue with that member. Date of birth.
+
+
+
+Samir Rawat   27:08
+Mhm.
+
+
+
+Reed, Linda   27:14
+name is spelled incorrectly sometimes, or most females, their last name are different, things like that. Then that's when I go in and they send that back. I go in and look in Epic, and that is, you know, Mercy Source of Truth. I go in and I look.
+And if it matches what I sent, I cannot make a change. That is, I cannot change to what the payer states. So I, there's nothing we can do on my end.
+
+
+
+Kate McClure   27:42
+You don't compare to the eligibility files in Epic? Oh, okay, you do.
+
+
+
+Reed, Linda   27:45
+Yes, yes, that's what I'm saying. If mine is different, then what, if it's what I send is the same as in Epic, then I can't make a change, and there's nothing I can do, and that would be basically above my pay grade.
+
+
+
+Kate McClure   28:04
+So.
+So if Epic has Chris, for example, and the eligibility file has Christopher, you can't make that correction and it still goes as Chris and then it gets rejected by the payer. Is that what you're saying?
+
+
+
+Reed, Linda   28:20
+What I'm saying is if Epic has it as Chris, I cannot make that change. That'll have to be somebody else.
+
+
+
+Kate McClure   28:29
+Just checking, so...
+
+
+
+Reed, Linda   28:29
+No. Yeah, I mean, I can't take the file. I will, and I'm just saying, I will not take that file if Epic says Chris anywhere in Epic eligibility, no matter what. I mean, because I can look on the cards, because the cards, you know, are in Epic. I can see that.
+
+
+
+Weiler, Sandra   28:30
+Yip.
+
+
+
+Kate McClure   28:35
+Yeah.
+
+
+
+Reed, Linda   28:49
+If a change needs to be made in Epic, I cannot personally make that change. And I personally cannot make that change on the file and send it back to me that is reporting incorrect information that we have in our system. Does that make sense?
+
+
+
+Kate McClure   29:05
+Right, I'm just, you're using EPIC as a sense of truth, as the source of truth, not necessarily the eligibility file. Gotcha.
+
+
+
+Reed, Linda   29:06
+Okay, yeah.
+So true, yes.
+Right.
+
+
+
+Samir Rawat   29:12
+So, Lindy, so wait.
+
+
+
+Jay Baker   29:12
+So, so...
+
+
+
+Weiler, Sandra   29:12
+Hey, hey, Kate, with that being said, is there any value in including the attribution files as part of this assessment? Does that give you any value?
+
+
+
+Kate McClure   29:24
+Yes, absolutely.
+Yeah.
+
+
+
+Weiler, Sandra   29:28
+Okay, so Jennifer will have to...
+I guess I lie.
+
+
+
+Reed, Linda   29:32
+Now, those attribute files, when we looked at those last time, they were not correct. Have those been fixed last time we looked at them?
+The information did not match up to anything that I could find.
+
+
+
+Weiler, Sandra   29:42
+Um...
+
+
+
+Reed, Linda   29:46
+So is that going to be something that you're going to go, someone's going to go into Epic and correct?
+
+
+
+Weiler, Sandra   29:47
+Yip.
+I'm not sure what you mean, Linda, that they're not correct.
+
+
+
+Reed, Linda   29:53
+Um...
+Well, they, the payers were not correct on them.
+
+
+
+Weiler, Sandra   29:56
+Mm.
+Um...
+
+
+
+Reed, Linda   30:04
+That can be a different discussion, I'm just saying.
+
+
+
+Weiler, Sandra   30:05
+So these are these are files. OK, OK. These are files directly from the payer where they're communicating to us who the attributed patients are as part of the contract. Are we talking about the same thing?
+
+
+
+Reed, Linda   30:16
+Right, and we're, and I, yes, and we weren't going to use just attributed files because we're going to use everything that's in our system like we always have. So, right.
+
+
+
+Weiler, Sandra   30:28
+Yeah, right. So the attributed population is a subset of the total patient population. Yeah.
+
+
+
+Reed, Linda   30:33
+Okay, and when Jennifer was going, Jennifer and Lindsay were going through and doing their checks, some of the information, and if I've got it mixed up, let me know, but some of the information was showing that.
+
+
+
+Weiler, Sandra   30:49
+Sure.
+
+
+
+Reed, Linda   30:53
+the person was in the file, the attributed file was listed, and they were stating we were missing that person, and we really weren't missing that person because they never had a claim filed under that payer.
+
+
+
+Weiler, Sandra   31:09
+Yeah, and that's right. So that is it, yeah, balanced scenario, right? So someone can be attributed, but not receive service during the submission period. Yeah.
+
+
+
+Reed, Linda   31:13
+Right.
+Right.
+Right. Okay. I just wanted to throw that out there because that was a big issue when we were going through that. So I just needed to throw that out there. And if, you know, again, very rarely do I have problems with the eligibility. It is more date of birth or.
+
+
+
+Weiler, Sandra   31:23
+Yeah.
+Yeah, that is.
+
+
+
+Reed, Linda   31:41
+name. Now, United Healthcare does not have an issue with the last name because they send it back and say, hey, this does not match up. What we do, they have us remove the last name, make it blank, and they will correct it when it's sent back over.
+So that's not a big deal.
+
+
+
+Samir Rawat   32:02
+Do you have do you have a list of errors like this for each health plan where what what kind of errors we get? And what's the process of fixing that this Linda? Let's say there is something that you can fix it at your end. Are you?
+
+
+
+Reed, Linda   32:07
+No.
+No.
+
+
+
+Kate McClure   32:09
+Mm.
+Do you have?
+
+
+
+Reed, Linda   32:17
+At my end on for United Healthcare is the only one that actually really works with us and Blue Cross Blue Shield of Oklahoma. What I do is go in and for United Healthcare, if it's the last name, they have me remove the last name and send the file back over.
+date of, not date of birth, my apologies, last name, the MBI, they have me remove that and have it go back as an error. They have me remove that and I send it back over. So those are the errors.
+
+
+
+Samir Rawat   32:49
+So, what is removing? So, what is removing means here? Are you, are you yourself?
+
+
+
+Reed, Linda   32:55
+Make it null.
+
+
+
+Kate McClure   32:56
+No, no.
+
+
+
+Samir Rawat   32:57
+No, are you yourself remove up writing a SQL code and then?
+
+
+
+Reed, Linda   32:57
+No.
+I just remove the file. In the file they send back, I remove manually. Yes, that, well, I don't even make it, null, I'll just make it blank. They want it removed.
+
+
+
+Kate McClure   33:07
+You manually remove, you manually make it null.
+
+
+
+Samir Rawat   33:10
+Okay.
+Okay, but who owns the SQL code? You, do you, so you are the writer of the SQL code or someone in IT?
+
+
+
+Reed, Linda   33:18
+Me.
+Yes, I am.
+No, I am.
+
+
+
+Samir Rawat   33:23
+OK, so you can you can go in and change the logic of the SQL code anytime you want, but yeah, OK, OK.
+
+
+
+Reed, Linda   33:29
+You bet.
+Yip.
+And again, very simple sequel. It's nothing.
+
+
+
+Samir Rawat   33:37
+Mhm.
+
+
+
+Reed, Linda   33:40
+Major, I mean, to me, this is straightforward, easy read, and that's it. I mean, very simple.
+
+
+
+Kate McClure   33:48
+Lindy, do you use the registries when you are pulling your group or do you just use straight insurance?
+
+
+
+Reed, Linda   34:00
+I use the health plans.
+Is that what you're asking me?
+
+
+
+Kate McClure   34:05
+Yeah, because I was going to say, I know you guys build registries in there that would get your attributed members. I didn't know if you pulled that in or just used whoever said they had a United Healthcare one. Okay.
+
+
+
+Reed, Linda   34:06
+Mhm.
+Yeah, we pull in the health plans and the health plans are given to us by the payer.
+
+
+
+Kate McClure   34:24
+Okay.
+
+
+
+Weiler, Sandra   34:25
+In the criteria you use the payer plan, is that right, Linda? Not the contract registry ID, yeah.
+
+
+
+Reed, Linda   34:28
+Yes.
+
+
+
+Kate McClure   34:29
+Mm.
+
+
+
+Reed, Linda   34:30
+Right. And those are given to us by the payer. And we, before each sweep, we go through and make sure that we have everything for the plan available.
+
+
+
+Kate McClure   34:30
+Yeah.
+And let me know if this is correct, but for Samir and Jay, they don't just use the registry because you guys have worked with your payer partners to submit everybody in that payer, not just the ones that you're at risk for or value-based care for.
+
+
+
+Reed, Linda   34:48
+Mhm.
+
+
+
+Kate McClure   35:01
+as a kind of a contracting leverage for future relationships and such. So that's why you overextended the population rather than just the value-based care.
+
+
+
+Reed, Linda   35:08
+Correct.
+Yes.
+Yes, ma'am.
+
+
+
+Weiler, Sandra   35:12
+Well, and I guess just to add to that too, Kate, when the contract registry is assigned to the patient record, it identifies for the current period, the current month, whether or not the patient is attributed. But if the patient moves out of attribution, it doesn't historically.
+
+
+
+Kate McClure   35:24
+Mhm.
+
+
+
+Weiler, Sandra   35:32
+Brock the assignment to the contract registry.
+So if we're looking at attribution over time, we rely on the attribution data that's been curated in the IDP versus the contract registry IDs. So we use contract registry IDs for operational purposes, but for any kind of historical look back.
+
+
+
+Samir Rawat   35:42
+Okay.
+
+
+
+Kate McClure   35:51
+That's fair.
+
+
+
+Weiler, Sandra   35:56
+we would use the curated attribution data.
+
+
+
+Kate McClure   36:04
+That's fair. That makes sense.
+
+
+
+Weiler, Sandra   36:07
+You.
+
+
+
+Samir Rawat   36:09
+So let's talk a little bit on the chart review sides. So this is the non-chart review process, correct?
+
+
+
+Kate McClure   36:20
+Correct. That's just the regular sweeps process.
+
+
+
+Reed, Linda   36:24
+That's correct.
+
+
+
+Samir Rawat   36:25
+Okay, and and how do you establish?
+Or are you given with a pre-coded data with ads and deletes pre-identified? Or do you do some sort of comparison to establish ad and delete in your process of submission?
+
+
+
+Reed, Linda   36:44
+I don't do any add and deletion on any of my submission for sweeps.
+
+
+
+Kate McClure   36:49
+Samir, if they were going to do a retro, they'd probably contact with us here at Vertex. They would give us a list of members that we were going to review with that claims data. So they would do an initial poll, kind of like their query now. We would take that and then we would...
+give them back a file that had adds and deletes for those different records in the format of the different payers.
+
+
+
+Samir Rawat   37:21
+So, so when you when you send a delete, is that relative to the claim, and then so do you have access to the claim and you do the comparison kit that?
+
+
+
+Kate McClure   37:32
+No, that's why I was asking Linda earlier. We would just send them a flat file that says these are the changes that should be made, these should be deleted, these should be added. And I wanted Linda to say if they circled back and made those changes in the back end tables or if it was just sent to the payers.
+
+
+
+Reed, Linda   37:34
+Mm.
+
+
+
+Samir Rawat   37:36
+What?
+
+
+
+Reed, Linda   37:50
+I would not make those. That would be Amber, right? Amber, your group or whoever that you guys would do the adds and deletes.
+
+
+
+Samir Rawat   37:53
+Yip.
+
+
+
+Bruno, Amber   38:03
+Right, my team works on those.
+
+
+
+Reed, Linda   38:04
+Yes. So basically, I would just, once Amber and them make those changes. And if I'm incorrect, Amber, please let me know. But that's how it was in the past. If those were taken care of, Amber's team, and it wasn't her team, and I apologize, Amber, I'm not trying to throw you out there like that.
+
+
+
+Kate McClure   38:23
+You.
+
+
+
+Reed, Linda   38:24
+Um, it's they would go in and make those changes, I would submit that file.
+In a different format, it's different than what I send for sweeps to the payer.
+And there are also deadlines for those.
+So did that make it, did that help at all? Sorry.
+I can only tell you what I've done in the past, and that's how I've always done it.
+
+
+
+Samir Rawat   38:56
+Sorry.
+Sorry, I'm a little not clear, so I'll ask the question again for to start with Kate. So, Kate, you mentioned you guys do chart review, so, and how's that chart review and I process of identifying add and delete different than what Amber is doing?
+
+
+
+Kate McClure   39:07
+Mhm.
+It's not. So we do it outside of the system and give a file back and Amber's team changes it within the Epic system so that for future polls it would be correct.
+
+
+
+Samir Rawat   39:26
+I see.
+Okay, so, and when you're coding, I mean, because you mentioned add and delete, that means it's not a blind coding, right? You have access to the baseline data to establish add and delete and you establish a comparison, okay, this is, these are the ads related to the baseline.
+
+
+
+Kate McClure   39:39
+Correct.
+Yip.
+Mhm.
+
+
+
+Samir Rawat   39:47
+Okay.
+Alright, Jay, any any do you have any question from your side?
+
+
+
+Jay Baker   39:57
+Just.
+So Linda, I understand that you're reporting as is out of Epic. You're not making any transformations, filtering or anything like that. But when an error comes in that is in Epic, so it's not in your reporting pipeline, is there a process or a compliant process that says we're going to go and reconcile or make changes in Epic so that the blocker issue is resolved?
+Or is that just become a blocker and that data is never unlocked because Epic is immutable? I'm just trying to get to, do we have processes that address issues in Epic if there is an error in Epic?
+
+
+
+Reed, Linda   40:40
+Sorry, I'm talking and I'm on mute. My apologies.
+
+
+
+Jay Baker   40:42
+Oh.
+
+
+
+Kate McClure   40:42
+Yeah.
+
+
+
+Jay Baker   40:44
+I thought I was on mute for a second.
+
+
+
+Reed, Linda   40:45
+Oh, I was like, hey, I, no, I have no way to go in and make any changes in Epic. That is just.
+
+
+
+Kate McClure   40:54
+So there's no ticket you can put in or our team you can notify.
+
+
+
+Reed, Linda   40:59
+Not that I know of. I have asked before in the past if there were changes, but it was difficult to do. Okay, prime example. I have, because you know, we have now, we have images of the cards. I can look at the card.
+And I can say, you know what, payer, I don't know where you're getting your information from because this card matches what we also have in Epic and you're coming back and saying this. So to me, it's basically on the payer. But you know, that's how I can verify everything. And
+We also have an epic where, let's say, I can go in and look, let's say they came back and say, oh, this person does not belong to United Healthcare. I can go an epic, I go in and look, and I'm like, yeah, it does. You accepted this claim. Here is where we, you know, E-verified that they had this information.
+So, you know, I'm kind of, there's not really anything I can do on that end. Now, let's.
+
+
+
+Kate McClure   42:04
+Is there a process with the payer that you can show them that data or dispute their?
+
+
+
+Jay Baker   42:04
+So...
+To.
+
+
+
+Reed, Linda   42:10
+No, and I don't have that many, honestly. Kate, there's not that many. And it's kind of minute. I will say United Healthcare is the one that works with us the most. Again, last name, a female can have a different last name. They can have a hyphenated last name. Even a male can have a hyphenated last name.
+
+
+
+Kate McClure   42:11
+Okay, just checking.
+Okay.
+
+
+
+Reed, Linda   42:32
+And they just tell us.
+They send the file back, not the whole file guys, just realized they've accepted the file, but these came through saying, hey, we have this list here that, you know, their last names do not match. And they...
+
+
+
+Jay Baker   42:50
+Yeah.
+
+
+
+Kate McClure   42:51
+Do you have any of those sample files, Linda, that you might have had in the past that they've sent back?
+
+
+
+Reed, Linda   42:57
+No, because I just go and correct and send it back, send it back out because it has to be the same file. Has to be the same file, has to be in the same format. You cannot make changes or it rejects the error file that you sent back. I found that out the hard way. Not fun.
+
+
+
+Kate McClure   43:01
+Okay.
+
+
+
+Jay Baker   43:12
+Ha ha.
+
+
+
+Kate McClure   43:13
+Mhm.
+
+
+
+Reed, Linda   43:15
+So basically what they had me do is I and it's so simple, it takes 5 seconds. I go in there, remove the last name, which is basically I delete the last name, it's null. I send the file back and they accept it. Done. So.
+
+
+
+Jay Baker   43:32
+So Linda, you're perfectly describing the edge cases that we've seen. So I totally understand where you're coming from. And what we found is if you have 10 million diagnosis codes you're sending and 2,000 of them are in these edge cases, that can represent if they're new and unique diagnosis codes, that could represent
+
+
+
+Reed, Linda   43:34
+Yip.
+Okay.
+Okay.
+Mhm.
+
+
+
+Jay Baker   43:52
+hundreds of thousands of dollars. So I'm trying to push around the edges on where data leakage might be happening and if there is a pathway to unlock some of that value so that we properly get paid.
+
+
+
+Reed, Linda   44:04
+Okay, that will not be up to me, Jay. Since I am, yeah, I cannot go in and make those changes in Epic. And if that needs to fall to the claims group or whatever group, yeah, that will go through.
+
+
+
+Jay Baker   44:08
+Understood.
+That, that's right.
+Right. Clinical, someone like that. So is there an alternate pathway to take that exceptions and have those exceptions reviewed and processed appropriately in a compliant way?
+
+
+
+Kate McClure   44:31
+with somebody in your HIM department, maybe.
+
+
+
+Reed, Linda   44:35
+I can't answer that, sorry. I don't know.
+
+
+
+Weiler, Sandra   44:36
+Yip.
+Yeah, and Kate, we've touched on that topic, but there isn't, as far as I'm aware, a current process that we can tap into, but I think that's certainly something we can talk through.
+
+
+
+Reed, Linda   44:49
+And again, they take these files back, definitely United Healthcare. And I keep on harping on them because they work very well with me. I work very well with them. We removing the last name is not causing us to lose any money because they accept the file.
+because they fill in. When I say I remove the last name, they put in the last name to send it over to CMS. Okay. Yeah.
+
+
+
+Kate McClure   45:14
+Yeah, Linda, but that's only one pair of your eight, right? So...
+
+
+
+Reed, Linda   45:17
+Right, and I'm with you on it. I understand, and I'm trying to explain. And that's the only reason I'm bringing up UnitedHealthcare, because I know how their errors go back and forth. Most of the other payers are good, and they go in and make the corrections. But again,
+
+
+
+Kate McClure   45:20
+Mhm.
+
+
+
+Reed, Linda   45:38
+They don't require as much information as UnitedHealthcare requires. They don't require a lot of info. And so that, like some of them don't even require the MBI. So no errors. It gets straight across. You see what I'm saying?
+
+
+
+Jay Baker   45:44
+Yeah.
+
+
+
+Samir Rawat   45:49
+Yip.
+
+
+
+Jay Baker   45:57
+If you don't collect, if you don't collect the data, there's no errors.
+
+
+
+Kate McClure   45:57
+Mm.
+
+
+
+Reed, Linda   45:58
+Yeah.
+Right, yeah, they don't want it, so hey.
+
+
+
+Kate McClure   46:00
+Jay.
+
+
+
+Jay Baker   46:01
+So...
+So my recommendation, and I know this is an edge case, but let's put our energy, our concentration, our energy on the happy path, but let's document this as an edge case that as time allows, we can go back. And even if the answer is there's no alternative process, that's a finding. And then the team has that information to make a business decision.
+
+
+
+Reed, Linda   46:05
+Yeah.
+
+
+
+Jay Baker   46:23
+on whether or not they want to create a new process to unlock some of that value. So I don't want to over rotate on a, you know, a.2% edge case, but at least I want to have it documented so it's visible. Is that fair, Jennifer, Kenny, Karen?
+Okay.
+
+
+
+Kate McClure   46:39
+Makes sense to me.
+
+
+
+Weiler, Sandra   46:39
+makes sense to me.
+
+
+
+Samir Rawat   46:41
+Okay, I have a question. I want to circle back on the add and delete process. So, Amber's team provides add and delete. Sorry, Kate, your team provides add and delete on the chat review.
+Amber, your team goes back and make that modification on the EMR, right? How does, let's say there was a member who had, let's say, diabetes with chronic complication, and now that diabetes and chronic complication has been removed.
+And lower severity code diabetes without application has been added. Now, you have an add code and you have a delete code both into the system right now, when you enter that code.
+How does the health plan get notified that that change has happened into the system about, is there a process that says that, okay, this diabetes with chronic complication has now been lowered down and that's the reason why we have to now send a delete for the low, because the
+Previously, it was already submitted, right? Before we do the chart review, diabetes with chronic complication has already been submitted to the health plan. So what process captures that removal of that higher complication, or let's say general removal, let's say a member does not have any code at all.
+right, but before the chart review that existed in the submission. So how, what is the process that captures that removal of the code and how is that sent to the health plan?
+
+
+
+Kate McClure   48:20
+So it would get picked up on the alternate submission. We send a file in to Mercy to submit to the payer to capture those adds and deletes. And then since Amber's correcting it in Epic, the next sweeps process would also capture that change.
+if it's in the date range of the sweeps they're pulling.
+
+
+
+Samir Rawat   48:41
+So, but that does not mean, but that does not mean Linda is generating the delete file. Are you, Linda?
+
+
+
+Reed, Linda   48:42
+Yes.
+No, I'm not generating the delete file. The delete, my apologies. The delete file is going to come from Amber's team or whomever is going to do the delete or add. And then we will send that information once the file is sent to me, we'll send it over to the payer.
+So the payroll will receive this from Mercy.
+
+
+
+Samir Rawat   49:15
+So, so, okay, so the link, if Amber's file who is preparing the delete file, and then you are basically doing the data conversion of that delete file, is that correct?
+
+
+
+Reed, Linda   49:27
+That's correct and just send it over. I'll put it in the correct format that that payer requires and send it over to the payer.
+
+
+
+Samir Rawat   49:35
+Amber, you there, Amber? Can you conform to that?
+On the delete.
+
+
+
+Bruno, Amber   49:43
+Yeah, say it again.
+
+
+
+Samir Rawat   49:45
+So, my understanding from Kate is that the deletes are right.
+Let's say there was a delete identified, right, or the severity was reduced. That deletes get corrected into the system by your team. But what I want to understand is that how does that delete reaches the health plan? Because Linda's process doesn't look like she has a process to identify the delete. So.
+
+
+
+Bruno, Amber   49:57
+And.
+
+
+
+Samir Rawat   50:13
+You, you have the process where you take the delete and send to send to Linda, correct?
+
+
+
+Bruno, Amber   50:19
+Right.
+I don't know that we've done it for a while though, Linda, have we? We have a delete file. I know we're preparing one right now.
+
+
+
+Reed, Linda   50:30
+No, we have not, but yes, it's, yeah, it has.
+
+
+
+Bruno, Amber   50:30
+Bret.
+It's been, it's been a while.
+
+
+
+Samir Rawat   50:37
+Okay.
+All right.
+Give me a minute, okay, sorry.
+
+
+
+Oldfather, Jennifer   50:53
+Quick question, not to throw everyone off, because I don't know anything about the add and deletes either. So how often do the add and delete files, if it's been a while, how often is the process supposed to run? Or is it just whenever the payer needs something, Amber or Linda?
+
+
+
+Samir Rawat   51:11
+It has to be done every time a chart review is done, right? So chart review has add and delete.
+
+
+
+Kate McClure   51:17
+A retro chart review.
+
+
+
+Samir Rawat   51:18
+For retro chart review, yes.
+
+
+
+Kate McClure   51:21
+So you guys haven't done retros in a while, is that correct?
+
+
+
+Bruno, Amber   51:25
+No, not since January of 25.
+
+
+
+Kate McClure   51:27
+Yeah.
+Yeah. So since we're doing prospective coding and concurrent coding, we're really trying to capture any changes before the claim goes out. So we don't, haven't done retros and the needs for adds and deletes. That's more of a one-off process.
+
+
+
+Samir Rawat   51:52
+OK.
+And do you guys do any audit related activities, Samir?
+Other than...
+
+
+
+Bruno, Amber   52:03
+We do. And that's where our current delete file is coming from. We do a provider audit a couple times a year that's outside of the prospective and current concurrent reviews. And that's where our current delete file is coming from.
+
+
+
+Samir Rawat   52:09
+Mhm.
+Okay. And the way to submit that delete is that you have a two-way process. Once you go back and correct that, code that data into the system itself. But then the other thing is that you also send a delete file to Linda and team, correct? For every. Okay. How do you track?
+
+
+
+Bruno, Amber   52:35
+Right.
+
+
+
+Samir Rawat   52:38
+That the deletes are are removed from the from the members' data, uh, where from from the health plan set.
+
+
+
+Bruno, Amber   52:47
+Well, my team has it. It's just on a spreadsheet.
+That we use, but...
+
+
+
+Samir Rawat   52:52
+Okay, but is there a process that you do where you said, okay, we sent a delete on this member for this year, this member does not have diabetes for 2025 date of service. We originally submitted it and we deleted it for this date of service.
+And then when you receive a response file from CMS in the from MAOMOMOR, do you reconcile to that, that the members data had condition has been deleted from the baseline or there is no such process?
+
+
+
+Bruno, Amber   53:26
+We don't have a process for that.
+
+
+
+Samir Rawat   53:29
+Okay.
+Okay.
+All right, so I believe we now need to get into the layouts, Linda, from your end.
+on and because you receive the deletes.
+And deletes and probably the ads too, right? And where your coding process also has may have also be the ads too, right? So the ads generated out of the review from your side is different than the ad that is coming out of the due to the diagnosis positioning issues, right?
+
+
+
+Bruno, Amber   54:10
+We don't usually give her an additional add file. We just add those in Epic to the charge correct or to the charge session.
+
+
+
+Samir Rawat   54:17
+Okay.
+OK, that gets automatically picked up by Linda's process. OK, so OK, Linda, so you should have two processes then: one is for the scooping the for the diagnosis that are not submitted through the general channel, and then one is for the a delete process where you you take the to use data and send it to.
+
+
+
+Bruno, Amber   54:23
+Yeah.
+
+
+
+Samir Rawat   54:38
+The health plan, so you should have two two codes for every health, every health plan, correct?
+Mhm.
+
+
+
+Reed, Linda   55:06
+And I just add it to what the payer has told us in the past that they want the information set up as. So I just put that information in and verify that I've got all the information that the payer requires. If not, I pull that information out of Epic and submit it to them.
+
+
+
+Samir Rawat   55:24
+But the deletes are not in Epic, right? So you have to ingest the deletes.
+
+
+
+Reed, Linda   55:28
+What I'm meaning by pulling the information, let's say they require the member ID and I did not receive it or provider information and it was not on what was given to me. So that's it. I'm not doing anything else in Epic other than just pulling what is the missing.
+Field that is required for the vendor.
+
+
+
+Samir Rawat   55:56
+OK, so this process is not about.
+where you have a set process on reading the delete from Linda and team and you have an automated process where you just run through it. It's more like a manual process where you take in the...
+
+
+
+Reed, Linda   56:06
+No.
+Yeah.
+No.
+It is a manual process. Okay. And it's, you know, I think the most I've ever had was 10 on one file.
+
+
+
+Samir Rawat   56:15
+Okay.
+
+
+
+Reed, Linda   56:24
+And that was it.
+on the deletes.
+
+
+
+Samir Rawat   56:34
+All right, so...
+Coming back on the.
+files that we received from the health plans.
+What are the activities that you do today for reading the data from MAO?
+and reconciling against it.
+Do you have a process where you do those kind of thing or?
+That is an ave that is yet to be tapped in.
+
+
+
+Reed, Linda   57:05
+That would be Jennifer.
+
+
+
+Oldfather, Jennifer   57:08
+Hello, so we are currently working on a process to ingest the sweeps files that Linda has created and they have submitted to the payer. We're currently working on, I've got a wiki page where we've identified every single validation check that we want to build for.
+And I'm currently working on the actual validations as well as the dashboard that will do, that will verify that for the members that are in the sweeps file, if we can account for them as far as attributed patients, if they're in the different MAO and MLR files,
+if they were accepted or deleted, and if those particular diagnosis codes are associated with an HCC, what HCC they had, and if we can identify if they are indicated on the MOR files. That's all in the works. We're starting with
+Aetna as our first use case and I can show more of that next week. But yeah, that's something that we are currently striving to do.
+And then we're also trying to identify one of the things that I haven't said is when the sweeps files are submitted. So say that Linda submits the sweeps files for July of this year. What is the lag time from when the payer is going to resubmit that information back to us in the MAO and MOR?
+there, we do not know what that lag time is right now per each payer. And some of the payers like Blue Cross of Arkansas, Essence, Global, and Anthem do not provide us premium risk files. So the only ones that we receive MAOs and MAOs
+MORs for is Aetna, Blue Cross of Oklahoma, Humana, and UHC.
+So, and we just started some conversations with UHC when we found at a high level some discrepancies from what was sent in the file, and we haven't seen them in the MLRs and the MAOs like we expect, but that all that process is in the works.
+Did that help?
+
+
+
+Samir Rawat   59:35
+Yes, so.
+How do you how do you plan to reconcile with MOR though right? So let's say you just completed March sweep.
+The MOR, if you compare the data of the March week in April with the MOR that you are receiving right now, the MOR is based on the initial submission that is based on September submissions.
+and you won't get the updated MOR until August, right, from the health plan.
+And so any comparison that you're doing are apple and oranges, because now you're looking at the smart suite data.
+and trying to compare with the MOR that is from for the prior seed.
+So, are you?
+
+
+
+Oldfather, Jennifer   1:00:23
+There's a lag. So we have to identify what the lag is. Once we identify what the lag is for when we will see it on the file from the MLR, that's the number that we will use going forward. So in your example, if it was submitted in September of, you know, 2026, but I'm not going to receive it till August of 2027,
+
+
+
+Samir Rawat   1:00:27
+Mmh.
+Okay.
+
+
+
+Weiler, Sandra   1:00:37
+No.
+Okay.
+
+
+
+Oldfather, Jennifer   1:00:46
+we will have a parameter in our logic that would say, okay, you need to look 11 months out. But it's something we haven't identified yet.
+
+
+
+Samir Rawat   1:00:54
+And yeah.
+
+
+
+Weiler, Sandra   1:00:55
+So.
+
+
+
+Samir Rawat   1:00:58
+Okay, bye.
+
+
+
+Weiler, Sandra   1:00:58
+And Samir, this is Sandy. So I think I missed your original question. Were you questioning what the validation process is for the outbound submission or the reconciliation to the CMS return files?
+
+
+
+Samir Rawat   1:01:14
+That was more, that was more, yeah, that was that was more towards the return files on how, what is the high level, you know, I just wanted to understand the high at the high level, obviously, we'll get into the detail in the following session, but at the high level, I wanted to understand who's involved in in in reconciling.
+
+
+
+Weiler, Sandra   1:01:22
+Yip.
+
+
+
+Samir Rawat   1:01:32
+the response file with this submission.
+
+
+
+Weiler, Sandra   1:01:36
+Okay, okay. So, okay. So you haven't talked, and I have to step away for just a second. You haven't talked about a validation process for the outbound submission file.
+
+
+
+Samir Rawat   1:01:38
+Yip.
+
+
+
+Weiler, Sandra   1:01:49
+Or have you?
+
+
+
+Samir Rawat   1:01:50
+No, we have not. We, Linda, Linda mentioned about the sanity checks he does on a month-to-month basis, on a on a before and after submission basis, right? So, what was the status of the like member at CC before before the submission, and what are the after including that? Let's say there is a file, three file, let's say file name is file one, so...
+
+
+
+Weiler, Sandra   1:01:55
+Okay.
+Oh.
+
+
+
+Samir Rawat   1:02:14
+If there are 10 members with 15 diagnosis in the scope in total, and before the submission and after the submission, there are 25 diagnosis. So there is a process that Linda is referring that allows her to see that what is the impact of the file in itself to the member's baseline.
+And Linda, I'm assuming that is done at the whole yearly level, or is that just done at a member in scope for the members being submitted only? But I need to get into the details of those kind of analysis, but right now,
+Linda mentioned that there is some sort of a sanity check like that.
+
+
+
+Weiler, Sandra   1:02:55
+Okay, very good. I was just making sure I was tracking to the life cycle.
+
+
+
+Samir Rawat   1:02:59
+Yip.
+Yip.
+So...
+So Linda, we will in your if you when you send your send us the script, if you can also send me some samples of the validation that you do and the validation script that you have to generate the members. Let's say if we are doing submission for 2026 may.
+date of service, 2027 payment year, and then what does pre-submission and post-submission look like at the file level so that you can tell, hey, on an XYZ date, we submitted this file for March sweep.
+And here is the profile that look like for members, for our members for United before the submission of the file. And here is the profile and distribution look like after the submission of the file. And any analytics around that that you do if you can save that in your saving, script saving and artifact saving with
+But me that would be ideal.
+Lindy.
+
+
+
+Reed, Linda   1:04:14
+Yes.
+
+
+
+Samir Rawat   1:04:15
+Okay.
+All right, Jay, do you want to add anything?
+
+
+
+Jay Baker   1:04:20
+No, I think it's well covered.
+
+
+
+Samir Rawat   1:04:22
+Okay. All right. I know we are reserved for three hours, but we are yet to review the scripts and the files. So Linda, a couple of things. I need the validation scripts from your end. The, and whether it's on the...
+Oracle or Notebook, we are reviewing the process here, not the technology, right? So please save them to me and then also the layout for all the health plans and any sample of delete process.
+on how you converted the last delete process to the final file. I would like to at least one instance, even if it is not done frequently, any one instance where you took the delete file and how you converted that to an end-to-end submission, that would be ideal.
+
+
+
+Reed, Linda   1:05:21
+Okay, actually, you know, the delete is not something that I...
+do per se. It's just me taking the information from Amber's team and putting it in the correct format and sending it out. That's all it is. And so the only thing I'll have is the format of what the payer requires. And so that's all I'll have for you.
+
+
+
+Samir Rawat   1:05:48
+Sure, so, but yeah, even in even that part, right? So I just wanted to understand what do you receive from Amber? How do you convert that? Even if it's a manual, you're following a process, right? And then...
+
+
+
+Reed, Linda   1:05:49
+Okay.
+I just wait for a file from Amber's group and put it in a format and submit. Yes, that's it.
+
+
+
+Samir Rawat   1:06:07
+Yeah, OK.
+O.
+All right, so I'll wait for the artifacts from you. I need to work with Kate on getting access to all of them. And then once we chew on those data points, we'll have more questions, and then we'll meet again.
+Is that fair, Pete, or do you want to add anything?
+
+
+
+Reed, Linda   1:06:30
+Um...
+I need to add something real quick. Since I've been out of office, I see that you scheduled, hang on, my apologies. I'm still trying to get caught up. I see that you scheduled one for Wednesday, which I will not be able to make that. Unfortunately, I have a family member that is ill and is getting surgery that day. So
+
+
+
+Samir Rawat   1:06:51
+Okay.
+
+
+
+Reed, Linda   1:06:56
+I will be in and out on that day. So it would probably be best not to have that scheduled for that day, unless you have other things you need to cover. That's totally cool. I'm just letting you know. And I apologize for the last minute notice, but I've been on vacation and I just found out about this. And so it's something that I need.
+
+
+
+Samir Rawat   1:06:58
+Okay.
+
+
+
+Reed, Linda   1:07:16
+to be with my family member.
+
+
+
+Samir Rawat   1:07:19
+Okay.
+
+
+
+Reed, Linda   1:07:20
+Okay, sorry.
+
+
+
+Samir Rawat   1:07:21
+Yeah, that's fine. So while you are out at that point of time, can we use that time to understand your side, Jennifer, because that has been scheduled, you're invited to that call. Can we go into the details of the reconciliation side or the...
+MAO and all and the things that you receive and go into the detail about it or do you want to wait for that for the next week?
+
+
+
+Oldfather, Jennifer   1:07:49
+I can start the conversation. It's still a work in progress for me, but I can show you what I've done so far and where I'm headed, if that's okay with Sandy.
+
+
+
+Samir Rawat   1:07:53
+Mhm.
+Yip.
+
+
+
+Weiler, Sandra   1:07:58
+Yip, that's fine.
+
+
+
+Samir Rawat   1:08:00
+Yeah, okay. Let's make that as an agenda for the next one. Yeah, and work in progress is completely fine. The overall, you know, goal of this is to establish is to establish a, you know, form future state, right? And even if you are not there and you're working towards that, that should be fine. We just need to document that.
+
+
+
+Oldfather, Jennifer   1:08:20
+OK.
+
+
+
+Samir Rawat   1:08:22
+All right. Thank you, everyone. I think that's all for today.
+
+
+
+Weiler, Sandra   1:08:28
+Thank you.
+
+
+
+Oldfather, Jennifer   1:08:28
+Thank you. Have a good day.
+
+
+
+Kate McClure   1:08:29
+Thank you.
+
+
+
+Samir Rawat   1:08:30
+OK. All right. Thank you.
+
+
+
+Weiler, Sandra   1:08:30
+Bye, everyone.
+
+
+
+Kate McClure   1:08:31
+Bye now.
+
+
+
+Oldfather, Jennifer   1:08:31
+Bye.
+
+
+
+Samir Rawat stopped transcription

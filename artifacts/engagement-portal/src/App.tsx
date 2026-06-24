@@ -7,6 +7,7 @@ import { Shell } from "@/components/layout/Shell";
 import Phase1 from "@/pages/Phase1";
 import KickoffPlanning from "@/pages/KickoffPlanning";
 import Kickoff from "@/pages/Kickoff";
+import DiscussionJun08 from "@/pages/DiscussionJun08";
 import Phase2 from "@/pages/Phase2";
 import Phase3 from "@/pages/Phase3";
 
@@ -20,6 +21,7 @@ function Router() {
         <Route path="/phase/1" component={Phase1} />
         <Route path="/kickoff-planning" component={KickoffPlanning} />
         <Route path="/kickoff" component={Kickoff} />
+        <Route path="/discussions/2026-06-08" component={DiscussionJun08} />
         <Route path="/phase/2" component={Phase2} />
         <Route path="/phase/3" component={Phase3} />
         <Route component={NotFound} />
