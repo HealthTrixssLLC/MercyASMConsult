@@ -158,49 +158,57 @@ const CONSOLIDATED_THEMES = [
   "Payer response-file completeness remains a major dependency and should be called out in the assessment.",
 ];
 
-const RECOMMENDATIONS: { title: string; detail: string }[] = [
+const RECOMMENDATIONS: { title: string; detail: string; source: string }[] = [
   {
-    title: "Centralize logic in a parameterized engine",
+    title: "Clarify the response paths in the architecture",
     detail:
-      "Replace per-payer hard-coded SQL with one generalized ASM engine driven by configuration (Health Plan ID, sweep type, DOS range, run type, filters, and effective-dated rules / value sets), separating the developer who builds it from the executor who runs it.",
-  },
-  {
-    title: "Stage a Mercy-format source of truth before layout conversion",
-    detail:
-      "Produce standardized, submission-grain staged data (Member · DOS · NPI · Diagnoses) once, then apply payer-specific layouts last — eliminating the manual re-ingestion cycle entirely.",
-  },
-  {
-    title: "Add run control & run-level auditability",
-    detail:
-      "Capture Run ID, executed-by, parameters, record counts, previous-run reference, and a latest-run flag so reruns and historical runs are cleanly separated and traceable.",
-  },
-  {
-    title: "Make QA a systematic gate",
-    detail:
-      "Reconcile member / DOS / DX / NPI / record counts, required fields, and duplicates between the staged source and the export-ready payer view before submission — PASS / FAIL with investigate-and-fix on failure.",
-  },
-  {
-    title: "Build reconciliation crawl-walk-run",
-    detail:
-      "Leverage MAO-004 already received first, then expand to MAO-002 and payer response files. A repurposable status flag marks each staged record (found in MAO-004, MAO-002, etc.) so new sources can be added without reworking the pipeline.",
-  },
-  {
-    title: "Move reporting to an accessible layer",
-    detail:
-      "Because operations cannot access Databricks, surface analytics through Power BI or a purpose-built web app that can also orchestrate runs and capture the operational “bless” / approval before submission.",
+      "Sandra noted the step between submission and reconciliation should explicitly account for both health-plan responses and CMS responses through the payer. Distinguish MAO-004, MAO-002, and payer-specific response files in the reconciliation flow, and relabel the response stage accordingly.",
+    source: "Raised by Sandra Weiler",
   },
   {
     title: "Call out response-file completeness as a dependency",
     detail:
-      "Document that Mercy receives MAO-004 from four of seven payers and MAO-002 from one. Leverage what is already received first, and let contracting work with payers to receive files completely and on time — without going down the rabbit hole of tracing every individual rejection file prematurely.",
+      "Sandra asked that the assessment document that Mercy is not consistently receiving response files — MAO-004 from four of seven payers and MAO-002 from only one. This limits end-to-end validation and should be addressed through payer operations and contracting over time.",
+    source: "Raised by Sandra Weiler",
+  },
+  {
+    title: "Treat Jennifer's Databricks work as an interim prototype",
+    detail:
+      "Jennifer confirmed her current KPI / reconciliation dashboards are valuable but interim — they still depend on manually receiving files, moving them to storage, running ingestion, and refreshing. Preserve the learning, but do not treat it as the final scalable operating model.",
+    source: "Raised by Jennifer Oldfather",
+  },
+  {
+    title: "Move operational reporting to an accessible layer",
+    detail:
+      "Jennifer flagged that operations users do not have Databricks access, so reporting likely needs to move to Power BI or another accessible layer. This is about adoption and operating model — surfacing submission, validation, rejection, and acceptance metrics where ops can actually see them.",
+    source: "Raised by Jennifer Oldfather",
+  },
+  {
+    title: "Add an operational review / approval checkpoint",
+    detail:
+      "Jennifer raised that Linda and Aaron currently send extracts to the operational team for manual validation. Replace that with a report-driven approval process where operations can review key counts, exceptions, and validation results — and record their “blessing” — before submission.",
+    source: "Raised by Jennifer Oldfather",
+  },
+  {
+    title: "Validate source-to-submission completeness against Clarity (later maturity)",
+    detail:
+      "Beyond comparing sweep files to MAO files, Samir raised — and Jennifer agreed — that reconciliation should eventually look back to the Clarity source to determine whether eligible records were missed entirely. A later “run” step once staged data and reconciliation stabilize.",
+    source: "Agreed by Jennifer Oldfather",
+  },
+  {
+    title: "Evaluate payer technical-spec validation (future enhancement)",
+    detail:
+      "Sandra asked whether current payer technical specifications could be integrated between layout conversion and QA validation to confirm export-ready files align with the latest payer specs. Acknowledged as more of a later “run” step than an immediate “walk” step.",
+    source: "Raised by Sandra Weiler",
   },
 ];
 
 const NEXT_STEPS = [
-  "Review Jennifer's interim prototype before presenting the broader future-state architecture to Linda.",
-  "Build out Linda and Aaron's new (not lift-and-shift) logic as the basis for the curated and staged tables.",
-  "Walk the developers (Hari, Ron Goody) through the future-state architecture so curated / stage tables are built with the target design in mind.",
-  "Run the MAO completeness test for one health plan — record counts by grain (Member · DOS · DX · NPI) grouped by date of service — to quantify response-file completeness month over month.",
+  "Review Jennifer's interim prototype and identify which metrics / checks should carry forward into the future-state reporting layer.",
+  "Use Linda and Aaron's revised (not lift-and-shift) logic as an input to curated / staged table design, confirming it aligns with the target architecture.",
+  "Walk the developers (Hari, Ron Goody) through the recommended architecture so development decisions support the future-state design.",
+  "Run a MAO completeness test for one payer — grain-level counts (Member · DOS · DX · NPI) by DOS month — to determine whether response data is complete enough for reliable reconciliation.",
+  "Define the operational approval report: what operations needs to review, what constitutes approval, and how that approval is tracked.",
 ];
 
 const TABS: { id: string; label: string; icon: LucideIcon }[] = [
@@ -520,6 +528,16 @@ export default function DiscussionJun17() {
 
         {/* ---------------- Recommendations ---------------- */}
         <TabsContent value="recommendations" className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <div>
+            <h2 className="font-serif text-2xl text-foreground mb-1">Incremental Stakeholder Refinements</h2>
+            <p className="text-sm text-muted-foreground max-w-3xl">
+              The core future-state architecture (centralized engine, Mercy-format staged source, run control, systematic
+              QA, and closed-loop reconciliation) is HealthTrixss's recommendation, detailed in the Future State tab.
+              Sandra and Jennifer validated that direction; the items below are the incremental refinements they raised
+              that are not already covered by that core design.
+            </p>
+          </div>
+
           <div className="grid md:grid-cols-2 gap-5">
             {RECOMMENDATIONS.map((r, i) => (
               <div key={r.title} className="rounded-xl border border-border bg-card p-5">
@@ -529,7 +547,10 @@ export default function DiscussionJun17() {
                   </span>
                   <div className="font-medium text-sm text-foreground">{r.title}</div>
                 </div>
-                <p className="text-xs text-muted-foreground leading-relaxed">{r.detail}</p>
+                <p className="text-xs text-muted-foreground leading-relaxed mb-3">{r.detail}</p>
+                <Badge variant="outline" className="border-primary/30 text-primary bg-primary/5 text-[11px]">
+                  {r.source}
+                </Badge>
               </div>
             ))}
           </div>
