@@ -25,9 +25,27 @@ import {
   ClipboardX,
   ClipboardCheck,
   Gauge,
+  Maximize2,
   type LucideIcon,
 } from "lucide-react";
-import { CurrentStateFlow, FutureStateFlow } from "@/components/diagrams/ArchitectureFlow";
+import currentStateDiagram from "@assets/mercy_current_state.png";
+import futureStateDiagram from "@assets/mercy_future_state.png";
+
+function DiagramImage({ src, alt }: { src: string; alt: string }) {
+  return (
+    <a
+      href={src}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group relative block overflow-hidden rounded-lg border border-border bg-white"
+    >
+      <img src={src} alt={alt} className="w-full h-auto" />
+      <span className="absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-md bg-foreground/80 px-2.5 py-1 text-xs font-medium text-background opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
+        <Maximize2 className="w-3.5 h-3.5" /> View full size
+      </span>
+    </a>
+  );
+}
 
 const QUICK_FACTS = [
   { label: "Session", value: "Current & Future State Analysis" },
@@ -315,7 +333,10 @@ export default function DiscussionJun17() {
             </p>
             <Card className="border-none shadow-sm bg-card">
               <CardContent className="pt-6">
-                <CurrentStateFlow />
+                <DiagramImage
+                  src={currentStateDiagram}
+                  alt="Current State Architecture: payer-specific extracts built directly from Clarity — decentralized, hard-coded SQL per payer, payer-specific layout conversion, submission to each health plan, and ad-hoc non-systematic response reconciliation."
+                />
               </CardContent>
             </Card>
           </div>
@@ -368,7 +389,10 @@ export default function DiscussionJun17() {
             </p>
             <Card className="border-none shadow-sm bg-card">
               <CardContent className="pt-6">
-                <FutureStateFlow />
+                <DiagramImage
+                  src={futureStateDiagram}
+                  alt="Future State Architecture: a centralized, configurable ASM engine producing standardized Mercy-format staged data, with payer-specific layouts applied last, systematic QA validation, submission, MAO/HP response handling, a reconciliation feedback loop, and analytics & reporting built on the staged source."
+                />
               </CardContent>
             </Card>
           </div>
