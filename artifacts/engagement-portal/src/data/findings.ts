@@ -8,7 +8,7 @@ export type FindingTag = "High" | "Medium" | "Opportunity" | "Affirmed" | "Gover
 
 export type RegisterLane = "Submission Lane" | "Reconciliation Lane";
 
-export type FindingSourceKey = "preKickoff" | "kickoff" | "jun08" | "jun10" | "jun12" | "asmAnalysis";
+export type FindingSourceKey = "preKickoff" | "kickoff" | "jun08" | "jun10" | "jun12" | "asmAnalysis" | "maoGap";
 
 export type Finding = {
   id: string;
@@ -28,6 +28,7 @@ export const SOURCE_COLUMNS: { key: FindingSourceKey; label: string; path: strin
   { key: "jun10", label: "Jun 10", path: "/discussions/2026-06-10" },
   { key: "jun12", label: "Jun 12", path: "/discussions/2026-06-12" },
   { key: "asmAnalysis", label: "ASM Analysis", path: "/asm-analysis-current" },
+  { key: "maoGap", label: "MAO-004", path: "/mao-data-gap" },
 ];
 
 const REC = "/reconciliation-strategy";
@@ -41,6 +42,7 @@ function src(partial: Partial<Record<FindingSourceKey, boolean>>): Record<Findin
     jun10: false,
     jun12: false,
     asmAnalysis: false,
+    maoGap: false,
     ...partial,
   };
 }
@@ -225,5 +227,53 @@ export const FINDINGS: Finding[] = [
       "Resolve each situational / to-confirm mapping with the payer and lock the destination field mapping in a controlled reference.",
     lane: "Submission Lane",
     lanePath: SUB,
+  },
+  {
+    id: "F-16",
+    title: "MAO-004 submission methodology differs by payer (cumulative vs delta)",
+    detail:
+      "Normalized by membership, Humana's MAO-004 volume is flat (~10–12 rows per member every month) while Aetna, UHC, and BCBSOK decline steeply from the oldest DOS to the newest. Aetna's files are confirmed cumulative (each carries prior-period records forward); Humana's flat profile suggests per-period deltas, pending payer confirmation.",
+    tag: "High",
+    sources: src({ maoGap: true }),
+    resolution:
+      "Document each payer's MAO-004 accumulation method (cumulative snapshot vs per-period delta) before judging completeness, trending, or missing-file impact.",
+    lane: "Reconciliation Lane",
+    lanePath: REC,
+  },
+  {
+    id: "F-17",
+    title: "Cumulative carry-forward double-counts older DOS months",
+    detail:
+      "Aggregating all of Aetna's overlapping monthly files repeatedly counts historical DOS — filtering to a single file (MHS_MA_MAO4_202601_20260204.txt) still returned January-2025 DOS records. The original rows-per-member analysis overstated older Aetna DOS months as a result.",
+    tag: "Validation",
+    sources: src({ maoGap: true }),
+    resolution:
+      "De-duplicate cumulative payers to a latest-file (snapshot) view per period so older DOS months are not overstated.",
+    lane: "Reconciliation Lane",
+    lanePath: REC,
+  },
+  {
+    id: "F-18",
+    title: "Recent-period decline reflects claim lag, not a data gap",
+    detail:
+      "After correcting for carry-forward, the declining tail and the April-2026 drop in MAO-004 counts are consistent with normal claim lag for recent periods rather than missing data.",
+    tag: "Affirmed",
+    sources: src({ maoGap: true }),
+    resolution:
+      "Interpret recent-period dips as claim lag; confirm against expected lag curves before treating them as completeness gaps.",
+    lane: "Reconciliation Lane",
+    lanePath: REC,
+  },
+  {
+    id: "F-19",
+    title: "Missing files are unrecoverable for delta-like payers",
+    detail:
+      "Risk is asymmetric: a missing cumulative file (Aetna, UHC, BCBSOK) is largely recoverable because later files re-carry prior DOS, but a missing delta-like file (suspected Humana) may permanently drop that period's DOS tracking inventory with no later file to backfill it.",
+    tag: "High",
+    sources: src({ maoGap: true }),
+    resolution:
+      "Prioritize file-arrival monitoring and SLA enforcement for delta-like feeds where a gap is unrecoverable, and confirm Humana's behavior with the payer.",
+    lane: "Reconciliation Lane",
+    lanePath: REC,
   },
 ];

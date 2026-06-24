@@ -136,38 +136,28 @@ export const KEY_FINDINGS: string[] = [
   "We cannot assume Humana behaves like Aetna. A flat, delta-like profile means missing Humana files would be far harder — possibly impossible — to recover.",
 ];
 
-// `key` is a stable identifier independent of array order — the consolidated
-// Recommendations register (src/data/recommendations.ts) maps these to R-## ids
-// by key, so reordering this list never renumbers register ids.
-export type MaoRecommendation = { key: string; title: string; detail: string };
-
-export const RECOMMENDATIONS: MaoRecommendation[] = [
+export const RECOMMENDATIONS: { title: string; detail: string }[] = [
   {
-    key: "characterize-methodology",
     title: "Characterize each payer's submission methodology before measuring completeness",
     detail:
       "Document, per payer, whether MAO-004 files are cumulative snapshots or per-period deltas, and how resubmissions/corrections are handled. Completeness, trending, and missing-file impact all depend on this.",
   },
   {
-    key: "normalize-by-membership",
     title: "Always normalize by membership for cross-payer comparison",
     detail:
       "Raw record counts are not comparable across payers of different sizes. Rows-per-member exposes the true submission pattern and isolates the cumulative-vs-delta signature.",
   },
   {
-    key: "dedup-cumulative",
     title: "De-duplicate cumulative payers to a latest-file (snapshot) view",
     detail:
       "For carry-forward payers like Aetna, count from the most recent file per period rather than summing all files, to avoid overstating older DOS months.",
   },
   {
-    key: "prioritize-delta-monitor",
     title: "Prioritize delta-like payers in the missing-file monitor",
     detail:
       "Because a gap in a delta-like feed (suspected Humana) is unrecoverable, file-arrival monitoring and SLA enforcement matter most there.",
   },
   {
-    key: "confirm-humana",
     title: "Confirm Humana's behavior with the payer",
     detail:
       "Treat the delta-like classification as a hypothesis until validated through a single-file test (as done for Aetna) and payer confirmation.",
