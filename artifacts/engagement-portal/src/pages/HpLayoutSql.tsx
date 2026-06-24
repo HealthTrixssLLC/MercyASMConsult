@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
 import {
   Database,
@@ -7,16 +8,36 @@ import {
   Download,
   Copy,
   Check,
+  Minus,
   ChevronDown,
   Building2,
   Layers,
+  FolderOpen,
+  GitCompare,
   type LucideIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import {
+  HP_COLUMNS,
+  MATRIX_LEGEND,
+  CONCEPT_MATRIX,
+  SUMMARY_METRICS,
+  CONCEPTS_REQUIRED_IN_ALL,
+  COMMON_CONCEPTS,
+  INPUT_ARTIFACTS,
+  MATRIX_NOTES,
+  SOURCE_FIELD_MAPPING,
+  type MatrixRow,
+  type MappingRow,
+} from "@/data/conceptMatrix";
 
 const BASE = import.meta.env.BASE_URL;
 const LAYOUT_DIR = `${BASE}files/hp/layout/`;
 const SQL_DIR = `${BASE}files/hp/sql/`;
+
+/* ----------------------------------------------------------------------------
+ * Artifacts tab — source SQL + layout files per health plan
+ * ------------------------------------------------------------------------- */
 
 type LayoutKind = "xlsx" | "csv" | "docx";
 type LayoutFile = { label: string; file: string; kind: LayoutKind };
@@ -335,10 +356,295 @@ function PlanRow({ plan }: { plan: HealthPlan }) {
   );
 }
 
+function ArtifactsTab() {
+  return (
+    <Card className="border-none shadow-sm bg-card overflow-hidden">
+      <div className="overflow-x-auto">
+        <table className="w-full border-collapse text-left">
+          <thead>
+            <tr className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+              <th className="py-3 pl-6 pr-4 w-[24%]">Health Plan</th>
+              <th className="py-3 px-4 w-[40%]">Submission SQL</th>
+              <th className="py-3 pl-4 pr-6 w-[36%]">File Layout / Spec</th>
+            </tr>
+          </thead>
+          <tbody className="[&>tr>td:first-child]:pl-6 [&>tr>td:last-child]:pr-6">
+            {HEALTH_PLANS.map((plan) => (
+              <PlanRow key={plan.id} plan={plan} />
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </Card>
+  );
+}
+
+/* ----------------------------------------------------------------------------
+ * Artifacts Analysis tab — concept matrix workbook
+ * ------------------------------------------------------------------------- */
+
+function groupByCategory<T extends { category: string }>(rows: T[]) {
+  const groups: { category: string; rows: T[] }[] = [];
+  for (const row of rows) {
+    let g = groups.find((x) => x.category === row.category);
+    if (!g) {
+      g = { category: row.category, rows: [] };
+      groups.push(g);
+    }
+    g.rows.push(row);
+  }
+  return groups;
+}
+
+function SummarySection() {
+  return (
+    <Card className="border-none shadow-sm bg-card p-6">
+      <div className="grid lg:grid-cols-[1fr_auto] gap-6 items-start">
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse text-left text-sm">
+            <thead>
+              <tr className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                <th className="py-2 pr-4">Metric</th>
+                {HP_COLUMNS.map((c) => (
+                  <th key={c} className="py-2 px-3 text-center font-semibold">
+                    {c}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {SUMMARY_METRICS.map((m) => (
+                <tr key={m.metric} className="border-t border-border">
+                  <td className="py-2.5 pr-4 font-medium text-foreground">{m.metric}</td>
+                  {m.values.map((v, i) => (
+                    <td key={i} className="py-2.5 px-3 text-center tabular-nums text-muted-foreground">
+                      {v}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div className="flex flex-col gap-3 lg:w-56">
+          <div className="rounded-lg border border-primary/30 bg-primary/5 p-4">
+            <div className="text-3xl font-serif text-primary">{CONCEPTS_REQUIRED_IN_ALL}</div>
+            <div className="text-xs text-muted-foreground mt-1">
+              Concepts required / present across all plans
+            </div>
+            <div className="mt-2 flex flex-wrap gap-1.5">
+              {COMMON_CONCEPTS.map((c) => (
+                <span
+                  key={c}
+                  className="inline-flex items-center rounded-full bg-primary/10 px-2.5 py-0.5 text-[11px] font-medium text-primary"
+                >
+                  {c}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </Card>
+  );
+}
+
+function PresenceCell({ present }: { present: boolean }) {
+  return present ? (
+    <span className="inline-flex items-center justify-center" title="Required / present">
+      <Check className="w-4 h-4 text-primary" />
+    </span>
+  ) : (
+    <span className="inline-flex items-center justify-center" title="Not required / not found">
+      <Minus className="w-4 h-4 text-muted-foreground/30" />
+    </span>
+  );
+}
+
+function CoverageMatrix() {
+  const groups = groupByCategory<MatrixRow>(CONCEPT_MATRIX);
+  return (
+    <Card className="border-none shadow-sm bg-card overflow-hidden">
+      <div className="overflow-x-auto">
+        <table className="w-full border-collapse text-left text-sm min-w-[820px]">
+          <thead className="sticky top-0 z-10 bg-card">
+            <tr className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+              <th className="py-3 pl-6 pr-4 bg-card">Concept</th>
+              {HP_COLUMNS.map((c) => (
+                <th key={c} className="py-3 px-2 text-center align-bottom font-semibold w-[9%]">
+                  {c}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {groups.map((group) => (
+              <Fragment key={group.category}>
+                <tr className="bg-background/60">
+                  <td
+                    colSpan={HP_COLUMNS.length + 1}
+                    className="py-2 pl-6 pr-4 text-xs font-semibold uppercase tracking-widest text-primary"
+                  >
+                    {group.category}
+                  </td>
+                </tr>
+                {group.rows.map((row) => (
+                  <tr key={row.concept} className="border-t border-border hover:bg-background/40">
+                    <td className="py-2.5 pl-6 pr-4">
+                      <div className="font-medium text-foreground leading-snug">{row.concept}</div>
+                      <div className="text-[11px] font-mono text-muted-foreground">{row.canonical}</div>
+                    </td>
+                    {row.present.map((p, i) => (
+                      <td key={i} className="py-2.5 px-2 text-center">
+                        <PresenceCell present={p} />
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </Fragment>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </Card>
+  );
+}
+
+function SourceFieldMapping() {
+  const groups = groupByCategory<MappingRow>(SOURCE_FIELD_MAPPING);
+  return (
+    <Card className="border-none shadow-sm bg-card overflow-hidden">
+      <div className="overflow-x-auto">
+        <table className="w-full border-collapse text-left text-sm min-w-[1100px]">
+          <thead className="sticky top-0 z-10 bg-card">
+            <tr className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+              <th className="py-3 pl-6 pr-4 w-[14%] bg-card">Concept</th>
+              {HP_COLUMNS.map((c) => (
+                <th key={c} className="py-3 px-3 font-semibold align-bottom">
+                  {c}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {groups.map((group) => (
+              <Fragment key={group.category}>
+                <tr className="bg-background/60">
+                  <td
+                    colSpan={HP_COLUMNS.length + 1}
+                    className="py-2 pl-6 pr-4 text-xs font-semibold uppercase tracking-widest text-primary"
+                  >
+                    {group.category}
+                  </td>
+                </tr>
+                {group.rows.map((row) => (
+                  <tr key={row.concept} className="border-t border-border align-top">
+                    <td className="py-2.5 pl-6 pr-4 font-medium text-foreground">{row.concept}</td>
+                    {row.sources.map((src, i) => (
+                      <td key={i} className="py-2.5 px-3 text-muted-foreground">
+                        {src ? (
+                          <span className="font-mono text-[12px] leading-relaxed">{src}</span>
+                        ) : (
+                          <span className="text-muted-foreground/30">—</span>
+                        )}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </Fragment>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </Card>
+  );
+}
+
+function InputsAndNotes() {
+  return (
+    <div className="grid lg:grid-cols-2 gap-6">
+      <Card className="border-none shadow-sm bg-card p-6">
+        <h3 className="font-serif text-xl text-foreground mb-4 flex items-center gap-2">
+          <FolderOpen className="w-5 h-5 text-primary" /> Input Artifacts
+        </h3>
+        <div className="space-y-4">
+          {INPUT_ARTIFACTS.map((a) => (
+            <div key={a.plan} className="rounded-lg border border-border bg-background/40 p-4">
+              <div className="text-sm font-semibold text-foreground">{a.plan}</div>
+              <div className="text-xs text-muted-foreground mt-1.5">{a.artifacts}</div>
+              <div className="text-xs text-foreground/80 mt-2 italic">{a.interpretation}</div>
+            </div>
+          ))}
+        </div>
+      </Card>
+      <Card className="border-none shadow-sm bg-card p-6">
+        <h3 className="font-serif text-xl text-foreground mb-4 flex items-center gap-2">
+          <FileText className="w-5 h-5 text-primary" /> Assumptions &amp; Notes
+        </h3>
+        <dl className="space-y-4">
+          {MATRIX_NOTES.map((n) => (
+            <div key={n.assumption}>
+              <dt className="text-sm font-semibold text-foreground">{n.assumption}</dt>
+              <dd className="text-sm text-muted-foreground mt-1 leading-relaxed">{n.description}</dd>
+            </div>
+          ))}
+        </dl>
+      </Card>
+    </div>
+  );
+}
+
+const ANALYSIS_TABS = [
+  { id: "matrix", label: "Coverage Matrix", icon: GitCompare },
+  { id: "sources", label: "Source Field Mapping", icon: Database },
+  { id: "inputs", label: "Inputs & Notes", icon: FolderOpen },
+] as const;
+
+function AnalysisTab() {
+  return (
+    <div className="space-y-8">
+      <SummarySection />
+      <p className="text-sm text-muted-foreground leading-relaxed max-w-4xl">{MATRIX_LEGEND}</p>
+      <Tabs defaultValue="matrix" className="w-full">
+        <div className="border-b border-border mb-6 overflow-x-auto no-scrollbar">
+          <TabsList className="h-auto p-0 bg-transparent flex justify-start gap-6">
+            {ANALYSIS_TABS.map((t) => (
+              <TabsTrigger
+                key={t.id}
+                value={t.id}
+                className="pb-3 pt-2 px-1 rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:text-primary text-muted-foreground hover:text-foreground transition-colors flex gap-2 items-center text-sm font-medium whitespace-nowrap"
+              >
+                <t.icon className="w-4 h-4" />
+                {t.label}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+        </div>
+        <TabsContent value="matrix" className="animate-in fade-in duration-300">
+          <CoverageMatrix />
+        </TabsContent>
+        <TabsContent value="sources" className="animate-in fade-in duration-300">
+          <SourceFieldMapping />
+        </TabsContent>
+        <TabsContent value="inputs" className="animate-in fade-in duration-300">
+          <InputsAndNotes />
+        </TabsContent>
+      </Tabs>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------------- */
+
+const TABS = [
+  { id: "artifacts", label: "Artifacts", icon: FolderOpen },
+  { id: "analysis", label: "Artifacts Analysis", icon: GitCompare },
+] as const;
+
 export default function HpLayoutSql() {
   return (
     <div className="max-w-6xl mx-auto p-8 md:p-12 fade-in">
-      <header className="mb-12">
+      <header className="mb-10">
         <div className="flex items-center gap-3 text-sm font-medium text-muted-foreground uppercase tracking-widest mb-3">
           <span className="text-primary">Reference · Health Plan Specs</span>
           <span className="w-1 h-1 rounded-full bg-primary/30" />
@@ -346,30 +652,35 @@ export default function HpLayoutSql() {
         </div>
         <h1 className="text-4xl md:text-5xl font-serif text-foreground mb-4">ASM Analysis Current</h1>
         <p className="text-lg text-muted-foreground max-w-3xl leading-relaxed">
-          Current-state inventory of each health plan's submission SQL and file layout / spec. Submission SQL can be
-          viewed inline, copied, or downloaded; layout specs are available to download. More files will be added as they
-          are provided.
+          Current-state inventory of each health plan's submission SQL and file layout / spec, alongside a
+          cross-plan concept analysis comparing how each payer layout maps to a recommended Mercy-format
+          canonical model.
         </p>
       </header>
 
-      <Card className="border-none shadow-sm bg-card overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full border-collapse text-left">
-            <thead>
-              <tr className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-                <th className="py-3 pl-6 pr-4 w-[24%]">Health Plan</th>
-                <th className="py-3 px-4 w-[40%]">Submission SQL</th>
-                <th className="py-3 pl-4 pr-6 w-[36%]">File Layout / Spec</th>
-              </tr>
-            </thead>
-            <tbody className="[&>tr>td:first-child]:pl-6 [&>tr>td:last-child]:pr-6">
-              {HEALTH_PLANS.map((plan) => (
-                <PlanRow key={plan.id} plan={plan} />
-              ))}
-            </tbody>
-          </table>
+      <Tabs defaultValue="artifacts" className="w-full">
+        <div className="border-b border-border mb-8 overflow-x-auto no-scrollbar">
+          <TabsList className="h-auto p-0 bg-transparent flex justify-start gap-6">
+            {TABS.map((tab) => (
+              <TabsTrigger
+                key={tab.id}
+                value={tab.id}
+                className="pb-4 pt-2 px-1 rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:text-primary text-muted-foreground hover:text-foreground transition-colors flex gap-2 items-center text-sm md:text-base font-medium whitespace-nowrap"
+              >
+                <tab.icon className="w-4 h-4" />
+                {tab.label}
+              </TabsTrigger>
+            ))}
+          </TabsList>
         </div>
-      </Card>
+
+        <TabsContent value="artifacts" className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <ArtifactsTab />
+        </TabsContent>
+        <TabsContent value="analysis" className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <AnalysisTab />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }
