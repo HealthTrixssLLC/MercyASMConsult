@@ -27,7 +27,7 @@ export const PHASES: Phase[] = [
       {
         id: "mao-guidance",
         path: "/discussions/2026-06-10/mao-guidance",
-        title: "Jay's MAO Guidance",
+        title: "HealthTrixss MAO Guidance",
         icon: Table2,
       },
     ],

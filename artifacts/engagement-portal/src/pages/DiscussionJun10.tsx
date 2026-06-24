@@ -194,7 +194,7 @@ export default function DiscussionJun10() {
               { id: "workflow", label: "End-to-End Workflow", icon: Workflow },
               { id: "themes", label: "Discussion Themes", icon: MessagesSquare },
               { id: "findings", label: "Findings", icon: AlertTriangle },
-              { id: "mao", label: "Jay's MAO Guidance", icon: Table2 },
+              { id: "mao", label: "HealthTrixss MAO Guidance", icon: Table2 },
             ].map((tab) => (
               <TabsTrigger
                 key={tab.id}
@@ -228,7 +228,7 @@ export default function DiscussionJun10() {
                 reconciliation process envisioned for future state. Toward the end, Jay shared an Excel-based MAO-004
                 corrective-action playbook, reproduced in full under{" "}
                 <Link href="/discussions/2026-06-10/mao-guidance" className="text-primary font-medium hover:underline">
-                  Jay's MAO Guidance
+                  HealthTrixss MAO Guidance
                 </Link>
                 .
               </p>
@@ -381,7 +381,7 @@ export default function DiscussionJun10() {
         <TabsContent value="mao" className="animate-in fade-in slide-in-from-bottom-4 duration-500">
           <Card className="border-border shadow-sm">
             <CardHeader>
-              <CardTitle className="font-serif text-xl">Jay's MAO-004 Corrective-Action Playbook</CardTitle>
+              <CardTitle className="font-serif text-xl">HealthTrixss MAO-004 Corrective-Action Playbook</CardTitle>
               <CardDescription>The Excel workbook Jay shared, reproduced in full</CardDescription>
             </CardHeader>
             <CardContent className="space-y-5 text-muted-foreground leading-relaxed">

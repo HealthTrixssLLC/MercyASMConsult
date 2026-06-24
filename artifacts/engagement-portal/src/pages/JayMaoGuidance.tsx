@@ -3,7 +3,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
 import { SheetTable } from "@/components/SheetTable";
 import { MAO_SHEETS } from "@/data/maoGuidance";
-import { ChevronLeft, Table2, Info } from "lucide-react";
+import { ChevronLeft, Table2, Info, Download } from "lucide-react";
+
+const WORKBOOK_FILE = `${import.meta.env.BASE_URL}files/HealthTrixss-MAO-Guidance.xlsx`;
 
 const GUIDANCE_SHEETS = [
   "Executive Summary",
@@ -66,7 +68,7 @@ export default function JayMaoGuidance() {
           <span className="w-1 h-1 rounded-full bg-primary/30" />
           <span>MAO-004 Corrective-Action Playbook</span>
         </div>
-        <h1 className="text-4xl md:text-5xl font-serif text-foreground mb-4">Jay's MAO Guidance</h1>
+        <h1 className="text-4xl md:text-5xl font-serif text-foreground mb-4">HealthTrixss MAO Guidance</h1>
         <p className="text-lg text-muted-foreground max-w-3xl leading-relaxed">
           The MAO-004 provider corrective-action workbook Jay Baker shared at the close of the June 10 session,
           reproduced in full. Every sheet, row, and value from the original workbook is preserved below — nothing is
@@ -111,6 +113,24 @@ export default function JayMaoGuidance() {
             >
               {SHEET_NOTES[name] && (
                 <p className="text-sm text-muted-foreground leading-relaxed max-w-3xl">{SHEET_NOTES[name]}</p>
+              )}
+              {name === "Executive Summary" && (
+                <div className="flex flex-wrap items-center gap-4 rounded-lg border border-border bg-card p-4 mb-2">
+                  <div className="flex-1 min-w-[12rem]">
+                    <p className="text-sm font-medium text-foreground">Download the full workbook</p>
+                    <p className="text-xs text-muted-foreground">
+                      HealthTrixss-MAO-Guidance.xlsx — all nine worksheets, original Excel file.
+                    </p>
+                  </div>
+                  <a
+                    href={WORKBOOK_FILE}
+                    download="HealthTrixss-MAO-Guidance.xlsx"
+                    className="inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors shadow-sm"
+                  >
+                    <Download className="w-4 h-4" />
+                    Download Excel
+                  </a>
+                </div>
               )}
               <SheetTable sheet={sheet} />
             </TabsContent>
