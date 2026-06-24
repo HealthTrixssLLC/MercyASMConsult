@@ -17,6 +17,7 @@ import JayMaoGuidance from "@/pages/JayMaoGuidance";
 import HpLayoutSql from "@/pages/HpLayoutSql";
 import SubmissionStrategy from "@/pages/SubmissionStrategy";
 import ReconciliationStrategy from "@/pages/ReconciliationStrategy";
+import Findings from "@/pages/Findings";
 
 const queryClient = new QueryClient();
 
@@ -42,6 +43,7 @@ function Router() {
         <Route path="/discussions/2026-06-12" component={DiscussionJun12} />
         <Route path="/discussions/2026-06-17" component={DiscussionJun17} />
         <Route path="/asm-analysis-current" component={HpLayoutSql} />
+        <Route path="/findings" component={Findings} />
         <Route path="/submission-strategy" component={SubmissionStrategy} />
         <Route path="/reconciliation-strategy" component={ReconciliationStrategy} />
         <Route component={NotFound} />

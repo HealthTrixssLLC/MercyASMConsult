@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useRoute } from "wouter";
-import { FileText, Presentation, ClipboardList, MessagesSquare, Table2, Workflow, Database, Send, GitCompareArrows, LogOut } from "lucide-react";
+import { FileText, Presentation, ClipboardList, MessagesSquare, Table2, Workflow, Database, Send, GitCompareArrows, AlertTriangle, LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/useAuth";
 import healthtrixssLogo from "@assets/image_1782296236638.png";
@@ -67,6 +67,7 @@ export const PHASE_GROUPS: PhaseGroup[] = [
     id: "gap-risk",
     title: "Gap and Risk Register",
     items: [
+      { id: "findings", path: "/findings", title: "Findings", icon: AlertTriangle, status: "active" },
       { id: "submission-strategy", path: "/submission-strategy", title: "Submission Lane", icon: Send, status: "active" },
       { id: "reconciliation-strategy", path: "/reconciliation-strategy", title: "Reconciliation Lane", icon: GitCompareArrows, status: "active" },
     ],
