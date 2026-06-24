@@ -68,7 +68,7 @@ export const PHASE_GROUPS: PhaseGroup[] = [
     id: "gap-risk",
     title: "Gap and Risk Register",
     items: [
-      { id: "findings", path: "/findings", title: "Findings", icon: AlertTriangle, status: "active" },
+      { id: "findings", path: "/findings", title: "Findings & Recommendations", icon: AlertTriangle, status: "active" },
       { id: "submission-strategy", path: "/submission-strategy", title: "Submission Lane", icon: Send, status: "active" },
       { id: "reconciliation-strategy", path: "/reconciliation-strategy", title: "Reconciliation Lane", icon: GitCompareArrows, status: "active" },
     ],
