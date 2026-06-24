@@ -15,6 +15,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { StrategyTable, priorityBadgeClass } from "@/components/StrategyTable";
+import { RECOMMENDATION_FINDINGS } from "@/data/traceability";
 import {
   REC_EXEC,
   REC_REGISTER,
@@ -132,7 +133,13 @@ export default function ReconciliationStrategy() {
           value="register"
           className="animate-in fade-in slide-in-from-bottom-4 duration-500"
         >
-          <StrategyTable sheet={REC_REGISTER} />
+          <StrategyTable
+            sheet={REC_REGISTER}
+            findingLinks={{
+              insertAfter: "Current Gap / Risk",
+              map: RECOMMENDATION_FINDINGS,
+            }}
+          />
         </TabsContent>
 
         <TabsContent

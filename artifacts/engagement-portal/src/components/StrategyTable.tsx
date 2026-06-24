@@ -1,5 +1,8 @@
+import { Link } from "wouter";
 import { cn } from "@/lib/utils";
 import type { StrategySheet } from "@/data/submissionStrategy";
+import { FINDINGS_BY_ID } from "@/data/traceability";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 export function priorityBadgeClass(value: string): string | null {
   const v = value.trim().toLowerCase();
@@ -27,18 +30,100 @@ export function PriorityChip({ value }: { value: string }) {
   );
 }
 
+export function FindingLinks({ ids }: { ids: string[] }) {
+  if (!ids.length) {
+    return (
+      <span
+        className="text-xs italic text-muted-foreground/50"
+        title="Orphan — no finding linked yet"
+      >
+        — none
+      </span>
+    );
+  }
+  return (
+    <TooltipProvider delayDuration={150}>
+      <div className="flex flex-wrap gap-1">
+        {ids.map((id) => {
+          const f = FINDINGS_BY_ID.get(id);
+          return (
+            <Tooltip key={id}>
+              <TooltipTrigger asChild>
+                <Link
+                  href={`/findings#${id}`}
+                  aria-label={f ? `${id}: ${f.title} — open finding` : `${id} — open finding`}
+                  className="inline-flex items-center rounded-full border border-primary/30 bg-primary/10 px-2 py-0.5 font-mono text-xs font-semibold text-primary transition-colors hover:bg-primary/20"
+                >
+                  {id}
+                </Link>
+              </TooltipTrigger>
+              {f && (
+                <TooltipContent className="max-w-xs border border-border bg-popover text-popover-foreground shadow-md">
+                  <p className="mb-1 font-semibold text-foreground">
+                    {f.id} · {f.title}
+                  </p>
+                  <p className="leading-snug text-muted-foreground">{f.detail}</p>
+                  <p className="mt-1.5 text-[10px] font-medium uppercase tracking-wide text-primary">
+                    Click to open finding
+                  </p>
+                </TooltipContent>
+              )}
+            </Tooltip>
+          );
+        })}
+      </div>
+    </TooltipProvider>
+  );
+}
+
+type FindingLinkConfig = {
+  /** Insert the findings column immediately after the header with this exact label. */
+  insertAfter: string;
+  /** Column header for the injected findings column. */
+  header?: string;
+  /** Index of the column holding the recommendation id used as the map key (default 0). */
+  idColumnIndex?: number;
+  /** recommendation id -> finding ids. */
+  map: Record<string, string[]>;
+};
+
+type Col =
+  | { kind: "data"; dataIndex: number; label: string }
+  | { kind: "findings"; label: string };
+
 export function StrategyTable({
   sheet,
   showTitle = true,
+  findingLinks,
 }: {
   sheet: StrategySheet;
   showTitle?: boolean;
+  findingLinks?: FindingLinkConfig;
 }) {
   const priorityCols = new Set(
     sheet.headers
       .map((h, i) => (h.trim().toLowerCase() === "priority" ? i : -1))
       .filter((i) => i >= 0),
   );
+
+  if (import.meta.env.DEV && findingLinks && !sheet.headers.includes(findingLinks.insertAfter)) {
+    throw new Error(
+      `StrategyTable: findingLinks.insertAfter "${findingLinks.insertAfter}" not found in headers ` +
+        `[${sheet.headers.join(", ")}]. The findings column would silently land at index 0.`,
+    );
+  }
+  const insertIndex = findingLinks ? sheet.headers.indexOf(findingLinks.insertAfter) + 1 : -1;
+  const idColumnIndex = findingLinks?.idColumnIndex ?? 0;
+  const findingsHeader = findingLinks?.header ?? "Driven by (Findings)";
+
+  const cols: Col[] = [];
+  sheet.headers.forEach((h, i) => {
+    if (findingLinks && i === insertIndex) cols.push({ kind: "findings", label: findingsHeader });
+    cols.push({ kind: "data", dataIndex: i, label: h });
+  });
+  if (findingLinks && insertIndex === sheet.headers.length) {
+    cols.push({ kind: "findings", label: findingsHeader });
+  }
 
   return (
     <div className="space-y-3">
@@ -56,12 +141,12 @@ export function StrategyTable({
         <table className="w-full border-collapse text-left text-sm">
           <thead>
             <tr className="bg-secondary/60">
-              {sheet.headers.map((h, i) => (
+              {cols.map((col, i) => (
                 <th
                   key={i}
                   className="sticky top-0 z-10 bg-secondary/60 px-4 py-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground whitespace-nowrap align-bottom"
                 >
-                  {h}
+                  {col.label}
                 </th>
               ))}
             </tr>
@@ -75,18 +160,27 @@ export function StrategyTable({
                   ri % 2 === 1 && "bg-muted/30",
                 )}
               >
-                {sheet.headers.map((_, ci) => {
-                  const cell = row[ci] ?? "";
+                {cols.map((col, ci) => {
+                  if (col.kind === "findings") {
+                    const recId = (row[idColumnIndex] ?? "").trim();
+                    const ids = findingLinks?.map[recId] ?? [];
+                    return (
+                      <td key={ci} className="px-4 py-3 align-top">
+                        <FindingLinks ids={ids} />
+                      </td>
+                    );
+                  }
+                  const cell = row[col.dataIndex] ?? "";
                   return (
                     <td
                       key={ci}
                       className={cn(
                         "px-4 py-3 leading-relaxed align-top",
-                        ci === 0 && "font-medium text-foreground",
-                        ci !== 0 && "text-muted-foreground",
+                        col.dataIndex === 0 && "font-medium text-foreground",
+                        col.dataIndex !== 0 && "text-muted-foreground",
                       )}
                     >
-                      {priorityCols.has(ci) ? <PriorityChip value={cell} /> : cell || ""}
+                      {priorityCols.has(col.dataIndex) ? <PriorityChip value={cell} /> : cell || ""}
                     </td>
                   );
                 })}

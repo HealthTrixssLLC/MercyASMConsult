@@ -13,6 +13,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { StrategyTable } from "@/components/StrategyTable";
+import { RECOMMENDATION_FINDINGS } from "@/data/traceability";
 import {
   SUB_EXEC,
   SUB_REGISTER,
@@ -122,7 +123,13 @@ export default function SubmissionStrategy() {
           value="register"
           className="animate-in fade-in slide-in-from-bottom-4 duration-500"
         >
-          <StrategyTable sheet={SUB_REGISTER} />
+          <StrategyTable
+            sheet={SUB_REGISTER}
+            findingLinks={{
+              insertAfter: "Current-State Gap / Risk",
+              map: RECOMMENDATION_FINDINGS,
+            }}
+          />
         </TabsContent>
 
         <TabsContent

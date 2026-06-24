@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { Check, X, ArrowUpRight, ClipboardList } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -39,6 +40,25 @@ export default function Findings() {
   const recurring = FINDINGS.filter(
     (f) => SOURCE_COLUMNS.reduce((n, c) => n + Number(f.sources[c.key]), 0) > 1,
   ).length;
+
+  const [highlightId, setHighlightId] = useState<string | null>(null);
+  useEffect(() => {
+    let clear: ReturnType<typeof setTimeout> | undefined;
+    function go() {
+      const hash = window.location.hash.replace("#", "");
+      if (!hash) return;
+      setHighlightId(hash);
+      const el = document.getElementById(hash);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+      clear = setTimeout(() => setHighlightId(null), 2400);
+    }
+    go();
+    window.addEventListener("hashchange", go);
+    return () => {
+      window.removeEventListener("hashchange", go);
+      if (clear) clearTimeout(clear);
+    };
+  }, []);
 
   return (
     <div className="w-full px-6 md:px-10 py-8 md:py-10 fade-in">
@@ -99,7 +119,12 @@ export default function Findings() {
             {FINDINGS.map((f, ri) => (
               <tr
                 key={f.id}
-                className={cn("border-t border-border align-top", ri % 2 === 1 && "bg-muted/30")}
+                id={f.id}
+                className={cn(
+                  "border-t border-border align-top scroll-mt-24 transition-colors",
+                  ri % 2 === 1 && "bg-muted/30",
+                  highlightId === f.id && "bg-primary/10 ring-2 ring-inset ring-primary",
+                )}
               >
                 <td className="px-4 py-4 font-mono text-xs font-semibold text-foreground whitespace-nowrap align-top">
                   {f.id}
