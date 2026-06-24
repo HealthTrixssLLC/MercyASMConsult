@@ -8,6 +8,8 @@ import Phase1 from "@/pages/Phase1";
 import KickoffPlanning from "@/pages/KickoffPlanning";
 import Kickoff from "@/pages/Kickoff";
 import DiscussionJun08 from "@/pages/DiscussionJun08";
+import DiscussionJun10 from "@/pages/DiscussionJun10";
+import JayMaoGuidance from "@/pages/JayMaoGuidance";
 import Phase2 from "@/pages/Phase2";
 import Phase3 from "@/pages/Phase3";
 
@@ -22,6 +24,8 @@ function Router() {
         <Route path="/kickoff-planning" component={KickoffPlanning} />
         <Route path="/kickoff" component={Kickoff} />
         <Route path="/discussions/2026-06-08" component={DiscussionJun08} />
+        <Route path="/discussions/2026-06-10/mao-guidance" component={JayMaoGuidance} />
+        <Route path="/discussions/2026-06-10" component={DiscussionJun10} />
         <Route path="/phase/2" component={Phase2} />
         <Route path="/phase/3" component={Phase3} />
         <Route component={NotFound} />

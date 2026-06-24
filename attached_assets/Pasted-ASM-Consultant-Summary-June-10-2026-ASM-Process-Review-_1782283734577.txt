@@ -1,0 +1,350 @@
+ASM Consultant Summary
+June 10, 2026 – ASM Process Review
+Executive Takeaway
+
+Unlike the June 9 kickoff discussion, which focused on scope and objectives, the June 10 session shifted into a detailed review of Mercy's proposed future-state ASM architecture.
+
+Sandra walked the team through two future-state design diagrams:
+
+Current State vs Future State Architecture
+Future-State End-to-End ASM Workflow
+
+The majority of the discussion centered on:
+
+Data curation strategy
+Validation design
+Submission timing
+Sweep methodology
+Reconciliation to CMS response files
+Risks introduced by centralized data transformation
+Traceability requirements
+Sandra's Architecture Slide
+
+Sandra presented the following conceptual architecture for the ASM modernization effort.
+
+Current State (Legacy Oracle)
+
+The current model consists of:
+
+Multiple source tables
+Separate payer-specific extraction logic
+Separate payer-specific code bases
+Independent file generation processes
+
+Challenges highlighted in the diagram include:
+
+Duplicated logic
+Limited tracking
+High maintenance effort
+Data quality risks
+
+The diagram shows individual extraction paths for each payer, each with its own logic stack.
+
+Future State (Integrated Data Platform)
+
+Sandra described the future-state design as:
+
+Centralized data integration
+Single curated risk-adjustment data source
+Standardized ASM data
+End-to-end monitoring
+CMS HCC result integration
+Member identification and attribution support
+
+From that centralized curated source:
+
+Payer A extract
+Payer B extract
+Payer C extract
+Payer D extract
+
+would be generated from the same canonical dataset.
+
+Architecture Diagram Presented
+
+(Page 2 of transcript images)
+
+Key message from Sandra:
+
+Instead of maintaining separate code bases for each payer, curate data once and generate payer-specific extracts from a common source.
+
+Sandra's End-to-End Workflow Slide
+
+Sandra then presented a future-state operational workflow.
+
+Workflow Components
+
+The diagram included:
+
+Align with payers
+Curate data for ASM sweeps
+Stage data in payer-specific format
+Complete pre-submission validation
+Root-cause remediation
+Electronic file submission
+Ingest submission/response files
+MAO004 ingestion and comparison
+MOR ingestion and comparison
+Reporting and transparency
+
+with a recurring sweep cycle in the center.
+
+Workflow Diagram Presented
+
+(Page 3 of transcript images)
+
+Major Discussion Themes
+1. Curation Becomes the New Critical Control Point
+
+Jay immediately focused on the biggest architectural risk.
+
+He separated the future-state process into:
+
+Step 1 — Curation
+
+Creating the canonical ASM dataset.
+
+Step 2 — Transformation
+
+Converting canonical data into payer-specific layouts.
+
+Jay's concern:
+
+Most silent compliance issues occur during curation because data is being transformed before submission.
+
+Consultant Assessment
+
+This was one of the most important observations of the meeting.
+
+Under the current architecture:
+
+Errors are isolated to individual payer processes.
+
+Under the future architecture:
+
+Errors introduced in the curated layer can propagate to every payer.
+
+Samir reinforced this concern by noting that centralized curation creates a single point of failure across all plans.
+
+2. Validation Must Prove Old and New Processes Match
+
+Jennifer described the migration strategy.
+
+Her goal:
+
+Build curated tables
+Build staging tables
+Generate the same outputs as the current Oracle process
+Validate equivalency before optimization
+
+The initial objective is not transformation improvement.
+
+The initial objective is:
+
+Produce the same outputs as today's process and prove parity.
+
+Consultant Observation
+
+This is the correct migration approach.
+
+Phase 1:
+
+Replicate
+
+Phase 2:
+
+Optimize
+
+Phase 3:
+
+Enhance
+3. CMS Validation Should Become Explicit
+
+Kate raised a key concern.
+
+She questioned whether current logic is routinely validated against:
+
+CMS CPT lists
+CMS acceptable service types
+Current CMS requirements
+
+Jennifer indicated some validation exists but is not fully transparent or automated today. Sandra confirmed that integrating CMS requirements into pre-submission validation is a future-state objective.
+
+Recommendation
+
+Future validation should include:
+
+CPT eligibility checks
+HCPCS eligibility checks
+Provider specialty validation
+Bill type validation
+Diagnosis validity checks
+Effective date validation
+
+before export generation.
+
+4. Major Discussion on "Sweeps"
+
+A large portion of the session focused on a question Jay raised:
+
+Why Is Mercy Structuring ASM Around Sweeps?
+
+Jay challenged the assumption that submissions should be constrained by payer sweep schedules.
+
+His argument:
+
+Mercy should submit validated data continuously.
+Plans should handle their own sweep timing.
+Providers should not artificially restrict submissions.
+Best-Practice Recommendation
+
+Jay and Samir recommended:
+
+Send Data Continuously
+
+Rather than:
+
+July submission:
+
+DOS 7/1/25–6/30/26 only
+
+Use:
+
+All valid open-period records
+New records
+Retroactive chart reviews
+Newly discovered diagnoses
+
+provided duplicates are avoided.
+
+5. Open Period Concept
+
+One of the most important educational discussions occurred around CMS open periods.
+
+Sandra was focused on:
+
+July submission windows
+Initial sweep windows
+
+Jay and Samir reframed the discussion.
+
+Example:
+
+If 2025 DOS remains open through January 2027:
+
+Newly discovered diagnoses from March 2025 remain valid for submission.
+
+Therefore:
+
+Submission windows should follow CMS open periods rather than payer sweep boundaries.
+
+Consultant Observation
+
+This represents a maturity shift from:
+
+"Submit by sweep"
+
+to
+
+"Submit all eligible diagnoses during the open period."
+
+6. Need for Historical Submission Inventory
+
+A direct consequence of the above discussion was recognition that Mercy needs submission history.
+
+Jennifer noted that future-state logic will need to know:
+
+What has already been submitted
+What has not been submitted
+What is retroactive
+What is net new
+
+to avoid duplicate submissions.
+
+This aligns directly with the Run Control / Submission Inventory architecture we have discussed previously.
+
+7. Reconciliation Strategy Expanded
+
+Another major topic was response-file reconciliation.
+
+Sandra explained that:
+
+Some plans provide acknowledgements and rejects.
+Some plans provide almost no response information.
+
+Samir recommended using CMS files as the authoritative source.
+
+MAO-002
+
+Used to determine:
+
+What the plan actually submitted to CMS
+Transaction-level acceptance/rejection
+Reject reason codes
+MAO-004
+
+Used to determine:
+
+What CMS ultimately accepted for risk adjustment processing
+
+Sandra indicated Mercy currently receives MAO-004 files and Jennifer is developing validation processes around them.
+
+Jay's MAO-004 Playbook (Excel Reference)
+
+Toward the end of the meeting Jay shared an Excel-based MAO-004 playbook.
+
+Sandra reacted positively and indicated it would be extremely useful.
+
+The workbook appears to classify MAO-004 outcomes into:
+
+Accepted encounters
+Provider-controlled issues
+Plan-controlled issues
+Shared responsibility issues
+CMS-controlled issues
+
+The purpose is to move beyond simply reading MAO-004 files and instead determine:
+
+Operational Actionability
+
+For each scenario:
+
+Who owns the issue?
+Can Mercy fix it?
+Does the plan need to act?
+Is CMS action required?
+Is correction worthwhile?
+
+This is likely the Excel file Jay referenced during the final portion of the discussion.
+
+Consultant Assessment
+
+The June 10 discussion surfaced three strategic findings:
+
+1. Mercy's future-state architecture is directionally correct
+
+Centralized curation plus payer-specific export generation is the right long-term model.
+
+2. Curation becomes the highest-risk component
+
+A defect in the curated layer could affect every payer simultaneously.
+
+3. Mercy needs a formal submission inventory and reconciliation framework
+
+To support:
+
+Open-period submissions
+Retroactive coding
+Duplicate prevention
+MAO-002 reconciliation
+MAO-004 reconciliation
+Closed-loop acceptance tracking
+
+This discussion is actually the earliest point where the future-state concepts of:
+
+canonical ASM staging,
+run control,
+reverse reconciliation,
+and submission traceability
+
+begin to emerge very clearly.

@@ -1,0 +1,1 @@
+- [Parsing xlsx/docx](office-file-parsing.md) — no python3 & npm xlsx blocked at root; unzip the file and parse XML in code_execution, applying ALL numFmtIds incl. customs.

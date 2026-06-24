@@ -1,16 +1,76 @@
 import React from "react";
 import { Link, useRoute } from "wouter";
-import { FileText, Calendar, ShieldAlert, Presentation, ClipboardList, MessagesSquare } from "lucide-react";
+import { FileText, Calendar, ShieldAlert, Presentation, ClipboardList, MessagesSquare, Table2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-export const PHASES = [
+type Phase = {
+  id: string;
+  path: string;
+  title: string;
+  icon: typeof FileText;
+  status: string;
+  children?: { id: string; path: string; title: string; icon: typeof FileText }[];
+};
+
+export const PHASES: Phase[] = [
   { id: "1", path: "/phase/1", title: "Statement of Work", icon: FileText, status: "active" },
   { id: "kickoff-planning", path: "/kickoff-planning", title: "Kickoff Planning", icon: ClipboardList, status: "active" },
   { id: "kickoff", path: "/kickoff", title: "Kickoff", icon: Presentation, status: "active" },
   { id: "discussion-2026-06-08", path: "/discussions/2026-06-08", title: "Jun 8, 2026", icon: MessagesSquare, status: "active" },
+  {
+    id: "discussion-2026-06-10",
+    path: "/discussions/2026-06-10",
+    title: "Jun 10, 2026",
+    icon: MessagesSquare,
+    status: "active",
+    children: [
+      {
+        id: "mao-guidance",
+        path: "/discussions/2026-06-10/mao-guidance",
+        title: "Jay's MAO Guidance",
+        icon: Table2,
+      },
+    ],
+  },
   { id: "2", path: "/phase/2", title: "Strategy & Design", icon: Calendar, status: "upcoming" },
   { id: "3", path: "/phase/3", title: "Execution & Handover", icon: ShieldAlert, status: "upcoming" },
 ];
+
+function SubLink({
+  child,
+  onNavigate,
+}: {
+  child: NonNullable<Phase["children"]>[number];
+  onNavigate?: () => void;
+}) {
+  const [isActive] = useRoute(child.path);
+  const Icon = child.icon;
+  return (
+    <Link
+      href={child.path}
+      className="block"
+      onClick={onNavigate}
+      aria-current={isActive ? "page" : undefined}
+    >
+      <div
+        className={cn(
+          "group flex items-center gap-2.5 py-2 pl-3 pr-3 rounded-md transition-all duration-200 border border-transparent",
+          isActive
+            ? "bg-sidebar-accent text-sidebar-accent-foreground border-sidebar-border/50"
+            : "text-sidebar-foreground/60 hover:bg-sidebar-accent/40 hover:text-sidebar-foreground"
+        )}
+      >
+        <Icon
+          className={cn(
+            "w-3.5 h-3.5 shrink-0",
+            isActive ? "text-sidebar-primary" : "text-sidebar-foreground/40 group-hover:text-sidebar-foreground/70"
+          )}
+        />
+        <span className="font-medium text-[13px] flex-1">{child.title}</span>
+      </div>
+    </Link>
+  );
+}
 
 function PhaseLink({
   phase,
@@ -22,27 +82,36 @@ function PhaseLink({
   const [isActive] = useRoute(phase.path);
   const Icon = phase.icon;
   return (
-    <Link
-      href={phase.path}
-      className="block"
-      onClick={onNavigate}
-      aria-current={isActive ? "page" : undefined}
-    >
-      <div
-        className={cn(
-          "group flex items-center gap-3 p-3 rounded-md transition-all duration-200 border border-transparent",
-          isActive
-            ? "bg-sidebar-accent text-sidebar-accent-foreground border-sidebar-border/50"
-            : "text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
-        )}
+    <div>
+      <Link
+        href={phase.path}
+        className="block"
+        onClick={onNavigate}
+        aria-current={isActive ? "page" : undefined}
       >
-        <Icon className={cn("w-4 h-4 shrink-0", isActive ? "text-sidebar-primary" : "text-sidebar-foreground/40 group-hover:text-sidebar-foreground/70")} />
-        <span className="font-medium text-sm flex-1">{phase.title}</span>
-        {phase.status === "active" && (
-          <span className="w-1.5 h-1.5 rounded-full bg-sidebar-primary shadow-[0_0_8px_rgba(245,158,11,0.8)] shrink-0" />
-        )}
-      </div>
-    </Link>
+        <div
+          className={cn(
+            "group flex items-center gap-3 p-3 rounded-md transition-all duration-200 border border-transparent",
+            isActive
+              ? "bg-sidebar-accent text-sidebar-accent-foreground border-sidebar-border/50"
+              : "text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
+          )}
+        >
+          <Icon className={cn("w-4 h-4 shrink-0", isActive ? "text-sidebar-primary" : "text-sidebar-foreground/40 group-hover:text-sidebar-foreground/70")} />
+          <span className="font-medium text-sm flex-1">{phase.title}</span>
+          {phase.status === "active" && (
+            <span className="w-1.5 h-1.5 rounded-full bg-sidebar-primary shadow-[0_0_8px_rgba(245,158,11,0.8)] shrink-0" />
+          )}
+        </div>
+      </Link>
+      {phase.children && phase.children.length > 0 && (
+        <div className="mt-1 ml-5 pl-3 border-l border-sidebar-border/50 space-y-1">
+          {phase.children.map((child) => (
+            <SubLink key={child.id} child={child} onNavigate={onNavigate} />
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
 
