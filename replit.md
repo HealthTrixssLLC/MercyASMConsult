@@ -25,6 +25,7 @@ A structured, phase-by-phase web portal that presents a consulting engagement �
 - Web app: `artifacts/engagement-portal` (React + Vite + wouter, frontend-only). Routes in `src/App.tsx`.
 - Sidebar / phase navigation: `src/components/layout/Sidebar.tsx` — `Phase` type supports optional `children` for nested sub-menu links (e.g. "Jay's MAO Guidance" under "Jun 10, 2026").
 - Discussion pages: `src/pages/Discussion*.tsx` (one per session date; follow the `DiscussionJun08.tsx` pattern — eyebrow + serif h1 + Radix Tabs with primary underline).
+- HP Layout and Submission SQL page: `src/pages/HpLayoutSql.tsx` — data-driven from the `HEALTH_PLANS` array. Source files live in `public/files/hp/layout/` (xlsx/docx/csv, download links) and `public/files/hp/sql/` (`.sql`, fetched inline at runtime via `import.meta.env.BASE_URL`). To add more, drop files in those folders and append an entry to `HEALTH_PLANS`.
 - Reproduced Excel workbooks: rendered via `src/components/SheetTable.tsx` (merged-cell rowSpan/colSpan, banner/header rows, horizontal scroll) from auto-generated data in `src/data/*.ts` (e.g. `maoGuidance.ts`).
 - To regenerate an Office-derived data file, see `.agents/memory/office-file-parsing.md` (unzip + parse XML; no python3, npm xlsx blocked).
 

@@ -1,0 +1,337 @@
+import { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Database,
+  FileSpreadsheet,
+  FileText,
+  FileCode2,
+  Download,
+  Copy,
+  Check,
+  ChevronDown,
+  Building2,
+  Layers,
+  type LucideIcon,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
+
+const BASE = import.meta.env.BASE_URL;
+
+type LayoutKind = "xlsx" | "csv" | "docx";
+type LayoutFile = { label: string; file: string; kind: LayoutKind };
+type SqlFile = { label: string; file: string };
+type HealthPlan = {
+  id: string;
+  name: string;
+  icon: LucideIcon;
+  note?: string;
+  layouts: LayoutFile[];
+  sql: SqlFile[];
+};
+
+const LAYOUT_DIR = `${BASE}files/hp/layout/`;
+const SQL_DIR = `${BASE}files/hp/sql/`;
+
+const HEALTH_PLANS: HealthPlan[] = [
+  {
+    id: "uhc",
+    name: "UnitedHealthcare (UHC)",
+    icon: Building2,
+    layouts: [
+      { label: "UHC Template", file: "uhc-template.xlsx", kind: "xlsx" },
+      { label: "UHC Template (CSV)", file: "uhc-template.csv", kind: "csv" },
+    ],
+    sql: [
+      { label: "Institutional", file: "uhc-institutional.sql" },
+      { label: "Ambulatory", file: "uhc-ambulatory.sql" },
+    ],
+  },
+  {
+    id: "humana",
+    name: "Humana",
+    icon: Building2,
+    layouts: [
+      { label: "ASM Template (New 2026)", file: "humana-asm-template-2026.xlsx", kind: "xlsx" },
+    ],
+    sql: [{ label: "Inpatient — OKC", file: "humana-inpatient-okc.sql" }],
+  },
+  {
+    id: "aetna",
+    name: "Aetna",
+    icon: Building2,
+    layouts: [
+      {
+        label: "Verscend Import Supplemental Data Spec",
+        file: "aetna-verscend-import-spec.xlsx",
+        kind: "xlsx",
+      },
+    ],
+    sql: [
+      { label: "Institutional", file: "aetna-institutional.sql" },
+      { label: "Ambulatory", file: "aetna-ambulatory.sql" },
+    ],
+  },
+  {
+    id: "anthem",
+    name: "Anthem",
+    icon: Building2,
+    note: "MARA SDF job aids provided per Mercy entity.",
+    layouts: [
+      { label: "MARA SDF Job Aid — Mercy MO", file: "anthem-job-aid-mrcymo.docx", kind: "docx" },
+      { label: "MARA SDF Job Aid — MHSC", file: "anthem-job-aid-mhsc.docx", kind: "docx" },
+    ],
+    sql: [
+      { label: "Institutional", file: "anthem-institutional.sql" },
+      { label: "Ambulatory", file: "anthem-ambulatory.sql" },
+    ],
+  },
+  {
+    id: "global-health",
+    name: "Global Health",
+    icon: Building2,
+    layouts: [
+      {
+        label: "File Layout Requirements for IPA",
+        file: "global-health-file-layout.xlsx",
+        kind: "xlsx",
+      },
+    ],
+    sql: [
+      { label: "Institutional", file: "global-health-institutional.sql" },
+      { label: "Ambulatory", file: "global-health-ambulatory.sql" },
+    ],
+  },
+  {
+    id: "essence",
+    name: "Essence",
+    icon: Building2,
+    layouts: [
+      {
+        label: "Additional Dx Spec v4 (ICD-10)",
+        file: "essence-addtl-dx-spec.xlsx",
+        kind: "xlsx",
+      },
+    ],
+    sql: [{ label: "Ambulatory", file: "essence-ambulatory.sql" }],
+  },
+  {
+    id: "bcbsok",
+    name: "Blue Cross Blue Shield of Oklahoma (BCBSOK)",
+    icon: Building2,
+    sql: [
+      { label: "Institutional", file: "bcbsok-institutional.sql" },
+      { label: "Ambulatory", file: "bcbsok-ambulatory.sql" },
+    ],
+    layouts: [],
+  },
+  {
+    id: "cms-edps",
+    name: "CMS / EDPS (Shared)",
+    icon: Layers,
+    note: "Cross-plan CMS encounter specification.",
+    layouts: [
+      {
+        label: "EDPS Institutional Spec v05 (Unlinked Chart Review)",
+        file: "edps-institutional-spec.xlsx",
+        kind: "xlsx",
+      },
+    ],
+    sql: [],
+  },
+];
+
+const KIND_META: Record<LayoutKind, { icon: LucideIcon; tag: string }> = {
+  xlsx: { icon: FileSpreadsheet, tag: "XLSX" },
+  csv: { icon: FileSpreadsheet, tag: "CSV" },
+  docx: { icon: FileText, tag: "DOCX" },
+};
+
+function LayoutChip({ layout }: { layout: LayoutFile }) {
+  const meta = KIND_META[layout.kind];
+  const Icon = meta.icon;
+  return (
+    <a
+      href={`${LAYOUT_DIR}${layout.file}`}
+      download
+      className="group flex items-center gap-3 rounded-lg border border-border bg-background/40 px-4 py-3 transition-colors hover:border-primary/40 hover:bg-primary/5"
+    >
+      <Icon className="w-5 h-5 text-primary shrink-0" />
+      <div className="flex-1 min-w-0">
+        <div className="text-sm font-medium text-foreground truncate">{layout.label}</div>
+        <div className="text-[11px] uppercase tracking-widest text-muted-foreground">{meta.tag}</div>
+      </div>
+      <Download className="w-4 h-4 text-muted-foreground/50 group-hover:text-primary shrink-0" />
+    </a>
+  );
+}
+
+function SqlViewer({ sql }: { sql: SqlFile }) {
+  const [open, setOpen] = useState(false);
+  const [content, setContent] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const url = `${SQL_DIR}${sql.file}`;
+
+  async function ensureLoaded(): Promise<string | null> {
+    if (content !== null) return content;
+    setLoading(true);
+    setError(false);
+    try {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(String(res.status));
+      const text = await res.text();
+      setContent(text);
+      return text;
+    } catch {
+      setError(true);
+      return null;
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  function toggle() {
+    const next = !open;
+    setOpen(next);
+    if (next) void ensureLoaded();
+  }
+
+  async function copy(e: React.MouseEvent) {
+    e.stopPropagation();
+    const text = await ensureLoaded();
+    if (text === null) return;
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    } catch {
+      /* clipboard unavailable */
+    }
+  }
+
+  return (
+    <div className="rounded-lg border border-border overflow-hidden">
+      <div
+        role="button"
+        tabIndex={0}
+        aria-expanded={open}
+        onClick={toggle}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            toggle();
+          }
+        }}
+        className="flex items-center gap-3 px-4 py-3 bg-background/40 cursor-pointer hover:bg-background/70 transition-colors"
+      >
+        <Database className="w-4 h-4 text-primary shrink-0" />
+        <span className="flex-1 text-sm font-medium text-foreground">{sql.label}</span>
+        <button
+          onClick={copy}
+          className="inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium text-muted-foreground hover:text-primary hover:bg-primary/5 transition-colors"
+        >
+          {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+          {copied ? "Copied" : "Copy"}
+        </button>
+        <a
+          href={url}
+          download
+          onClick={(e) => e.stopPropagation()}
+          className="inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium text-muted-foreground hover:text-primary hover:bg-primary/5 transition-colors"
+        >
+          <Download className="w-3.5 h-3.5" />
+          Download
+        </a>
+        <ChevronDown
+          className={cn(
+            "w-4 h-4 text-muted-foreground/60 transition-transform shrink-0",
+            open && "rotate-180"
+          )}
+        />
+      </div>
+      {open && (
+        <div className="border-t border-border bg-[#0f1117]">
+          {loading && <div className="px-4 py-6 text-sm text-muted-foreground">Loading…</div>}
+          {error && (
+            <div className="px-4 py-6 text-sm text-destructive">
+              Unable to load this file. Use the download link above.
+            </div>
+          )}
+          {content !== null && !error && (
+            <pre className="max-h-[28rem] overflow-auto px-4 py-4 text-[12.5px] leading-relaxed text-slate-200 font-mono whitespace-pre">
+              {content}
+            </pre>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default function HpLayoutSql() {
+  return (
+    <div className="max-w-6xl mx-auto p-8 md:p-12 fade-in">
+      <header className="mb-12">
+        <div className="flex items-center gap-3 text-sm font-medium text-muted-foreground uppercase tracking-widest mb-3">
+          <span className="text-primary">Reference · Health Plan Specs</span>
+          <span className="w-1 h-1 rounded-full bg-primary/30" />
+          <span>Source Files</span>
+        </div>
+        <h1 className="text-4xl md:text-5xl font-serif text-foreground mb-4">
+          HP Layout and Submission SQL
+        </h1>
+        <p className="text-lg text-muted-foreground max-w-3xl leading-relaxed">
+          Health plan&ndash;specific file layout specifications and current submission SQL, organized by
+          payer. Layout specs are available to download; submission SQL can be viewed inline, copied, or
+          downloaded. More files will be added as they are provided.
+        </p>
+      </header>
+
+      <div className="space-y-6">
+        {HEALTH_PLANS.map((plan) => {
+          const Icon = plan.icon;
+          return (
+            <Card key={plan.id} className="border-none shadow-sm bg-card">
+              <CardHeader>
+                <CardTitle className="font-serif text-2xl flex items-center gap-2.5">
+                  <Icon className="w-5 h-5 text-primary" /> {plan.name}
+                </CardTitle>
+                {plan.note && (
+                  <p className="text-sm text-muted-foreground pt-1">{plan.note}</p>
+                )}
+              </CardHeader>
+              <CardContent className="space-y-6">
+                {plan.layouts.length > 0 && (
+                  <section>
+                    <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3">
+                      <FileSpreadsheet className="w-3.5 h-3.5" /> File Layout / Spec
+                    </div>
+                    <div className="grid sm:grid-cols-2 gap-3">
+                      {plan.layouts.map((layout) => (
+                        <LayoutChip key={layout.file} layout={layout} />
+                      ))}
+                    </div>
+                  </section>
+                )}
+                {plan.sql.length > 0 && (
+                  <section>
+                    <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3">
+                      <FileCode2 className="w-3.5 h-3.5" /> Submission SQL
+                    </div>
+                    <div className="space-y-3">
+                      {plan.sql.map((sql) => (
+                        <SqlViewer key={sql.file} sql={sql} />
+                      ))}
+                    </div>
+                  </section>
+                )}
+              </CardContent>
+            </Card>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
