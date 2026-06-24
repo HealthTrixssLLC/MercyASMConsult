@@ -69,7 +69,7 @@ export default function JayMaoGuidance() {
           <span>MAO-004 Corrective-Action Playbook</span>
         </div>
         <h1 className="text-3xl md:text-4xl font-serif text-foreground mb-4">HealthTrixss MAO Guidance</h1>
-        <p className="text-base text-muted-foreground max-w-3xl leading-relaxed">
+        <p className="text-base text-muted-foreground max-w-5xl leading-relaxed">
           The MAO-004 provider corrective-action workbook Jay Baker shared at the close of the June 10 session,
           reproduced in full. Every sheet, row, and value from the original workbook is preserved below — nothing is
           summarized or omitted.

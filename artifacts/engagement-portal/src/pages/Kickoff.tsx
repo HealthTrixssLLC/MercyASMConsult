@@ -34,7 +34,7 @@ export default function Kickoff() {
           <span>06 / 01 / 2026</span>
         </div>
         <h1 className="text-3xl md:text-4xl font-serif text-foreground mb-4">Kickoff</h1>
-        <p className="text-base text-muted-foreground max-w-3xl leading-relaxed">
+        <p className="text-base text-muted-foreground max-w-5xl leading-relaxed">
           Mercy — ASM Discovery &amp; Assessment. Mercy is evaluating its ASM direct-submission operating model as it
           transitions toward an Azure / Databricks future state. This kickoff aligns scope and stakeholders ahead of the
           discovery work.

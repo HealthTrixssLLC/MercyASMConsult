@@ -116,7 +116,7 @@ export default function KickoffPlanning() {
           <span>04 / 27 / 2026</span>
         </div>
         <h1 className="text-3xl md:text-4xl font-serif text-foreground mb-4">Kickoff Planning</h1>
-        <p className="text-base text-muted-foreground max-w-3xl leading-relaxed">
+        <p className="text-base text-muted-foreground max-w-5xl leading-relaxed">
           Gist of the pre-kickoff planning discussion between Mercy and the consulting team. The key alignment: this is
           not a traditional current-state assessment — Mercy is mid-migration from Oracle to Azure / Databricks while
           standing up a new validation framework, so the work spans both current and transitional future state.

@@ -179,7 +179,7 @@ export default function DiscussionJun10() {
           <span>06 / 10 / 2026</span>
         </div>
         <h1 className="text-3xl md:text-4xl font-serif text-foreground mb-4">ASM Process Review — Future-State Design</h1>
-        <p className="text-base text-muted-foreground max-w-3xl leading-relaxed">
+        <p className="text-base text-muted-foreground max-w-5xl leading-relaxed">
           Unlike the June 9 kickoff discussion, which focused on scope and objectives, June 10 shifted into a detailed
           review of Mercy's proposed future-state ASM architecture. Sandra Weiler walked the team through a current-vs-future
           design and a future-state end-to-end workflow, and the discussion centered on curation, validation,

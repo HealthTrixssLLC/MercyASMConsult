@@ -51,7 +51,7 @@ export default function SubmissionStrategy() {
         <h1 className="text-3xl md:text-4xl font-serif text-foreground mb-4">
           Submission Strategy
         </h1>
-        <p className="text-base text-muted-foreground max-w-3xl leading-relaxed">
+        <p className="text-base text-muted-foreground max-w-5xl leading-relaxed">
           {SUB_EXEC.narrative[0]?.text}
         </p>
         <p className="mt-4 text-sm font-medium text-foreground/80 max-w-3xl leading-relaxed border-l-2 border-primary pl-4">
