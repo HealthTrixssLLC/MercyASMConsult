@@ -195,7 +195,7 @@ export default function DiscussionJun10() {
               { id: "architecture", label: "Architecture", icon: Network },
               { id: "workflow", label: "End-to-End Workflow", icon: Workflow },
               { id: "themes", label: "Discussion Themes", icon: MessagesSquare },
-              { id: "findings", label: "Findings", icon: AlertTriangle },
+              { id: "findings", label: "Meeting Specific Findings", icon: AlertTriangle },
               { id: "mao", label: "HealthTrixss MAO Guidance", icon: Table2 },
             ].map((tab) => (
               <TabsTrigger

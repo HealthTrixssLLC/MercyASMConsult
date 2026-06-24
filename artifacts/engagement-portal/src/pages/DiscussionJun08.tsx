@@ -182,8 +182,8 @@ export default function DiscussionJun08() {
               { id: "summary", label: "Summary", icon: FileText },
               { id: "process", label: "Current Process", icon: Workflow },
               { id: "reconciliation", label: "Errors & Reconciliation", icon: RefreshCw },
-              { id: "findings", label: "Findings", icon: AlertTriangle },
-              { id: "actions", label: "Action Items", icon: ListChecks },
+              { id: "findings", label: "Meeting Specific Findings", icon: AlertTriangle },
+              { id: "actions", label: "Meeting Action Items", icon: ListChecks },
             ].map((tab) => (
               <TabsTrigger
                 key={tab.id}

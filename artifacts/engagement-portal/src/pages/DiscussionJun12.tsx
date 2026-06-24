@@ -224,7 +224,7 @@ export default function DiscussionJun12() {
               { id: "response", label: "Response Files", icon: Files },
               { id: "uhc", label: "UHC SQL Logic", icon: Database },
               { id: "bcbs", label: "BCBS MAO-002", icon: SearchCheck },
-              { id: "findings", label: "Findings", icon: AlertTriangle },
+              { id: "findings", label: "Meeting Specific Findings", icon: AlertTriangle },
             ].map((tab) => (
               <TabsTrigger
                 key={tab.id}
