@@ -648,7 +648,7 @@ export default function HpLayoutSql() {
           <span>Current State</span>
         </div>
         <h1 className="text-3xl md:text-4xl font-serif text-foreground mb-4">ASM Artifacts Analysis</h1>
-        <p className="text-base text-muted-foreground max-w-5xl leading-relaxed">
+        <p className="text-base text-muted-foreground leading-relaxed">
           Current-state inventory of each health plan's submission SQL and file layout / spec, alongside a
           cross-plan concept analysis comparing how each payer layout maps to a recommended Mercy-format
           canonical model.

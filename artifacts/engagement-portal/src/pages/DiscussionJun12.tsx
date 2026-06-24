@@ -208,7 +208,7 @@ export default function DiscussionJun12() {
         <h1 className="text-3xl md:text-4xl font-serif text-foreground mb-4">
           ASM Process Review — Current-State Logic & Reconciliation
         </h1>
-        <p className="text-base text-muted-foreground max-w-5xl leading-relaxed">
+        <p className="text-base text-muted-foreground leading-relaxed">
           June 12 moved from future-state architecture into a detailed working review of the actual current-state UHC
           SQL / query logic, payer file availability, MAO-002 / MAO-004 reconciliation, and known operational gaps. The
           team reviewed which response files Mercy actually receives, walked through Linda's UHC extract logic, and

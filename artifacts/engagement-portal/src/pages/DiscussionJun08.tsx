@@ -168,7 +168,7 @@ export default function DiscussionJun08() {
           <span>06 / 08 / 2026</span>
         </div>
         <h1 className="text-3xl md:text-4xl font-serif text-foreground mb-4">ASM Process Review</h1>
-        <p className="text-base text-muted-foreground max-w-5xl leading-relaxed">
+        <p className="text-base text-muted-foreground leading-relaxed">
           First discovery working session of the four-week review. The team walked the end-to-end ASM (alternative
           submission method) process — how sweep files are created, formatted, submitted, and reconciled — starting with
           United Healthcare as the representative first pass, with the goal of covering all health plans.

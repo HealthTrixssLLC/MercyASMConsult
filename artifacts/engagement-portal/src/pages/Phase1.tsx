@@ -10,7 +10,7 @@ export default function Phase1() {
           <span className="text-primary">Active</span>
         </div>
         <h1 className="text-3xl md:text-4xl font-serif text-foreground mb-4">Statement of Work</h1>
-        <p className="text-base text-muted-foreground max-w-5xl leading-relaxed">
+        <p className="text-base text-muted-foreground leading-relaxed">
           Discovery and Assessment of the client's encounter submission and Additional Submission Mechanism (ASM)
           processes, performed by HealthTrixss in connection with CMS risk adjustment requirements and the client's
           general RADV preparedness. The engagement is advisory in nature and conducted using commercially reasonable
