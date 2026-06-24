@@ -3,7 +3,6 @@ import { Link, useRoute } from "wouter";
 import { FileText, Presentation, ClipboardList, MessagesSquare, Table2, Workflow, Database, Send, GitCompareArrows, LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/useAuth";
-import healthtrixssLogo from "@assets/image_1782296236638.png";
 
 type Phase = {
   id: string;
@@ -125,8 +124,7 @@ export function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
   return (
     <div className="flex flex-col h-full text-sidebar-foreground">
       <div className="p-6 border-b border-sidebar-border/50">
-        <img src={healthtrixssLogo} alt="HealthTrixss" className="h-7 w-auto" />
-        <p className="text-xs text-sidebar-foreground/60 mt-3 uppercase tracking-widest font-medium">ASM Submission Process Review</p>
+        <p className="text-xs text-sidebar-foreground/60 uppercase tracking-widest font-medium">ASM Submission Process Review</p>
       </div>
 
       <nav className="flex-1 overflow-y-auto py-6 px-4 space-y-8" aria-label="Engagement topics">

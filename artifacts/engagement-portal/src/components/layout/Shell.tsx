@@ -10,11 +10,16 @@ export function Shell({ children }: { children: React.ReactNode }) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   return (
-    <div className="flex h-[100dvh] w-full overflow-hidden bg-background">
-      <Sidebar />
-      <div className="flex-1 flex flex-col h-full relative">
-        <header className="md:hidden flex items-center justify-between p-4 border-b bg-card">
-          <div className="flex items-center">
+    <div className="flex flex-col h-[100dvh] w-full overflow-hidden bg-background">
+      <header className="flex items-center justify-center gap-6 md:gap-12 px-6 h-20 border-b bg-card shrink-0">
+        <img src={healthtrixssLogo} alt="HealthTrixss" className="h-8 md:h-11 w-auto" />
+        <span className="h-9 w-px bg-border" />
+        <img src={mercyLogo} alt="Mercy" className="h-9 md:h-12 w-auto" />
+      </header>
+      <div className="flex flex-1 overflow-hidden">
+        <Sidebar />
+        <div className="flex-1 flex flex-col h-full relative">
+          <header className="md:hidden flex items-center p-4 border-b bg-card">
             <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon" className="mr-2" aria-label="Open navigation menu">
@@ -25,16 +30,12 @@ export function Shell({ children }: { children: React.ReactNode }) {
                 <SidebarContent onNavigate={() => setMobileOpen(false)} />
               </SheetContent>
             </Sheet>
-            <img src={healthtrixssLogo} alt="HealthTrixss" className="h-6 w-auto" />
-          </div>
-          <img src={mercyLogo} alt="Mercy" className="h-9 w-auto" />
-        </header>
-        <header className="hidden md:flex items-center justify-end px-6 md:px-10 h-20 border-b bg-card">
-          <img src={mercyLogo} alt="Mercy" className="h-12 w-auto" />
-        </header>
-        <main className="flex-1 overflow-auto">
-          {children}
-        </main>
+            <span className="text-sm uppercase tracking-widest font-medium text-muted-foreground">Engagement Topics</span>
+          </header>
+          <main className="flex-1 overflow-auto">
+            {children}
+          </main>
+        </div>
       </div>
     </div>
   );
