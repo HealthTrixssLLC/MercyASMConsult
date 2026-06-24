@@ -9,36 +9,34 @@ export function Shell({ children }: { children: React.ReactNode }) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   return (
-    <div className="flex flex-col h-[100dvh] w-full overflow-hidden bg-background">
-      <header className="flex justify-center px-6 py-4 border-b bg-card shrink-0">
-        <div className="inline-flex flex-col items-stretch gap-2.5">
-          <div className="flex items-center justify-center">
-            <img src={mercyLogo} alt="Mercy" className="h-9 md:h-12 w-auto" />
+    <div className="flex h-[100dvh] w-full overflow-hidden bg-background">
+      <Sidebar />
+      <div className="flex-1 flex flex-col h-full relative">
+        <header className="md:hidden flex items-center p-4 border-b bg-card">
+          <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" className="mr-2" aria-label="Open navigation menu">
+                <Menu className="h-5 w-5" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="left" className="p-0 w-64 bg-sidebar border-sidebar-border">
+              <SidebarContent onNavigate={() => setMobileOpen(false)} />
+            </SheetContent>
+          </Sheet>
+        </header>
+        <header className="flex justify-center px-6 py-4 border-b bg-card shrink-0">
+          <div className="inline-flex flex-col items-stretch gap-2.5">
+            <div className="flex items-center justify-center">
+              <img src={mercyLogo} alt="Mercy" className="h-9 md:h-12 w-auto" />
+            </div>
+            <p className="w-full text-center uppercase font-semibold text-muted-foreground tracking-[0.18em] text-[12.6px] md:text-[16.2px]">
+              ASM Submission Process Review
+            </p>
           </div>
-          <p className="w-full text-center uppercase font-semibold text-muted-foreground tracking-[0.18em] text-[12.6px] md:text-[16.2px]">
-            ASM Submission Process Review
-          </p>
-        </div>
-      </header>
-      <div className="flex flex-1 overflow-hidden">
-        <Sidebar />
-        <div className="flex-1 flex flex-col h-full relative">
-          <header className="md:hidden flex items-center p-4 border-b bg-card">
-            <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
-              <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="mr-2" aria-label="Open navigation menu">
-                  <Menu className="h-5 w-5" />
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="left" className="p-0 w-64 bg-sidebar border-sidebar-border">
-                <SidebarContent onNavigate={() => setMobileOpen(false)} />
-              </SheetContent>
-            </Sheet>
-          </header>
-          <main className="flex-1 overflow-auto">
-            {children}
-          </main>
-        </div>
+        </header>
+        <main className="flex-1 overflow-auto">
+          {children}
+        </main>
       </div>
     </div>
   );
