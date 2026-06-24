@@ -13,6 +13,8 @@ import DiscussionJun12 from "@/pages/DiscussionJun12";
 import DiscussionJun17 from "@/pages/DiscussionJun17";
 import JayMaoGuidance from "@/pages/JayMaoGuidance";
 import HpLayoutSql from "@/pages/HpLayoutSql";
+import SubmissionStrategy from "@/pages/SubmissionStrategy";
+import ReconciliationStrategy from "@/pages/ReconciliationStrategy";
 import Phase2 from "@/pages/Phase2";
 import Phase3 from "@/pages/Phase3";
 
@@ -32,6 +34,8 @@ function Router() {
         <Route path="/discussions/2026-06-12" component={DiscussionJun12} />
         <Route path="/discussions/2026-06-17" component={DiscussionJun17} />
         <Route path="/asm-analysis-current" component={HpLayoutSql} />
+        <Route path="/submission-strategy" component={SubmissionStrategy} />
+        <Route path="/reconciliation-strategy" component={ReconciliationStrategy} />
         <Route path="/phase/2" component={Phase2} />
         <Route path="/phase/3" component={Phase3} />
         <Route component={NotFound} />

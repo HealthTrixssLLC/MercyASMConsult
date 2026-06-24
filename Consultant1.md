@@ -158,7 +158,7 @@ Exports: `REC_DATA_MODEL`.
 
 ### Tab 5 — Response Intake
 Combine:
-- **Response Inventory Model** — 15 fields (Health Plan, Response Type, Expected?, Received Date, Source File Name, DOS From/Through, Received Month, Record Count, Distinct Member Count, Distinct Diagnosis Count, File Methodology, Load Status, Load Batch ID, Notes/Issues). Columns: Field, Definition, Required?, Example/Values, Why It Matters, Owner.
+- **Response Inventory Model** — 14 fields (Health Plan, Response Type, Expected?, Received Date, Source File Name, DOS From/Through, Received Month, Record Count, Distinct Member Count, Distinct Diagnosis Count, File Methodology, Load Status, Load Batch ID, Notes/Issues). Columns: Field, Definition, Required?, Example/Values, Why It Matters, Owner.
 - **Matching Grain Strategy** — 5 response sources (MAO-004, MAO-002, Health Plan ACK, Health Plan Reject File, MOR/MMR). Columns: Response Source, Primary Use, Best Available Match Grain, Fields Commonly Needed, Limitations, Recommended Matching Approach, Output Status, Confidence Rule, Notes.
 
 Exports: `REC_RESPONSE_INVENTORY`, `REC_MATCHING_GRAIN`.
