@@ -1,2356 +1,1390 @@
-// AUTO-GENERATED from Mercy_ASM_Health_Plan_Layout_Concept_Matrix.xlsx
-  // Source workbook sheets: Concept Matrix, Source Field Mapping, Input Artifacts, Summary, Notes.
+// AUTO-GENERATED from Mercy_ASM_Health_Plan_Layout_Concept_Matrix_REVISED.xlsx
+  // Source workbook sheets: Concept Matrix, Field Mapping, Notes & Legend.
   // To regenerate, see .agents/memory/office-file-parsing.md (unzip + parse XML).
 
   export const HP_COLUMNS = ["UHC","Humana","Global Health","Essence","BCBSOK / EDPS","Anthem","Aetna"] as const;
 
-  export const MATRIX_LEGEND = "Legend: ☑ = required / present in the provided payer layout; ☒ = not required / not found in the provided layout. For UHC and Humana templates, all visible template columns were treated as required layout columns because no separate required flag was provided.";
+  export const CROSSWALK_TITLE = "Revised Health Plan Layout Concept Crosswalk";
+
+  export type ConceptStatus = "present" | "situational" | "absent" | "confirm";
 
   export type MatrixRow = {
-    concept: string;
-    canonical: string;
     category: string;
-    present: boolean[];
+    concept: string;
+    definition: string;
+    status: ConceptStatus[];
+    notes: string;
   };
 
   export const CONCEPT_MATRIX: MatrixRow[] = [
   {
-    "concept": "File / Record Type",
-    "canonical": "record_type",
-    "category": "File / Control",
-    "present": [
-      true,
-      false,
-      false,
-      false,
-      true,
-      false,
-      true
-    ]
-  },
-  {
-    "concept": "Vendor / Submitter Name",
-    "canonical": "submitter_or_health_plan_name",
-    "category": "File / Control",
-    "present": [
-      false,
-      false,
-      false,
-      false,
-      true,
-      true,
-      false
-    ]
-  },
-  {
-    "concept": "File Sent Date",
-    "canonical": "sent_date",
-    "category": "File / Control",
-    "present": [
-      false,
-      false,
-      true,
-      false,
-      true,
-      true,
-      false
-    ]
-  },
-  {
-    "concept": "Claim Type",
-    "canonical": "claim_type",
-    "category": "File / Control",
-    "present": [
-      false,
-      true,
-      true,
-      false,
-      false,
-      true,
-      true
-    ]
-  },
-  {
-    "concept": "Risk Assessment Code",
-    "canonical": "risk_assessment_code",
-    "category": "File / Control",
-    "present": [
-      true,
-      false,
-      false,
-      false,
-      false,
-      false,
-      true
-    ]
-  },
-  {
-    "concept": "Supplemental / Chart Review Type",
-    "canonical": "supplemental_type",
-    "category": "File / Control",
-    "present": [
-      false,
-      false,
-      false,
-      false,
-      true,
-      false,
-      true
-    ]
-  },
-  {
-    "concept": "Unique Encounter / Reference ID",
-    "canonical": "encounter_or_submission_record_id",
-    "category": "File / Control",
-    "present": [
-      true,
-      false,
-      true,
-      false,
-      false,
-      true,
-      false
-    ]
-  },
-  {
-    "concept": "Billingprovideraddress",
-    "canonical": "billingprovideraddress",
-    "category": "File / Control",
-    "present": [
-      false,
-      false,
-      false,
-      false,
-      true,
-      false,
-      false
-    ]
-  },
-  {
-    "concept": "Billingproviderlastname",
-    "canonical": "billingproviderlastname",
-    "category": "File / Control",
-    "present": [
-      false,
-      false,
-      false,
-      false,
-      true,
-      false,
-      false
-    ]
-  },
-  {
-    "concept": "Billingproviderzipcode",
-    "canonical": "billingproviderzipcode",
-    "category": "File / Control",
-    "present": [
-      false,
-      false,
-      false,
-      false,
-      true,
-      false,
-      false
-    ]
-  },
-  {
-    "concept": "Fielddelimiter",
-    "canonical": "fielddelimiter",
-    "category": "File / Control",
-    "present": [
-      false,
-      false,
-      false,
-      false,
-      true,
-      false,
-      false
-    ]
-  },
-  {
-    "concept": "Formatversion",
-    "canonical": "formatversion",
-    "category": "File / Control",
-    "present": [
-      false,
-      false,
-      false,
-      false,
-      true,
-      false,
-      false
-    ]
-  },
-  {
-    "concept": "N U Indicator",
-    "canonical": "n_u_indicator",
-    "category": "File / Control",
-    "present": [
-      true,
-      false,
-      false,
-      false,
-      false,
-      false,
-      false
-    ]
-  },
-  {
-    "concept": "Payerplanaddress",
-    "canonical": "payerplanaddress",
-    "category": "File / Control",
-    "present": [
-      false,
-      false,
-      false,
-      false,
-      true,
-      false,
-      false
-    ]
-  },
-  {
-    "concept": "Payerplanname",
-    "canonical": "payerplanname",
-    "category": "File / Control",
-    "present": [
-      false,
-      false,
-      false,
-      false,
-      true,
-      false,
-      false
-    ]
-  },
-  {
-    "concept": "Payerplantype",
-    "canonical": "payerplantype",
-    "category": "File / Control",
-    "present": [
-      false,
-      false,
-      false,
-      false,
-      true,
-      false,
-      false
-    ]
-  },
-  {
-    "concept": "Payerplanzipcode",
-    "canonical": "payerplanzipcode",
-    "category": "File / Control",
-    "present": [
-      false,
-      false,
-      false,
-      false,
-      true,
-      false,
-      false
-    ]
-  },
-  {
-    "concept": "Planid",
-    "canonical": "planid",
-    "category": "File / Control",
-    "present": [
-      false,
-      false,
-      false,
-      false,
-      true,
-      false,
-      false
-    ]
-  },
-  {
-    "concept": "Record Id",
-    "canonical": "record_id",
-    "category": "File / Control",
-    "present": [
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
-      true
-    ]
-  },
-  {
-    "concept": "Recordinitiator",
-    "canonical": "recordinitiator",
-    "category": "File / Control",
-    "present": [
-      false,
-      false,
-      false,
-      false,
-      true,
-      false,
-      false
-    ]
-  },
-  {
-    "concept": "Service End Date",
-    "canonical": "service_end_date",
-    "category": "File / Control",
-    "present": [
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
-      true
-    ]
-  },
-  {
-    "concept": "Service Start Date",
-    "canonical": "service_start_date",
-    "category": "File / Control",
-    "present": [
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
-      true
-    ]
-  },
-  {
-    "concept": "Serviceenddate",
-    "canonical": "serviceenddate",
-    "category": "File / Control",
-    "present": [
-      false,
-      false,
-      false,
-      false,
-      true,
-      false,
-      false
-    ]
-  },
-  {
-    "concept": "Servicestartdate",
-    "canonical": "servicestartdate",
-    "category": "File / Control",
-    "present": [
-      false,
-      false,
-      false,
-      false,
-      true,
-      false,
-      false
-    ]
-  },
-  {
-    "concept": "Testorprodindicator",
-    "canonical": "testorprodindicator",
-    "category": "File / Control",
-    "present": [
-      false,
-      false,
-      false,
-      false,
-      true,
-      false,
-      false
-    ]
-  },
-  {
-    "concept": "Wiprocustomerid",
-    "canonical": "wiprocustomerid",
-    "category": "File / Control",
-    "present": [
-      false,
-      false,
-      false,
-      false,
-      true,
-      false,
-      false
-    ]
-  },
-  {
-    "concept": "Member Health Plan ID",
-    "canonical": "member_health_plan_id",
-    "category": "Member",
-    "present": [
-      true,
-      true,
-      true,
-      true,
-      false,
-      true,
-      true
-    ]
-  },
-  {
-    "concept": "Member CMS ID / MBI / HICN",
-    "canonical": "member_mbi_hicn",
-    "category": "Member",
-    "present": [
-      true,
-      false,
-      false,
-      false,
-      true,
-      false,
-      true
-    ]
-  },
-  {
-    "concept": "Member CMS Contract / Site / State Code",
-    "canonical": "member_contract_or_site_code",
-    "category": "Member",
-    "present": [
-      true,
-      false,
-      true,
-      false,
-      false,
-      false,
-      false
-    ]
-  },
-  {
-    "concept": "Member Last Name",
-    "canonical": "member_last_name",
-    "category": "Member",
-    "present": [
-      true,
-      false,
-      true,
-      true,
-      false,
-      true,
-      false
-    ]
-  },
-  {
-    "concept": "Member First Name",
-    "canonical": "member_first_name",
-    "category": "Member",
-    "present": [
-      true,
-      false,
-      true,
-      true,
-      false,
-      true,
-      false
-    ]
-  },
-  {
-    "concept": "Member Middle Name / Initial / Suffix",
-    "canonical": "member_middle_or_suffix",
-    "category": "Member",
-    "present": [
-      true,
-      false,
-      false,
-      true,
-      false,
-      false,
-      false
-    ]
-  },
-  {
-    "concept": "Member Date of Birth",
-    "canonical": "member_dob",
-    "category": "Member",
-    "present": [
-      true,
-      true,
-      true,
-      true,
-      true,
-      true,
-      true
-    ]
-  },
-  {
-    "concept": "Member Gender",
-    "canonical": "member_gender",
-    "category": "Member",
-    "present": [
-      true,
-      false,
-      true,
-      false,
-      true,
-      true,
-      false
-    ]
-  },
-  {
-    "concept": "Member Address Line 1",
-    "canonical": "member_address_1",
-    "category": "Member",
-    "present": [
-      true,
-      false,
-      true,
-      false,
-      false,
-      false,
-      false
-    ]
-  },
-  {
-    "concept": "Member Address Line 2",
-    "canonical": "member_address_2",
-    "category": "Member",
-    "present": [
-      true,
-      false,
-      false,
-      false,
-      false,
-      false,
-      false
-    ]
-  },
-  {
-    "concept": "Member City",
-    "canonical": "member_city",
-    "category": "Member",
-    "present": [
-      true,
-      false,
-      true,
-      false,
-      false,
-      false,
-      false
-    ]
-  },
-  {
-    "concept": "Member State",
-    "canonical": "member_state",
-    "category": "Member",
-    "present": [
-      true,
-      false,
-      false,
-      false,
-      false,
-      false,
-      false
-    ]
-  },
-  {
-    "concept": "Member ZIP Code",
-    "canonical": "member_zip",
-    "category": "Member",
-    "present": [
-      true,
-      false,
-      true,
-      false,
-      false,
-      false,
-      false
-    ]
-  },
-  {
-    "concept": "Memberaddress",
-    "canonical": "memberaddress",
-    "category": "Member",
-    "present": [
-      false,
-      false,
-      false,
-      false,
-      true,
-      false,
-      false
-    ]
-  },
-  {
-    "concept": "Memberfirstname",
-    "canonical": "memberfirstname",
-    "category": "Member",
-    "present": [
-      false,
-      false,
-      false,
-      false,
-      true,
-      false,
-      false
-    ]
-  },
-  {
-    "concept": "Memberid",
-    "canonical": "memberid",
-    "category": "Member",
-    "present": [
-      false,
-      false,
-      false,
-      false,
-      true,
-      false,
-      false
-    ]
-  },
-  {
-    "concept": "Memberlastname",
-    "canonical": "memberlastname",
-    "category": "Member",
-    "present": [
-      false,
-      false,
-      false,
-      false,
-      true,
-      false,
-      false
-    ]
-  },
-  {
-    "concept": "Provider NPI",
-    "canonical": "provider_npi",
-    "category": "Provider",
-    "present": [
-      true,
-      true,
-      true,
-      true,
-      true,
-      true,
-      true
-    ]
-  },
-  {
-    "concept": "Rendering / Attending Provider NPI",
-    "canonical": "rendering_attending_provider_npi",
-    "category": "Provider",
-    "present": [
-      false,
-      false,
-      false,
-      false,
-      false,
-      true,
-      false
-    ]
-  },
-  {
-    "concept": "Provider Tax ID",
-    "canonical": "provider_tax_id",
-    "category": "Provider",
-    "present": [
-      true,
-      true,
-      true,
-      false,
-      true,
-      true,
-      false
-    ]
-  },
-  {
-    "concept": "Provider Taxonomy / Specialty",
-    "canonical": "provider_taxonomy_or_specialty",
-    "category": "Provider",
-    "present": [
-      true,
-      false,
-      true,
-      false,
-      false,
-      false,
-      false
-    ]
-  },
-  {
-    "concept": "Provider Type",
-    "canonical": "provider_type",
-    "category": "Provider",
-    "present": [
-      true,
-      false,
-      false,
-      false,
-      false,
-      false,
-      true
-    ]
-  },
-  {
-    "concept": "Provider Last / Facility Name",
-    "canonical": "provider_last_or_facility_name",
-    "category": "Provider",
-    "present": [
-      true,
-      false,
-      true,
-      false,
-      false,
-      true,
-      false
-    ]
-  },
-  {
-    "concept": "Provider First Name",
-    "canonical": "provider_first_name",
-    "category": "Provider",
-    "present": [
-      false,
-      false,
-      true,
-      false,
-      false,
-      false,
-      false
-    ]
-  },
-  {
-    "concept": "Provider ID / Statutory / Internal",
-    "canonical": "provider_internal_or_statutory_id",
-    "category": "Provider",
-    "present": [
-      true,
-      false,
-      false,
-      true,
-      false,
-      false,
-      false
-    ]
-  },
-  {
-    "concept": "Provider Address Line 1",
-    "canonical": "provider_address_1",
-    "category": "Provider",
-    "present": [
-      false,
-      false,
-      true,
-      false,
-      false,
-      false,
-      false
-    ]
-  },
-  {
-    "concept": "Provider City",
-    "canonical": "provider_city",
-    "category": "Provider",
-    "present": [
-      false,
-      false,
-      true,
-      false,
-      true,
-      false,
-      false
-    ]
-  },
-  {
-    "concept": "Provider State",
-    "canonical": "provider_state",
-    "category": "Provider",
-    "present": [
-      false,
-      false,
-      false,
-      false,
-      true,
-      false,
-      false
-    ]
-  },
-  {
-    "concept": "Provider ZIP Code",
-    "canonical": "provider_zip",
-    "category": "Provider",
-    "present": [
-      false,
-      false,
-      true,
-      false,
-      true,
-      false,
-      false
-    ]
-  },
-  {
-    "concept": "Provider Signature on File",
-    "canonical": "provider_signature_on_file",
-    "category": "Provider",
-    "present": [
-      false,
-      false,
-      false,
-      false,
-      false,
-      true,
-      false
-    ]
-  },
-  {
-    "concept": "Provider Accepts Assignment",
-    "canonical": "provider_accepts_assignment",
-    "category": "Provider",
-    "present": [
-      false,
-      false,
-      false,
-      false,
-      false,
-      true,
-      false
-    ]
-  },
-  {
-    "concept": "Date of Service From",
-    "canonical": "dos_from",
-    "category": "Service / Encounter",
-    "present": [
-      true,
-      true,
-      true,
-      true,
-      false,
-      true,
-      false
-    ]
-  },
-  {
-    "concept": "Date of Service Through",
-    "canonical": "dos_through",
-    "category": "Service / Encounter",
-    "present": [
-      true,
-      true,
-      true,
-      true,
-      false,
-      true,
-      false
-    ]
-  },
-  {
-    "concept": "Bill Type / Type of Bill",
-    "canonical": "type_of_bill",
-    "category": "Service / Encounter",
-    "present": [
-      true,
-      false,
-      true,
-      false,
-      false,
-      true,
-      true
-    ]
-  },
-  {
-    "concept": "Frequency Code",
-    "canonical": "frequency_code",
-    "category": "Service / Encounter",
-    "present": [
-      false,
-      false,
-      false,
-      false,
-      true,
-      false,
-      false
-    ]
-  },
-  {
-    "concept": "Place of Service",
-    "canonical": "place_of_service",
-    "category": "Service / Encounter",
-    "present": [
-      true,
-      false,
-      true,
-      false,
-      false,
-      false,
-      false
-    ]
-  },
-  {
-    "concept": "CPT / HCPCS / Procedure Code",
-    "canonical": "procedure_code",
-    "category": "Service / Encounter",
-    "present": [
-      true,
-      false,
-      true,
-      false,
-      false,
-      true,
-      true
-    ]
-  },
-  {
-    "concept": "Procedure Code Type / Qualifier",
-    "canonical": "procedure_code_type",
-    "category": "Service / Encounter",
-    "present": [
-      false,
-      false,
-      true,
-      false,
-      false,
-      true,
-      false
-    ]
-  },
-  {
-    "concept": "Revenue Code",
-    "canonical": "revenue_code",
-    "category": "Service / Encounter",
-    "present": [
-      true,
-      false,
-      true,
-      false,
-      false,
-      true,
-      false
-    ]
-  },
-  {
-    "concept": "Line Charge",
-    "canonical": "line_charge",
-    "category": "Service / Encounter",
-    "present": [
-      false,
-      false,
-      false,
-      false,
-      false,
-      true,
-      false
-    ]
-  },
-  {
-    "concept": "Line Units Type",
-    "canonical": "line_units_type",
-    "category": "Service / Encounter",
-    "present": [
-      false,
-      false,
-      false,
-      false,
-      false,
-      true,
-      false
-    ]
-  },
-  {
-    "concept": "Line Units",
-    "canonical": "line_units",
-    "category": "Service / Encounter",
-    "present": [
-      false,
-      false,
-      false,
-      false,
-      false,
-      true,
-      false
-    ]
-  },
-  {
-    "concept": "Patient Status Code",
-    "canonical": "patient_status_code",
-    "category": "Service / Encounter",
-    "present": [
-      false,
-      false,
-      false,
-      false,
-      false,
-      true,
-      false
-    ]
-  },
-  {
-    "concept": "Patient Amount to Pay",
-    "canonical": "patient_amount_to_pay",
-    "category": "Service / Encounter",
-    "present": [
-      false,
-      false,
-      false,
-      false,
-      false,
-      true,
-      false
-    ]
-  },
-  {
+    "category": "Submission / File",
+    "concept": "Submitter / Vendor Identifier",
+    "definition": "Payer-assigned submitter/vendor abbreviation or entity identifier.",
+    "status": [
+      "absent",
+      "absent",
+      "absent",
+      "absent",
+      "absent",
+      "present",
+      "absent"
+    ],
+    "notes": "Anthem formal job aid uses Vendor_Name; other payer SQL may not expose file naming metadata."
+  },
+  {
+    "category": "Submission / File",
+    "concept": "Sent / File Creation Date",
+    "definition": "Date file is generated or sent to payer.",
+    "status": [
+      "absent",
+      "absent",
+      "present",
+      "absent",
+      "absent",
+      "present",
+      "absent"
+    ],
+    "notes": "Global Health and Anthem include Sent_Date / sent_Date."
+  },
+  {
+    "category": "Submission / File",
+    "concept": "Record / Segment Type",
+    "definition": "Row type indicator such as DTL, CR, D, or equivalent.",
+    "status": [
+      "present",
+      "absent",
+      "absent",
+      "absent",
+      "present",
+      "absent",
+      "present"
+    ],
+    "notes": "Do not merge with claim type; this describes record structure."
+  },
+  {
+    "category": "Submission / File",
+    "concept": "Claim Type / Claim Indicator",
+    "definition": "Professional, inpatient, outpatient, institutional, ambulatory, or claim-type indicator.",
+    "status": [
+      "present",
+      "present",
+      "present",
+      "absent",
+      "absent",
+      "present",
+      "present"
+    ],
+    "notes": "Separate from bill type/POS."
+  },
+  {
+    "category": "Submission / File",
     "concept": "ICD Level / ICD Indicator",
-    "canonical": "icd_level",
-    "category": "Diagnosis",
-    "present": [
-      true,
-      false,
-      true,
-      false,
-      false,
-      true,
-      false
-    ]
+    "definition": "Indicates ICD-9 vs ICD-10 coding or ICD indicator.",
+    "status": [
+      "present",
+      "absent",
+      "present",
+      "absent",
+      "absent",
+      "present",
+      "absent"
+    ],
+    "notes": "Anthem uses ICD_Level; Global Health IDC_Level; UHC ICD_INDIC."
   },
   {
-    "concept": "Diagnosis Code - Primary / Principal",
-    "canonical": "primary_diagnosis_code",
-    "category": "Diagnosis",
-    "present": [
-      false,
-      true,
-      true,
-      true,
-      false,
-      true,
-      false
-    ]
-  },
-  {
-    "concept": "Diagnosis Codes - Other / Additional",
-    "canonical": "diagnosis_code",
-    "category": "Diagnosis",
-    "present": [
-      true,
-      true,
-      false,
-      false,
-      false,
-      false,
-      true
-    ]
-  },
-  {
-    "concept": "Admitting Diagnosis",
-    "canonical": "admitting_diagnosis_code",
-    "category": "Diagnosis",
-    "present": [
-      false,
-      false,
-      false,
-      false,
-      false,
-      true,
-      false
-    ]
-  },
-  {
-    "concept": "External Cause Diagnosis",
-    "canonical": "external_cause_diagnosis_code",
-    "category": "Diagnosis",
-    "present": [
-      false,
-      false,
-      false,
-      false,
-      false,
-      true,
-      false
-    ]
-  },
-  {
-    "concept": "Add/Delete Diagnosis Indicator",
-    "canonical": "diagnosis_add_delete_indicator",
-    "category": "Diagnosis",
-    "present": [
-      false,
-      false,
-      true,
-      false,
-      false,
-      false,
-      false
-    ]
-  },
-  {
-    "concept": "Chart Barcode / Encounter / Diagnosis Key",
-    "canonical": "chart_tracking_key",
-    "category": "Diagnosis",
-    "present": [
-      true,
-      false,
-      false,
-      false,
-      false,
-      false,
-      false
-    ]
-  },
-  {
-    "concept": "Diagnosiscode 1",
-    "canonical": "diagnosiscode_1",
-    "category": "Diagnosis",
-    "present": [
-      false,
-      false,
-      false,
-      false,
-      true,
-      false,
-      false
-    ]
-  },
-  {
-    "concept": "Diagnosiscodetype 1",
-    "canonical": "diagnosiscodetype_1",
-    "category": "Diagnosis",
-    "present": [
-      false,
-      false,
-      false,
-      false,
-      true,
-      false,
-      false
-    ]
-  },
-  {
-    "concept": "Benefits Assigned",
-    "canonical": "benefits_are_assigned",
-    "category": "Administrative / Attestation",
-    "present": [
-      false,
-      false,
-      false,
-      false,
-      false,
-      true,
-      false
-    ]
-  },
-  {
-    "concept": "Release of Information Indicator",
-    "canonical": "release_of_info_indicator",
-    "category": "Administrative / Attestation",
-    "present": [
-      false,
-      false,
-      false,
-      false,
-      false,
-      true,
-      false
-    ]
-  },
-  {
-    "concept": "Status Code",
-    "canonical": "status_code",
-    "category": "Administrative / Attestation",
-    "present": [
-      false,
-      false,
-      false,
-      true,
-      false,
-      false,
-      false
-    ]
-  },
-  {
-    "concept": "End of Record / Record Delimiter",
-    "canonical": "end_of_record_delimiter",
-    "category": "Administrative / Attestation",
-    "present": [
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
-      true
-    ]
-  }
-];
-
-  export type SummaryMetric = { metric: string; values: string[] };
-  export const SUMMARY_METRICS: SummaryMetric[] = [
-  {
-    "metric": "Required Concept Count",
-    "values": [
-      "32",
-      "9",
-      "30",
-      "11",
-      "34",
-      "32",
-      "16"
-    ]
-  },
-  {
-    "metric": "Total Extracted Fields",
-    "values": [
-      "65",
-      "31",
-      "80",
-      "13",
-      "100",
-      "130",
-      "236"
-    ]
-  }
-];
-  export const CONCEPTS_REQUIRED_IN_ALL = "2";
-  export const COMMON_CONCEPTS = ["Member Date of Birth","Provider NPI"];
-
-  export type InputArtifact = { plan: string; artifacts: string; interpretation: string };
-  export const INPUT_ARTIFACTS: InputArtifact[] = [
-  {
-    "plan": "UHC",
-    "artifacts": "UHC Template.csv / UHC Template.xlsx; UHC INST/AMB SQL",
-    "interpretation": "Visible template columns treated as required layout columns."
-  },
-  {
-    "plan": "Humana",
-    "artifacts": "Humana ASM Template New 2026.xlsx; Humana SQL",
-    "interpretation": "Input File headers treated as required layout columns."
-  },
-  {
-    "plan": "Global Health",
-    "artifacts": "Global Health File Layout Requirements for IPA 12.05.2024.xlsx; GH SQL",
-    "interpretation": "Requirements sheet REQUIRED = Y treated as required."
-  },
-  {
-    "plan": "Essence",
-    "artifacts": "Essence Additional Dx Spec workbook; Essence SQL",
-    "interpretation": "File Specification & Layout REQUIRED = Yes treated as required."
-  },
-  {
-    "plan": "BCBSOK / EDPS",
-    "artifacts": "EDPS Institutional Spec Wipro workbook; BCBSOK SQL",
-    "interpretation": "HDR/CR/DGS/TLR fields marked Required treated as required."
-  },
-  {
-    "plan": "Anthem",
-    "artifacts": "2024 MARA SDF Job Aid MRCYMO and MHSC; Anthem SQL",
-    "interpretation": "Fields with P/I/O flag = R in either job aid treated as required."
-  },
-  {
-    "plan": "Aetna",
-    "artifacts": "Aetna Verscend Supplemental Data layout workbook; Aetna SQL",
-    "interpretation": "DetailRecord rows with Req = R treated as required."
-  }
-];
-
-  export type MatrixNote = { assumption: string; description: string };
-  export const MATRIX_NOTES: MatrixNote[] = [
-  {
-    "assumption": "Meaning of checkmark",
-    "description": "☑ indicates the concept is required / present in the provided health plan layout based on explicit required flags where available."
-  },
-  {
-    "assumption": "Meaning of cross",
-    "description": "☒ indicates the concept was not identified as required / present in the provided layout."
-  },
-  {
-    "assumption": "UHC and Humana interpretation",
-    "description": "The UHC and Humana files provided were templates rather than full field-specification workbooks with required/optional flags; visible template columns were treated as required layout columns."
-  },
-  {
-    "assumption": "Concept consolidation",
-    "description": "Similar fields were grouped into consulting concepts to support a future Mercy-format canonical staged source. For exact source field names, use the Source Field Mapping sheet."
-  },
-  {
-    "assumption": "Next refinement",
-    "description": "Once final payer technical specs are confirmed, this matrix should be updated to distinguish Required, Optional/Situational, Not Applicable, and Defaulted fields."
-  }
-];
-
-  export type MappingRow = { concept: string; category: string; sources: string[] };
-  export const SOURCE_FIELD_MAPPING: MappingRow[] = [
-  {
-    "concept": "File / Record Type",
-    "category": "File / Control",
-    "sources": [
-      "SEG TYPE",
-      "",
-      "",
-      "",
-      "FileType; RecordId",
-      "",
-      "Record Type"
-    ]
-  },
-  {
-    "concept": "Vendor / Submitter Name",
-    "category": "File / Control",
-    "sources": [
-      "",
-      "",
-      "",
-      "",
-      "PayerSubmitterId",
-      "Vendor_Name",
-      ""
-    ]
-  },
-  {
-    "concept": "File Sent Date",
-    "category": "File / Control",
-    "sources": [
-      "",
-      "",
-      "SENT_DATE",
-      "",
-      "FileDate",
-      "Sent_Date",
-      ""
-    ]
-  },
-  {
-    "concept": "Claim Type",
-    "category": "File / Control",
-    "sources": [
-      "",
-      "CLAIM TYPE",
-      "CLAIM_TYPE",
-      "",
-      "",
-      "Claim_Type",
-      "Claim Indicator; Claim Type Indicator"
-    ]
-  },
-  {
-    "concept": "Risk Assessment Code",
-    "category": "File / Control",
-    "sources": [
-      "RA Code- Required for Professional",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "Risk Assessment Code Diagnosis 1"
-    ]
-  },
-  {
+    "category": "Submission / File",
     "concept": "Supplemental / Chart Review Type",
-    "category": "File / Control",
-    "sources": [
-      "",
-      "",
-      "",
-      "",
-      "ChartReviewId; ChartReview_Claim_Count",
-      "",
-      "Supplemental Type"
-    ]
+    "definition": "Identifies supplemental/chart review record type.",
+    "status": [
+      "absent",
+      "absent",
+      "absent",
+      "absent",
+      "present",
+      "absent",
+      "present"
+    ],
+    "notes": "BCBSOK uses CR; Aetna uses Supplemental_type."
   },
   {
-    "concept": "Unique Encounter / Reference ID",
-    "category": "File / Control",
-    "sources": [
-      "CLAIMID/PCN; REF #",
-      "",
-      "ENCOUNTER_ID; PATIENT_ACCOUNT_NUMBER",
-      "",
-      "",
-      "Encounter_ID; Patient_Account_Number",
-      ""
-    ]
+    "category": "Submission / File",
+    "concept": "End of Record Marker",
+    "definition": "Explicit end-of-record delimiter or marker.",
+    "status": [
+      "absent",
+      "absent",
+      "absent",
+      "absent",
+      "absent",
+      "absent",
+      "present"
+    ],
+    "notes": "Aetna uses End_of_Rec."
   },
   {
-    "concept": "Billingprovideraddress",
-    "category": "File / Control",
-    "sources": [
-      "",
-      "",
-      "",
-      "",
-      "BillingProviderAddress",
-      "",
-      ""
-    ]
+    "category": "Identifiers",
+    "concept": "Encounter ID",
+    "definition": "Clinical encounter/account-level unique identifier.",
+    "status": [
+      "absent",
+      "present",
+      "present",
+      "absent",
+      "present",
+      "present",
+      "present"
+    ],
+    "notes": "Not the same as claim ID or invoice/reference number."
   },
   {
-    "concept": "Billingproviderlastname",
-    "category": "File / Control",
-    "sources": [
-      "",
-      "",
-      "",
-      "",
-      "BillingProviderLastName",
-      "",
-      ""
-    ]
+    "category": "Identifiers",
+    "concept": "Reference / Invoice Number",
+    "definition": "Payer or extract reference such as REF# or invoice number used for file row tracking.",
+    "status": [
+      "present",
+      "absent",
+      "present",
+      "present",
+      "present",
+      "present",
+      "present"
+    ],
+    "notes": "Used differently by payer; preserve original field mapping."
   },
   {
-    "concept": "Billingproviderzipcode",
-    "category": "File / Control",
-    "sources": [
-      "",
-      "",
-      "",
-      "",
-      "BillingProviderZipCode",
-      "",
-      ""
-    ]
+    "category": "Identifiers",
+    "concept": "Claim / Patient Control Number",
+    "definition": "Claim ID, patient control number, or claim-level identifier submitted to payer.",
+    "status": [
+      "present",
+      "absent",
+      "present",
+      "absent",
+      "present",
+      "absent",
+      "situational"
+    ],
+    "notes": "Aetna includes plan/original claim identifiers; UHC has CLAIMID PCN."
   },
   {
-    "concept": "Fielddelimiter",
-    "category": "File / Control",
-    "sources": [
-      "",
-      "",
-      "",
-      "",
-      "FieldDelimiter",
-      "",
-      ""
-    ]
+    "category": "Identifiers",
+    "concept": "CMS ICN",
+    "definition": "CMS internal control number when available.",
+    "status": [
+      "absent",
+      "absent",
+      "absent",
+      "absent",
+      "present",
+      "absent",
+      "absent"
+    ],
+    "notes": "Keep separate from MBI/HICN and claim ID."
   },
   {
-    "concept": "Formatversion",
-    "category": "File / Control",
-    "sources": [
-      "",
-      "",
-      "",
-      "",
-      "FormatVersion",
-      "",
-      ""
-    ]
+    "category": "Identifiers",
+    "concept": "Chart Review Reference / Chart Keys",
+    "definition": "Chart barcode, encounter key, diagnosis key, or chart review reference identifier.",
+    "status": [
+      "present",
+      "absent",
+      "absent",
+      "absent",
+      "present",
+      "absent",
+      "absent"
+    ],
+    "notes": "UHC has chart fields; BCBSOK has ChartReviewReferenceId."
   },
   {
-    "concept": "N U Indicator",
-    "category": "File / Control",
-    "sources": [
-      "N&U INDICATOR",
-      "",
-      "",
-      "",
-      "",
-      "",
-      ""
-    ]
+    "category": "Identifiers",
+    "concept": "Original / Prior Record Identifier",
+    "definition": "Identifier for prior/original submitted record for correction/delete workflows.",
+    "status": [
+      "absent",
+      "absent",
+      "absent",
+      "absent",
+      "absent",
+      "absent",
+      "present"
+    ],
+    "notes": "Aetna has original_record_id/original_plan_claim_id."
   },
   {
-    "concept": "Payerplanaddress",
-    "category": "File / Control",
-    "sources": [
-      "",
-      "",
-      "",
-      "",
-      "PayerPlanAddress",
-      "",
-      ""
-    ]
+    "category": "Member",
+    "concept": "Member Health Plan ID",
+    "definition": "Health plan member ID/subscriber ID.",
+    "status": [
+      "present",
+      "present",
+      "present",
+      "present",
+      "present",
+      "present",
+      "present"
+    ],
+    "notes": ""
   },
   {
-    "concept": "Payerplanname",
-    "category": "File / Control",
-    "sources": [
-      "",
-      "",
-      "",
-      "",
-      "PayerPlanName",
-      "",
-      ""
-    ]
+    "category": "Member",
+    "concept": "Member CMS ID / MBI / HICN",
+    "definition": "CMS-assigned member identifier, MBI or HICN.",
+    "status": [
+      "present",
+      "absent",
+      "present",
+      "absent",
+      "present",
+      "situational",
+      "present"
+    ],
+    "notes": "Anthem marks situational; can populate from plan ID if valid."
   },
   {
-    "concept": "Payerplantype",
-    "category": "File / Control",
-    "sources": [
-      "",
-      "",
-      "",
-      "",
-      "PayerPlanType",
-      "",
-      ""
-    ]
+    "category": "Member",
+    "concept": "Plan / Contract ID",
+    "definition": "Plan ID, CMS contract, contract/site number, or payer plan grouping.",
+    "status": [
+      "present",
+      "absent",
+      "absent",
+      "absent",
+      "present",
+      "situational",
+      "situational"
+    ],
+    "notes": "Do not merge with member ID."
   },
   {
-    "concept": "Payerplanzipcode",
-    "category": "File / Control",
-    "sources": [
-      "",
-      "",
-      "",
-      "",
-      "PayerPlanZipCode",
-      "",
-      ""
-    ]
+    "category": "Member",
+    "concept": "Member Name - Last",
+    "definition": "Member last name.",
+    "status": [
+      "present",
+      "present",
+      "present",
+      "present",
+      "present",
+      "present",
+      "present"
+    ],
+    "notes": ""
   },
   {
-    "concept": "Planid",
-    "category": "File / Control",
-    "sources": [
-      "",
-      "",
-      "",
-      "",
-      "PlanId",
-      "",
-      ""
-    ]
+    "category": "Member",
+    "concept": "Member Name - First",
+    "definition": "Member first name.",
+    "status": [
+      "present",
+      "present",
+      "present",
+      "present",
+      "present",
+      "present",
+      "present"
+    ],
+    "notes": ""
   },
   {
-    "concept": "Record Id",
-    "category": "File / Control",
-    "sources": [
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "Record ID"
-    ]
+    "category": "Member",
+    "concept": "Member Middle Initial / Middle Name",
+    "definition": "Member middle initial/name.",
+    "status": [
+      "present",
+      "absent",
+      "absent",
+      "absent",
+      "absent",
+      "absent",
+      "situational"
+    ],
+    "notes": ""
   },
   {
-    "concept": "Recordinitiator",
-    "category": "File / Control",
-    "sources": [
-      "",
-      "",
-      "",
-      "",
-      "RecordInitiator",
-      "",
-      ""
-    ]
+    "category": "Member",
+    "concept": "Member Name Suffix",
+    "definition": "Member name suffix.",
+    "status": [
+      "absent",
+      "absent",
+      "absent",
+      "absent",
+      "absent",
+      "absent",
+      "situational"
+    ],
+    "notes": ""
   },
   {
-    "concept": "Service End Date",
-    "category": "File / Control",
-    "sources": [
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "Service End Date"
-    ]
+    "category": "Member",
+    "concept": "Member Date of Birth",
+    "definition": "Member date of birth.",
+    "status": [
+      "present",
+      "present",
+      "present",
+      "present",
+      "present",
+      "present",
+      "present"
+    ],
+    "notes": ""
   },
   {
-    "concept": "Service Start Date",
-    "category": "File / Control",
-    "sources": [
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "Service Start Date"
-    ]
+    "category": "Member",
+    "concept": "Member Gender",
+    "definition": "Member sex/gender code.",
+    "status": [
+      "present",
+      "absent",
+      "present",
+      "absent",
+      "present",
+      "present",
+      "present"
+    ],
+    "notes": ""
   },
   {
-    "concept": "Serviceenddate",
-    "category": "File / Control",
-    "sources": [
-      "",
-      "",
-      "",
-      "",
-      "ServiceEndDate",
-      "",
-      ""
-    ]
+    "category": "Member",
+    "concept": "Member Address Line 1",
+    "definition": "Member street address line 1.",
+    "status": [
+      "present",
+      "absent",
+      "present",
+      "absent",
+      "present",
+      "situational",
+      "present"
+    ],
+    "notes": ""
   },
   {
-    "concept": "Servicestartdate",
-    "category": "File / Control",
-    "sources": [
-      "",
-      "",
-      "",
-      "",
-      "ServiceStartDate",
-      "",
-      ""
-    ]
+    "category": "Member",
+    "concept": "Member Address Line 2",
+    "definition": "Member street address line 2.",
+    "status": [
+      "present",
+      "absent",
+      "present",
+      "absent",
+      "absent",
+      "situational",
+      "present"
+    ],
+    "notes": ""
   },
   {
-    "concept": "Testorprodindicator",
-    "category": "File / Control",
-    "sources": [
-      "",
-      "",
-      "",
-      "",
-      "TestOrProdIndicator",
-      "",
-      ""
-    ]
+    "category": "Member",
+    "concept": "Member City",
+    "definition": "Member city.",
+    "status": [
+      "present",
+      "absent",
+      "present",
+      "absent",
+      "present",
+      "situational",
+      "present"
+    ],
+    "notes": ""
   },
   {
-    "concept": "Wiprocustomerid",
-    "category": "File / Control",
-    "sources": [
-      "",
-      "",
-      "",
-      "",
-      "WiproCustomerId",
-      "",
-      ""
-    ]
+    "category": "Member",
+    "concept": "Member State",
+    "definition": "Member state.",
+    "status": [
+      "present",
+      "absent",
+      "present",
+      "absent",
+      "present",
+      "situational",
+      "present"
+    ],
+    "notes": ""
   },
+  {
+    "category": "Member",
+    "concept": "Member ZIP",
+    "definition": "Member ZIP / ZIP+4.",
+    "status": [
+      "present",
+      "absent",
+      "present",
+      "absent",
+      "present",
+      "situational",
+      "present"
+    ],
+    "notes": ""
+  },
+  {
+    "category": "Member",
+    "concept": "Member County / Country / Group",
+    "definition": "Additional member geography/group fields.",
+    "status": [
+      "absent",
+      "absent",
+      "absent",
+      "absent",
+      "absent",
+      "absent",
+      "situational"
+    ],
+    "notes": "Aetna-specific optional/blank fields."
+  },
+  {
+    "category": "Provider",
+    "concept": "Billing Provider NPI",
+    "definition": "Billing provider NPI.",
+    "status": [
+      "present",
+      "absent",
+      "present",
+      "absent",
+      "present",
+      "present",
+      "present"
+    ],
+    "notes": "Keep separate from rendering/attending NPI."
+  },
+  {
+    "category": "Provider",
+    "concept": "Rendering / Attending Provider NPI",
+    "definition": "Rendering provider NPI for professional or attending provider NPI for institutional.",
+    "status": [
+      "present",
+      "present",
+      "present",
+      "present",
+      "absent",
+      "present",
+      "present"
+    ],
+    "notes": "Anthem Provider_ID_Internal is not same as Provider_NPI."
+  },
+  {
+    "category": "Provider",
+    "concept": "Retrieval NPI",
+    "definition": "Retrieval NPI or chart retrieval provider identifier.",
+    "status": [
+      "present",
+      "absent",
+      "absent",
+      "absent",
+      "absent",
+      "absent",
+      "absent"
+    ],
+    "notes": "UHC-specific."
+  },
+  {
+    "category": "Provider",
+    "concept": "Provider Tax ID",
+    "definition": "Provider tax identification number.",
+    "status": [
+      "present",
+      "present",
+      "present",
+      "absent",
+      "present",
+      "present",
+      "present"
+    ],
+    "notes": ""
+  },
+  {
+    "category": "Provider",
+    "concept": "Provider Taxonomy Code",
+    "definition": "Provider taxonomy classification code.",
+    "status": [
+      "absent",
+      "absent",
+      "absent",
+      "absent",
+      "present",
+      "absent",
+      "situational"
+    ],
+    "notes": "Aetna has rendering taxonomy-related fields."
+  },
+  {
+    "category": "Provider",
+    "concept": "Provider Specialty Code",
+    "definition": "CMS/payer provider specialty code.",
+    "status": [
+      "present",
+      "absent",
+      "present",
+      "absent",
+      "absent",
+      "absent",
+      "absent"
+    ],
+    "notes": "Specialty mapping should remain a controlled reference table."
+  },
+  {
+    "category": "Provider",
+    "concept": "Provider Type",
+    "definition": "Provider type/category such as P/I, INPT/OUTP, professional/institutional.",
+    "status": [
+      "present",
+      "absent",
+      "absent",
+      "absent",
+      "absent",
+      "absent",
+      "present"
+    ],
+    "notes": ""
+  },
+  {
+    "category": "Provider",
+    "concept": "Provider / Facility Name - Last or Organization",
+    "definition": "Provider last name, organization, or facility name depending on claim type.",
+    "status": [
+      "present",
+      "absent",
+      "present",
+      "present",
+      "present",
+      "present",
+      "present"
+    ],
+    "notes": "Do not merge with health plan name."
+  },
+  {
+    "category": "Provider",
+    "concept": "Provider Name - First",
+    "definition": "Provider first name where applicable.",
+    "status": [
+      "present",
+      "absent",
+      "present",
+      "present",
+      "absent",
+      "situational",
+      "present"
+    ],
+    "notes": ""
+  },
+  {
+    "category": "Provider",
+    "concept": "Facility Name",
+    "definition": "Facility name when separately populated.",
+    "status": [
+      "present",
+      "absent",
+      "present",
+      "absent",
+      "absent",
+      "present",
+      "present"
+    ],
+    "notes": "Sometimes same field as Provider_Name_Last_Facility_Name; mapping sheet clarifies."
+  },
+  {
+    "category": "Provider",
+    "concept": "Provider Statutory / Internal ID",
+    "definition": "State license, Medicare hospital number, internal provider ID, or plan provider ID.",
+    "status": [
+      "present",
+      "absent",
+      "present",
+      "absent",
+      "absent",
+      "situational",
+      "situational"
+    ],
+    "notes": ""
+  },
+  {
+    "category": "Provider",
+    "concept": "Provider Address Line 1",
+    "definition": "Provider/billing provider street address line 1.",
+    "status": [
+      "absent",
+      "absent",
+      "present",
+      "absent",
+      "present",
+      "situational",
+      "present"
+    ],
+    "notes": ""
+  },
+  {
+    "category": "Provider",
+    "concept": "Provider Address Line 2",
+    "definition": "Provider/billing provider street address line 2.",
+    "status": [
+      "absent",
+      "absent",
+      "present",
+      "absent",
+      "absent",
+      "situational",
+      "present"
+    ],
+    "notes": ""
+  },
+  {
+    "category": "Provider",
+    "concept": "Provider City",
+    "definition": "Provider/billing provider city.",
+    "status": [
+      "absent",
+      "absent",
+      "present",
+      "absent",
+      "present",
+      "situational",
+      "present"
+    ],
+    "notes": ""
+  },
+  {
+    "category": "Provider",
+    "concept": "Provider State",
+    "definition": "Provider/billing provider state.",
+    "status": [
+      "absent",
+      "absent",
+      "present",
+      "absent",
+      "present",
+      "situational",
+      "present"
+    ],
+    "notes": ""
+  },
+  {
+    "category": "Provider",
+    "concept": "Provider ZIP",
+    "definition": "Provider/billing provider ZIP / ZIP+4.",
+    "status": [
+      "absent",
+      "absent",
+      "present",
+      "absent",
+      "present",
+      "situational",
+      "present"
+    ],
+    "notes": ""
+  },
+  {
+    "category": "Provider",
+    "concept": "Provider Phone / Credentials",
+    "definition": "Provider credential, phone, oversight, or additional provider details.",
+    "status": [
+      "absent",
+      "absent",
+      "absent",
+      "absent",
+      "absent",
+      "absent",
+      "situational"
+    ],
+    "notes": "Primarily Aetna optional fields."
+  },
+  {
+    "category": "Service / Claim",
+    "concept": "Date of Service From",
+    "definition": "Start date of service.",
+    "status": [
+      "present",
+      "present",
+      "present",
+      "present",
+      "present",
+      "present",
+      "present"
+    ],
+    "notes": ""
+  },
+  {
+    "category": "Service / Claim",
+    "concept": "Date of Service Through",
+    "definition": "End date of service.",
+    "status": [
+      "present",
+      "present",
+      "present",
+      "present",
+      "present",
+      "present",
+      "present"
+    ],
+    "notes": ""
+  },
+  {
+    "category": "Service / Claim",
+    "concept": "Bill Type / Type of Bill",
+    "definition": "Institutional bill type or type of bill.",
+    "status": [
+      "present",
+      "absent",
+      "present",
+      "absent",
+      "present",
+      "present",
+      "absent"
+    ],
+    "notes": "Do not merge with POS for professional claims unless payer uses same concept field."
+  },
+  {
+    "category": "Service / Claim",
+    "concept": "Place of Service",
+    "definition": "Professional place of service code.",
+    "status": [
+      "present",
+      "absent",
+      "present",
+      "absent",
+      "present",
+      "present",
+      "absent"
+    ],
+    "notes": "For Anthem, Type_of_Bill carries POS for professional records."
+  },
+  {
+    "category": "Service / Claim",
+    "concept": "Revenue Code",
+    "definition": "Revenue code for institutional/outpatient records.",
+    "status": [
+      "present",
+      "absent",
+      "present",
+      "absent",
+      "present",
+      "present",
+      "present"
+    ],
+    "notes": ""
+  },
+  {
+    "category": "Service / Claim",
+    "concept": "Procedure Code Type",
+    "definition": "Procedure code set qualifier, e.g., HC or HP.",
+    "status": [
+      "absent",
+      "absent",
+      "present",
+      "absent",
+      "absent",
+      "situational",
+      "absent"
+    ],
+    "notes": ""
+  },
+  {
+    "category": "Service / Claim",
+    "concept": "Procedure / CPT / HCPCS Code",
+    "definition": "CPT/HCPCS/procedure code.",
+    "status": [
+      "present",
+      "absent",
+      "present",
+      "absent",
+      "present",
+      "situational",
+      "present"
+    ],
+    "notes": ""
+  },
+  {
+    "category": "Service / Claim",
+    "concept": "Procedure Modifier",
+    "definition": "Procedure modifier.",
+    "status": [
+      "absent",
+      "absent",
+      "present",
+      "absent",
+      "absent",
+      "situational",
+      "absent"
+    ],
+    "notes": ""
+  },
+  {
+    "category": "Service / Claim",
+    "concept": "Frequency Code",
+    "definition": "Bill frequency/frequency code.",
+    "status": [
+      "absent",
+      "absent",
+      "absent",
+      "absent",
+      "present",
+      "absent",
+      "absent"
+    ],
+    "notes": "BCBSOK-specific."
+  },
+  {
+    "category": "Service / Claim",
+    "concept": "Patient Type",
+    "definition": "Patient type classification.",
+    "status": [
+      "absent",
+      "absent",
+      "absent",
+      "absent",
+      "present",
+      "absent",
+      "absent"
+    ],
+    "notes": ""
+  },
+  {
+    "category": "Service / Claim",
+    "concept": "Admission Type",
+    "definition": "Admission type code.",
+    "status": [
+      "absent",
+      "absent",
+      "present",
+      "absent",
+      "present",
+      "situational",
+      "absent"
+    ],
+    "notes": ""
+  },
+  {
+    "category": "Service / Claim",
+    "concept": "Admission Source",
+    "definition": "Admission source code.",
+    "status": [
+      "absent",
+      "absent",
+      "present",
+      "absent",
+      "present",
+      "situational",
+      "absent"
+    ],
+    "notes": ""
+  },
+  {
+    "category": "Service / Claim",
+    "concept": "Patient Status / Discharge Disposition",
+    "definition": "Patient status/discharge disposition code.",
+    "status": [
+      "absent",
+      "absent",
+      "present",
+      "absent",
+      "present",
+      "situational",
+      "absent"
+    ],
+    "notes": ""
+  },
+  {
+    "category": "Service / Claim",
+    "concept": "Inpatient Discharge Time",
+    "definition": "Time of inpatient discharge.",
+    "status": [
+      "absent",
+      "absent",
+      "present",
+      "absent",
+      "absent",
+      "situational",
+      "absent"
+    ],
+    "notes": ""
+  },
+  {
+    "category": "Service / Claim",
+    "concept": "Line Charge",
+    "definition": "Line charge amount.",
+    "status": [
+      "absent",
+      "absent",
+      "present",
+      "absent",
+      "absent",
+      "present",
+      "absent"
+    ],
+    "notes": ""
+  },
+  {
+    "category": "Service / Claim",
+    "concept": "Line Units Type",
+    "definition": "Line unit type such as UN, DA, MJ.",
+    "status": [
+      "absent",
+      "absent",
+      "present",
+      "absent",
+      "absent",
+      "present",
+      "absent"
+    ],
+    "notes": ""
+  },
+  {
+    "category": "Service / Claim",
+    "concept": "Line Units",
+    "definition": "Line units quantity.",
+    "status": [
+      "absent",
+      "absent",
+      "present",
+      "absent",
+      "absent",
+      "present",
+      "absent"
+    ],
+    "notes": ""
+  },
+  {
+    "category": "Service / Claim",
+    "concept": "Provider Signature on File",
+    "definition": "Provider signature on file indicator.",
+    "status": [
+      "absent",
+      "absent",
+      "present",
+      "absent",
+      "absent",
+      "situational",
+      "absent"
+    ],
+    "notes": ""
+  },
+  {
+    "category": "Service / Claim",
+    "concept": "Provider Accepts Assignment",
+    "definition": "Assignment/participating agreement indicator.",
+    "status": [
+      "absent",
+      "absent",
+      "present",
+      "absent",
+      "absent",
+      "present",
+      "absent"
+    ],
+    "notes": ""
+  },
+  {
+    "category": "Service / Claim",
+    "concept": "Benefits Assigned",
+    "definition": "Benefits assigned indicator.",
+    "status": [
+      "absent",
+      "absent",
+      "present",
+      "absent",
+      "absent",
+      "present",
+      "absent"
+    ],
+    "notes": ""
+  },
+  {
+    "category": "Service / Claim",
+    "concept": "Release of Information Indicator",
+    "definition": "Release of information / PHI authorization indicator.",
+    "status": [
+      "absent",
+      "absent",
+      "present",
+      "absent",
+      "absent",
+      "present",
+      "absent"
+    ],
+    "notes": ""
+  },
+  {
+    "category": "Service / Claim",
+    "concept": "Patient Amount to Pay",
+    "definition": "Patient amount to pay.",
+    "status": [
+      "absent",
+      "absent",
+      "present",
+      "absent",
+      "absent",
+      "present",
+      "absent"
+    ],
+    "notes": ""
+  },
+  {
+    "category": "Service / Claim",
+    "concept": "Emergency Basis Indicator",
+    "definition": "Service provided on emergency basis indicator.",
+    "status": [
+      "absent",
+      "absent",
+      "absent",
+      "absent",
+      "absent",
+      "situational",
+      "absent"
+    ],
+    "notes": ""
+  },
+  {
+    "category": "Diagnosis",
+    "concept": "Primary / Principal Diagnosis",
+    "definition": "Primary/principal diagnosis field.",
+    "status": [
+      "present",
+      "present",
+      "present",
+      "absent",
+      "present",
+      "present",
+      "present"
+    ],
+    "notes": "Essence uses one diagnosis per row rather than primary/other split."
+  },
+  {
+    "category": "Diagnosis",
+    "concept": "Admitting Diagnosis",
+    "definition": "Admitting diagnosis.",
+    "status": [
+      "absent",
+      "absent",
+      "present",
+      "absent",
+      "absent",
+      "situational",
+      "absent"
+    ],
+    "notes": ""
+  },
+  {
+    "category": "Diagnosis",
+    "concept": "Other / Additional Diagnosis Codes",
+    "definition": "Additional diagnosis positions or repeated diagnosis rows.",
+    "status": [
+      "present",
+      "present",
+      "present",
+      "present",
+      "present",
+      "present",
+      "present"
+    ],
+    "notes": "Different max counts: UHC up to 40 per row; Anthem/GH up to 24; Aetna up to 30; Essence repeated rows."
+  },
+  {
+    "category": "Diagnosis",
+    "concept": "Diagnosis Type / Qualifier",
+    "definition": "Diagnosis qualifier/type, such as ICD diagnosis type or ABF/10 qualifiers.",
+    "status": [
+      "absent",
+      "absent",
+      "absent",
+      "absent",
+      "present",
+      "absent",
+      "present"
+    ],
+    "notes": ""
+  },
+  {
+    "category": "Diagnosis",
+    "concept": "POA Indicator - Primary",
+    "definition": "Present-on-admission indicator for primary diagnosis.",
+    "status": [
+      "absent",
+      "absent",
+      "absent",
+      "absent",
+      "absent",
+      "situational",
+      "present"
+    ],
+    "notes": ""
+  },
+  {
+    "category": "Diagnosis",
+    "concept": "POA Indicator - Other Diagnoses",
+    "definition": "Present-on-admission indicators for other diagnoses.",
+    "status": [
+      "absent",
+      "absent",
+      "absent",
+      "absent",
+      "absent",
+      "situational",
+      "present"
+    ],
+    "notes": ""
+  },
+  {
+    "category": "Diagnosis",
+    "concept": "Delete Diagnosis Flag",
+    "definition": "Indicates diagnosis deletion/removal.",
+    "status": [
+      "absent",
+      "absent",
+      "absent",
+      "absent",
+      "absent",
+      "absent",
+      "situational"
+    ],
+    "notes": "Aetna delete diagnosis fields; Anthem separate delete file naming."
+  },
+  {
+    "category": "Diagnosis",
+    "concept": "Risk Adjustment Indicator per Diagnosis",
+    "definition": "Diagnosis-level RA flag/indicator.",
+    "status": [
+      "absent",
+      "absent",
+      "absent",
+      "absent",
+      "absent",
+      "absent",
+      "situational"
+    ],
+    "notes": "Aetna RA1-RA30 fields."
+  },
+  {
+    "category": "Diagnosis",
+    "concept": "Status Code",
+    "definition": "Diagnosis/record status code.",
+    "status": [
+      "absent",
+      "absent",
+      "absent",
+      "present",
+      "absent",
+      "absent",
+      "absent"
+    ],
+    "notes": "Essence status_code."
+  }
+];
+
+  export type MappingRow = { concept: string; fields: string[] };
+
+  export const FIELD_MAPPING: MappingRow[] = [
   {
     "concept": "Member Health Plan ID",
-    "category": "Member",
-    "sources": [
-      "MEMBER ID",
+    "fields": [
+      "Plan ID / cvg.subscr_num",
       "UMID",
-      "MEMBER_ID_CMS_HICN; MEMBER_ID_HEALTH_PLAN",
-      "member_nbr",
-      "",
       "Member_ID_Health_Plan",
-      "Member ID"
+      "member_nbr",
+      "Member_ID",
+      "Member_ID_Health_Plan",
+      "Member_ID"
     ]
   },
   {
     "concept": "Member CMS ID / MBI / HICN",
-    "category": "Member",
-    "sources": [
-      "MEMBER/MBI",
+    "fields": [
+      "MBI- need either member ID or HIC",
       "",
+      "Member_ID_CMS_HICN",
       "",
-      "",
-      "MemberHICN",
-      "",
-      "MBI"
+      "HICN",
+      "Member_ID_CMS_HICN",
+      "HICN"
     ]
   },
   {
-    "concept": "Member CMS Contract / Site / State Code",
-    "category": "Member",
-    "sources": [
-      "Contract ID; STATE CODE",
+    "concept": "Billing Provider NPI",
+    "fields": [
+      "NPI / bil_prov_npi",
       "",
-      "MEMBER_STATE_CODE; PROVIDER_STATE_CODE",
+      "Provider_NPI",
       "",
-      "",
-      "",
-      ""
-    ]
-  },
-  {
-    "concept": "Member Last Name",
-    "category": "Member",
-    "sources": [
-      "LAST NAME; PROVIDER LAST NAME",
-      "",
-      "MEMBER_NAME_LAST",
-      "member_last_name; provider_last_name",
-      "",
-      "Member_Name_Last",
-      ""
-    ]
-  },
-  {
-    "concept": "Member First Name",
-    "category": "Member",
-    "sources": [
-      "FIRST NAME; PROVIDER FIRST NAME",
-      "",
-      "MEMBER_NAME_FIRST",
-      "member_first_name; provider_first_name",
-      "",
-      "Member_Name_First",
-      ""
-    ]
-  },
-  {
-    "concept": "Member Middle Name / Initial / Suffix",
-    "category": "Member",
-    "sources": [
-      "MI",
-      "",
-      "",
-      "member_nbr_sfx",
-      "",
-      "",
-      ""
-    ]
-  },
-  {
-    "concept": "Member Date of Birth",
-    "category": "Member",
-    "sources": [
-      "DOB",
-      "MEMBER DATE OF BIRTH",
-      "MEMBER_DATE_OF_BIRTH",
-      "member_dob",
-      "MemberDOB",
-      "Member_Date_of_Birth",
-      "Member DOB"
-    ]
-  },
-  {
-    "concept": "Member Gender",
-    "category": "Member",
-    "sources": [
-      "GENDER",
-      "",
-      "MEMBER_GENDER",
-      "",
-      "MemberGender",
-      "Member_Gender",
-      ""
-    ]
-  },
-  {
-    "concept": "Member Address Line 1",
-    "category": "Member",
-    "sources": [
-      "Mem Street Address",
-      "",
-      "MEMBER_STREET_ADDRESS_1",
-      "",
-      "",
-      "",
-      ""
-    ]
-  },
-  {
-    "concept": "Member Address Line 2",
-    "category": "Member",
-    "sources": [
-      "Mem Address 2",
-      "",
-      "",
-      "",
-      "",
-      "",
-      ""
-    ]
-  },
-  {
-    "concept": "Member City",
-    "category": "Member",
-    "sources": [
-      "Mem City",
-      "",
-      "MEMBER_CITY",
-      "",
-      "",
-      "",
-      ""
-    ]
-  },
-  {
-    "concept": "Member State",
-    "category": "Member",
-    "sources": [
-      "Mem State",
-      "",
-      "",
-      "",
-      "",
-      "",
-      ""
-    ]
-  },
-  {
-    "concept": "Member ZIP Code",
-    "category": "Member",
-    "sources": [
-      "Mem Zip Code",
-      "",
-      "MEMBER_ZIP_CODE",
-      "",
-      "",
-      "",
-      ""
-    ]
-  },
-  {
-    "concept": "Memberaddress",
-    "category": "Member",
-    "sources": [
-      "",
-      "",
-      "",
-      "",
-      "MemberAddress",
-      "",
-      ""
-    ]
-  },
-  {
-    "concept": "Memberfirstname",
-    "category": "Member",
-    "sources": [
-      "",
-      "",
-      "",
-      "",
-      "MemberFirstName",
-      "",
-      ""
-    ]
-  },
-  {
-    "concept": "Memberid",
-    "category": "Member",
-    "sources": [
-      "",
-      "",
-      "",
-      "",
-      "MemberId",
-      "",
-      ""
-    ]
-  },
-  {
-    "concept": "Memberlastname",
-    "category": "Member",
-    "sources": [
-      "",
-      "",
-      "",
-      "",
-      "MemberLastname",
-      "",
-      ""
-    ]
-  },
-  {
-    "concept": "Provider NPI",
-    "category": "Provider",
-    "sources": [
-      "NPI NUMBER; RETRIEVAL NPI",
-      "RENDERING PROVIDER NPI",
-      "PROVIDER_NPI",
-      "provider_npin",
       "BillingProviderNPI",
       "Provider_NPI",
-      "Rendering Provider NPI"
+      "Provider_NPI"
     ]
   },
   {
     "concept": "Rendering / Attending Provider NPI",
-    "category": "Provider",
-    "sources": [
-      "",
-      "",
-      "",
-      "",
+    "fields": [
+      "attending/rendering provider fields",
+      "RENDERING_PROVIDER_NPI",
+      "Provider_NPI / attending",
+      "provider_NPI",
       "",
       "Provider_ID_Internal",
-      ""
+      "Provider_NPI / rendering"
     ]
   },
   {
     "concept": "Provider Tax ID",
-    "category": "Provider",
-    "sources": [
-      "TAX ID",
-      "BILLING PROVIDER TAX ID NUMBER",
-      "PROVIDER_TAX_ID",
+    "fields": [
+      "TAX_ID",
+      "BILLING_PROVIDER_TAX_ID_NUMBER",
+      "Provider_Tax_ID",
       "",
       "BillingProviderTaxId",
       "Provider_Tax_ID",
-      ""
-    ]
-  },
-  {
-    "concept": "Provider Taxonomy / Specialty",
-    "category": "Provider",
-    "sources": [
-      "CMS SPECIALTY",
-      "",
-      "PROVIDER_SPECIALTY",
-      "",
-      "",
-      "",
-      ""
-    ]
-  },
-  {
-    "concept": "Provider Type",
-    "category": "Provider",
-    "sources": [
-      "PROV TYPE",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "Provider Type"
-    ]
-  },
-  {
-    "concept": "Provider Last / Facility Name",
-    "category": "Provider",
-    "sources": [
-      "FACILITY NAME",
-      "",
-      "PROVIDER_NAME_LAST",
-      "",
-      "",
-      "Provider_Name_Last_Facility_Name",
-      ""
-    ]
-  },
-  {
-    "concept": "Provider First Name",
-    "category": "Provider",
-    "sources": [
-      "",
-      "",
-      "PROVIDER_NAME_FIRST",
-      "",
-      "",
-      "",
-      ""
-    ]
-  },
-  {
-    "concept": "Provider ID / Statutory / Internal",
-    "category": "Provider",
-    "sources": [
-      "PROV ID",
-      "",
-      "",
-      "Essence_provider_number",
-      "",
-      "",
-      ""
-    ]
-  },
-  {
-    "concept": "Provider Address Line 1",
-    "category": "Provider",
-    "sources": [
-      "",
-      "",
-      "PROVIDER_STREET_ADDRESS_1",
-      "",
-      "",
-      "",
-      ""
-    ]
-  },
-  {
-    "concept": "Provider City",
-    "category": "Provider",
-    "sources": [
-      "",
-      "",
-      "PROVIDER_CITY",
-      "",
-      "BillingProviderCity; MemberCity; PayerPlanCity",
-      "",
-      ""
-    ]
-  },
-  {
-    "concept": "Provider State",
-    "category": "Provider",
-    "sources": [
-      "",
-      "",
-      "",
-      "",
-      "BillingProviderState; MemberState; PayerPlanState",
-      "",
-      ""
-    ]
-  },
-  {
-    "concept": "Provider ZIP Code",
-    "category": "Provider",
-    "sources": [
-      "",
-      "",
-      "PROVIDER_ZIP_CODE",
-      "",
-      "MemberZip",
-      "",
-      ""
-    ]
-  },
-  {
-    "concept": "Provider Signature on File",
-    "category": "Provider",
-    "sources": [
-      "",
-      "",
-      "",
-      "",
-      "",
-      "Provider_Signature_on_File",
-      ""
-    ]
-  },
-  {
-    "concept": "Provider Accepts Assignment",
-    "category": "Provider",
-    "sources": [
-      "",
-      "",
-      "",
-      "",
-      "",
-      "Provider_Accepts_Assignment",
-      ""
+      "provider_tax_id"
     ]
   },
   {
     "concept": "Date of Service From",
-    "category": "Service / Encounter",
-    "sources": [
-      "FROM DATE OF SERVICE; SERVICE FDOS",
-      "DOS FROM",
-      "DATE_OF_SERVICE_FROM",
-      "from_date",
-      "",
+    "fields": [
+      "FDOS",
+      "DOS_FROM",
       "Date_of_Service_From",
-      ""
+      "from_date",
+      "DOS_FROM",
+      "Date_of_Service_From",
+      "Date_of_Service_From"
     ]
   },
   {
     "concept": "Date of Service Through",
-    "category": "Service / Encounter",
-    "sources": [
-      "SERVICE TDOS; TO DATE OF SERVICE",
-      "DOS THROUGH",
-      "DATE_OF_SERVICE_THRU",
-      "thru_date",
-      "",
+    "fields": [
+      "TDOS",
+      "DOS_THROUGH",
       "Date_of_Service_Thru",
-      ""
+      "thru_date",
+      "DOS_Through",
+      "Date_of_Service_Thru",
+      "Date_of_Service_Thru"
     ]
   },
   {
     "concept": "Bill Type / Type of Bill",
-    "category": "Service / Encounter",
-    "sources": [
-      "BILL TYPE- Institutional Only",
+    "fields": [
+      "BILL_TYPE",
       "",
-      "TYPE_OF_BILL",
+      "Bill_Type",
       "",
-      "",
+      "bill_type",
       "Type_of_Bill",
-      "Place of Service Code / Bill Type"
-    ]
-  },
-  {
-    "concept": "Frequency Code",
-    "category": "Service / Encounter",
-    "sources": [
-      "",
-      "",
-      "",
-      "",
-      "FrequencyCode",
-      "",
       ""
     ]
   },
   {
-    "concept": "Place of Service",
-    "category": "Service / Encounter",
-    "sources": [
-      "POS",
-      "",
-      "PLACE_OF_SERVICE",
-      "",
-      "",
-      "",
-      ""
-    ]
-  },
-  {
-    "concept": "CPT / HCPCS / Procedure Code",
-    "category": "Service / Encounter",
-    "sources": [
-      "CPT",
-      "",
-      "PROCEDURE_CODE",
-      "",
+    "concept": "Procedure / CPT / HCPCS Code",
+    "fields": [
+      "CPT_CODE / CPT",
       "",
       "Procedure_Code",
-      "Procedure Code"
-    ]
-  },
-  {
-    "concept": "Procedure Code Type / Qualifier",
-    "category": "Service / Encounter",
-    "sources": [
       "",
-      "",
-      "PROCEDURE_CODE_TYPE",
-      "",
-      "",
-      "Procedure_Code_Type",
-      ""
+      "ProcedureCode",
+      "Procedure_Code",
+      "cpt_code"
     ]
   },
   {
     "concept": "Revenue Code",
-    "category": "Service / Encounter",
-    "sources": [
-      "REV CODE",
-      "",
-      "REVENUE_CODE",
-      "",
+    "fields": [
+      "REV_CODE",
       "",
       "Revenue_Code",
-      ""
+      "",
+      "Revenue_Code",
+      "Revenue_Code",
+      "rev_code"
     ]
   },
   {
-    "concept": "Line Charge",
-    "category": "Service / Encounter",
-    "sources": [
-      "",
-      "",
-      "",
-      "",
-      "",
-      "Inpatient_Discharge_Time; Line_Charge",
-      ""
-    ]
-  },
-  {
-    "concept": "Line Units Type",
-    "category": "Service / Encounter",
-    "sources": [
-      "",
-      "",
-      "",
-      "",
-      "",
-      "Line_Units_Type",
-      ""
-    ]
-  },
-  {
-    "concept": "Line Units",
-    "category": "Service / Encounter",
-    "sources": [
-      "",
-      "",
-      "",
-      "",
-      "",
-      "Line_Units",
-      ""
-    ]
-  },
-  {
-    "concept": "Patient Status Code",
-    "category": "Service / Encounter",
-    "sources": [
-      "",
-      "",
-      "",
-      "",
-      "",
-      "Patient_Status_Code",
-      ""
-    ]
-  },
-  {
-    "concept": "Patient Amount to Pay",
-    "category": "Service / Encounter",
-    "sources": [
-      "",
-      "",
-      "",
-      "",
-      "",
-      "Patient_Amount_to_Pay",
-      ""
-    ]
-  },
-  {
-    "concept": "ICD Level / ICD Indicator",
-    "category": "Diagnosis",
-    "sources": [
-      "ICD INDIC",
-      "",
-      "ICD_LEVEL",
-      "",
-      "",
-      "ICD_Level",
-      ""
-    ]
-  },
-  {
-    "concept": "Diagnosis Code - Primary / Principal",
-    "category": "Diagnosis",
-    "sources": [
-      "",
-      "ICD CODE 1",
-      "DIAGNOSIS_CODE_PRIMARY",
-      "diagnosis_code",
-      "",
+    "concept": "Primary / Principal Diagnosis",
+    "fields": [
+      "dx_1",
+      "dx_1",
       "Diagnosis_Code_Primary",
-      ""
+      "",
+      "dx_1",
+      "Diagnosis_Code_Primary",
+      "dx_1"
     ]
   },
   {
-    "concept": "Diagnosis Codes - Other / Additional",
-    "category": "Diagnosis",
-    "sources": [
-      "DX1; DX10; DX11; DX12; DX13; DX14; DX15; DX16; DX17; DX18; DX19; DX2; DX20; DX21; DX22; DX23; DX24; DX25; DX3; DX4; DX5; DX6; DX7; DX8; DX9",
-      "ICD CODE 10; ICD CODE 11; ICD CODE 12; ICD CODE 13; ICD CODE 14; ICD CODE 15; ICD CODE 16; ICD CODE 17; ICD CODE 18; ICD CODE 19; ICD CODE 2; ICD CODE 20; ICD CODE 21; ICD CODE 22; ICD CODE 23; ICD CODE 24; ICD CODE 3; ICD CODE 4; ICD CODE 5; ICD CODE 6; ICD CODE 7; ICD CODE 8; ICD CODE 9",
-      "",
-      "",
-      "",
-      "",
-      "Diagnosis Code 1; Diagnosis Code 1 Qualifier"
+    "concept": "Other / Additional Diagnosis Codes",
+    "fields": [
+      "dx_2...dx_40",
+      "dx_2...dx_24",
+      "Diagnosis_Code_1...24",
+      "diagnosis_code by repeated rows",
+      "dx_2...dx_25/12",
+      "Diagnosis_Code_Other1...24",
+      "dx_2...dx_30"
     ]
   },
   {
-    "concept": "Admitting Diagnosis",
-    "category": "Diagnosis",
-    "sources": [
+    "concept": "Encounter ID",
+    "fields": [
       "",
+      "Encounter_ID",
+      "Encounter_ID",
       "",
-      "",
-      "",
-      "",
-      "Diagnosis_Code_Admitting",
-      ""
+      "Encounter_ID",
+      "Encounter_ID",
+      "Encounter_ID"
     ]
   },
   {
-    "concept": "External Cause Diagnosis",
-    "category": "Diagnosis",
-    "sources": [
+    "concept": "Claim / Patient Control Number",
+    "fields": [
+      "CLAIMID PCN",
       "",
+      "patient_account_number",
       "",
+      "claim_id_a",
       "",
-      "",
-      "",
-      "Admission_Source_Code; Admission_Type_Code",
-      ""
+      "plan_claim_number / Patient_account_num"
     ]
   },
   {
-    "concept": "Add/Delete Diagnosis Indicator",
-    "category": "Diagnosis",
-    "sources": [
+    "concept": "Provider / Facility Name - Last or Organization",
+    "fields": [
+      "FACILITY_NM / provider last",
       "",
-      "",
-      "ADD_DELETE_IND",
-      "",
-      "",
-      "",
-      ""
-    ]
-  },
-  {
-    "concept": "Chart Barcode / Encounter / Diagnosis Key",
-    "category": "Diagnosis",
-    "sources": [
-      "Chart Barcode; Chart DX Key; Chart Enc Key",
-      "",
-      "",
-      "",
-      "",
-      "",
-      ""
-    ]
-  },
-  {
-    "concept": "Diagnosiscode 1",
-    "category": "Diagnosis",
-    "sources": [
-      "",
-      "",
-      "",
-      "",
-      "DiagnosisCode_1",
-      "",
-      ""
-    ]
-  },
-  {
-    "concept": "Diagnosiscodetype 1",
-    "category": "Diagnosis",
-    "sources": [
-      "",
-      "",
-      "",
-      "",
-      "DiagnosisCodeType_1",
-      "",
-      ""
-    ]
-  },
-  {
-    "concept": "Benefits Assigned",
-    "category": "Administrative / Attestation",
-    "sources": [
-      "",
-      "",
-      "",
-      "",
-      "",
-      "Benefits_Are_Assigned",
-      ""
-    ]
-  },
-  {
-    "concept": "Release of Information Indicator",
-    "category": "Administrative / Attestation",
-    "sources": [
-      "",
-      "",
-      "",
-      "",
-      "",
-      "Release_of_Info_Ind",
-      ""
-    ]
-  },
-  {
-    "concept": "Status Code",
-    "category": "Administrative / Attestation",
-    "sources": [
-      "",
-      "",
-      "",
-      "status_code",
-      "",
-      "",
-      ""
-    ]
-  },
-  {
-    "concept": "End of Record / Record Delimiter",
-    "category": "Administrative / Attestation",
-    "sources": [
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "End of Record Indicator"
+      "Facility_Name",
+      "provider_last_name",
+      "prov_name / last_name",
+      "Provider_Name_Last_Facility_Name",
+      "rend_Prov_Last / provider org"
     ]
   }
 ];
+
+  export type LegendItem = { symbol: string; meaning: string; use: string };
+
+  export const LEGEND: LegendItem[] = [
+  {
+    "symbol": "☑",
+    "meaning": "Required / present in provided layout artifact",
+    "use": "Use when the field/concept appears as part of the submitted payer layout or formal spec indicates required."
+  },
+  {
+    "symbol": "△",
+    "meaning": "Situational / optional / conditional",
+    "use": "Use when formal spec marks as situational/optional or applicability depends on claim type."
+  },
+  {
+    "symbol": "☒",
+    "meaning": "Not required / not present in provided artifact",
+    "use": "Use when the concept is not represented in the payer artifact reviewed."
+  },
+  {
+    "symbol": "?",
+    "meaning": "Needs confirmation",
+    "use": "Use when the artifact is SQL/template only or requirement status cannot be proven from provided files."
+  }
+];
+
+  export const REVISION_PRINCIPLE = "Concepts are merged only when the business meaning is the same. Fields with similar names but different roles are kept separate, e.g., Billing Provider NPI vs Rendering/Attending Provider NPI; Encounter ID vs Claim/Patient Control Number vs CMS ICN.";
+
+  export const SOURCE_NOTE = "Where a payer artifact is a SQL extract or template rather than a formal required/optional specification, ☑ indicates that the concept is present in the provided layout logic, not that the payer spec independently confirmed it as required.";
   

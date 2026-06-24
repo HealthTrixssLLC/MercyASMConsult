@@ -9,6 +9,8 @@ import {
   Copy,
   Check,
   Minus,
+  Triangle,
+  HelpCircle,
   ChevronDown,
   Building2,
   Layers,
@@ -19,17 +21,22 @@ import {
 import { cn } from "@/lib/utils";
 import {
   HP_COLUMNS,
-  MATRIX_LEGEND,
+  CROSSWALK_TITLE,
   CONCEPT_MATRIX,
-  SUMMARY_METRICS,
-  CONCEPTS_REQUIRED_IN_ALL,
-  COMMON_CONCEPTS,
-  INPUT_ARTIFACTS,
-  MATRIX_NOTES,
-  SOURCE_FIELD_MAPPING,
+  FIELD_MAPPING,
+  LEGEND,
+  REVISION_PRINCIPLE,
+  SOURCE_NOTE,
+  type ConceptStatus,
   type MatrixRow,
-  type MappingRow,
 } from "@/data/conceptMatrix";
+
+const SYMBOL_STATUS: Record<string, ConceptStatus> = {
+  "☑": "present",
+  "△": "situational",
+  "☒": "absent",
+  "?": "confirm",
+};
 
 const BASE = import.meta.env.BASE_URL;
 const LAYOUT_DIR = `${BASE}files/hp/layout/`;
@@ -396,67 +403,21 @@ function groupByCategory<T extends { category: string }>(rows: T[]) {
   return groups;
 }
 
-function SummarySection() {
-  return (
-    <Card className="border-none shadow-sm bg-card p-6">
-      <div className="grid lg:grid-cols-[1fr_auto] gap-6 items-start">
-        <div className="overflow-x-auto">
-          <table className="w-full border-collapse text-left text-sm">
-            <thead>
-              <tr className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-                <th className="py-2 pr-4">Metric</th>
-                {HP_COLUMNS.map((c) => (
-                  <th key={c} className="py-2 px-3 text-center font-semibold">
-                    {c}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {SUMMARY_METRICS.map((m) => (
-                <tr key={m.metric} className="border-t border-border">
-                  <td className="py-2.5 pr-4 font-medium text-foreground">{m.metric}</td>
-                  {m.values.map((v, i) => (
-                    <td key={i} className="py-2.5 px-3 text-center tabular-nums text-muted-foreground">
-                      {v}
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <div className="flex flex-col gap-3 lg:w-56">
-          <div className="rounded-lg border border-primary/30 bg-primary/5 p-4">
-            <div className="text-3xl font-serif text-primary">{CONCEPTS_REQUIRED_IN_ALL}</div>
-            <div className="text-xs text-muted-foreground mt-1">
-              Concepts required / present across all plans
-            </div>
-            <div className="mt-2 flex flex-wrap gap-1.5">
-              {COMMON_CONCEPTS.map((c) => (
-                <span
-                  key={c}
-                  className="inline-flex items-center rounded-full bg-primary/10 px-2.5 py-0.5 text-[11px] font-medium text-primary"
-                >
-                  {c}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </Card>
-  );
-}
+const STATUS_META: Record<
+  ConceptStatus,
+  { Icon: LucideIcon; className: string; label: string }
+> = {
+  present: { Icon: Check, className: "text-primary", label: "Required / present" },
+  situational: { Icon: Triangle, className: "text-amber-500", label: "Situational / optional" },
+  confirm: { Icon: HelpCircle, className: "text-amber-500", label: "Needs confirmation" },
+  absent: { Icon: Minus, className: "text-muted-foreground/30", label: "Not present" },
+};
 
-function PresenceCell({ present }: { present: boolean }) {
-  return present ? (
-    <span className="inline-flex items-center justify-center" title="Required / present">
-      <Check className="w-4 h-4 text-primary" />
-    </span>
-  ) : (
-    <span className="inline-flex items-center justify-center" title="Not required / not found">
-      <Minus className="w-4 h-4 text-muted-foreground/30" />
+function StatusCell({ status }: { status: ConceptStatus }) {
+  const meta = STATUS_META[status];
+  return (
+    <span className="inline-flex items-center justify-center" title={meta.label}>
+      <meta.Icon className={cn("w-4 h-4", meta.className)} />
     </span>
   );
 }
@@ -466,15 +427,16 @@ function CoverageMatrix() {
   return (
     <Card className="border-none shadow-sm bg-card overflow-hidden">
       <div className="overflow-x-auto">
-        <table className="w-full border-collapse text-left text-sm min-w-[820px]">
+        <table className="w-full border-collapse text-left text-sm min-w-[1180px]">
           <thead className="sticky top-0 z-10 bg-card">
             <tr className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-              <th className="py-3 pl-6 pr-4 bg-card">Concept</th>
+              <th className="py-3 pl-6 pr-4 w-[22%] bg-card">Concept</th>
               {HP_COLUMNS.map((c) => (
-                <th key={c} className="py-3 px-2 text-center align-bottom font-semibold w-[9%]">
+                <th key={c} className="py-3 px-2 text-center align-bottom font-semibold w-[7%]">
                   {c}
                 </th>
               ))}
+              <th className="py-3 pl-4 pr-6 w-[27%] align-bottom font-semibold">Reviewer Notes</th>
             </tr>
           </thead>
           <tbody>
@@ -482,23 +444,30 @@ function CoverageMatrix() {
               <Fragment key={group.category}>
                 <tr className="bg-background/60">
                   <td
-                    colSpan={HP_COLUMNS.length + 1}
+                    colSpan={HP_COLUMNS.length + 2}
                     className="py-2 pl-6 pr-4 text-xs font-semibold uppercase tracking-widest text-primary"
                   >
                     {group.category}
                   </td>
                 </tr>
                 {group.rows.map((row) => (
-                  <tr key={row.concept} className="border-t border-border hover:bg-background/40">
+                  <tr key={row.concept} className="border-t border-border align-top hover:bg-background/40">
                     <td className="py-2.5 pl-6 pr-4">
                       <div className="font-medium text-foreground leading-snug">{row.concept}</div>
-                      <div className="text-[11px] font-mono text-muted-foreground">{row.canonical}</div>
+                      {row.definition && (
+                        <div className="text-[11px] text-muted-foreground mt-0.5 leading-relaxed">
+                          {row.definition}
+                        </div>
+                      )}
                     </td>
-                    {row.present.map((p, i) => (
+                    {row.status.map((s, i) => (
                       <td key={i} className="py-2.5 px-2 text-center">
-                        <PresenceCell present={p} />
+                        <StatusCell status={s} />
                       </td>
                     ))}
+                    <td className="py-2.5 pl-4 pr-6 text-[12px] text-muted-foreground leading-relaxed">
+                      {row.notes || <span className="text-muted-foreground/30">—</span>}
+                    </td>
                   </tr>
                 ))}
               </Fragment>
@@ -510,15 +479,14 @@ function CoverageMatrix() {
   );
 }
 
-function SourceFieldMapping() {
-  const groups = groupByCategory<MappingRow>(SOURCE_FIELD_MAPPING);
+function DestinationFieldMapping() {
   return (
     <Card className="border-none shadow-sm bg-card overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full border-collapse text-left text-sm min-w-[1100px]">
           <thead className="sticky top-0 z-10 bg-card">
             <tr className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-              <th className="py-3 pl-6 pr-4 w-[14%] bg-card">Concept</th>
+              <th className="py-3 pl-6 pr-4 w-[16%] bg-card">Concept</th>
               {HP_COLUMNS.map((c) => (
                 <th key={c} className="py-3 px-3 font-semibold align-bottom">
                   {c}
@@ -527,31 +495,19 @@ function SourceFieldMapping() {
             </tr>
           </thead>
           <tbody>
-            {groups.map((group) => (
-              <Fragment key={group.category}>
-                <tr className="bg-background/60">
-                  <td
-                    colSpan={HP_COLUMNS.length + 1}
-                    className="py-2 pl-6 pr-4 text-xs font-semibold uppercase tracking-widest text-primary"
-                  >
-                    {group.category}
+            {FIELD_MAPPING.map((row) => (
+              <tr key={row.concept} className="border-t border-border align-top hover:bg-background/40">
+                <td className="py-2.5 pl-6 pr-4 font-medium text-foreground">{row.concept}</td>
+                {row.fields.map((f, i) => (
+                  <td key={i} className="py-2.5 px-3 text-muted-foreground">
+                    {f ? (
+                      <span className="font-mono text-[12px] leading-relaxed">{f}</span>
+                    ) : (
+                      <span className="text-muted-foreground/30">—</span>
+                    )}
                   </td>
-                </tr>
-                {group.rows.map((row) => (
-                  <tr key={row.concept} className="border-t border-border align-top">
-                    <td className="py-2.5 pl-6 pr-4 font-medium text-foreground">{row.concept}</td>
-                    {row.sources.map((src, i) => (
-                      <td key={i} className="py-2.5 px-3 text-muted-foreground">
-                        {src ? (
-                          <span className="font-mono text-[12px] leading-relaxed">{src}</span>
-                        ) : (
-                          <span className="text-muted-foreground/30">—</span>
-                        )}
-                      </td>
-                    ))}
-                  </tr>
                 ))}
-              </Fragment>
+              </tr>
             ))}
           </tbody>
         </table>
@@ -560,34 +516,48 @@ function SourceFieldMapping() {
   );
 }
 
-function InputsAndNotes() {
+function NotesAndLegend() {
   return (
     <div className="grid lg:grid-cols-2 gap-6">
       <Card className="border-none shadow-sm bg-card p-6">
         <h3 className="font-serif text-xl text-foreground mb-4 flex items-center gap-2">
-          <FolderOpen className="w-5 h-5 text-primary" /> Input Artifacts
+          <GitCompare className="w-5 h-5 text-primary" /> Legend
         </h3>
-        <div className="space-y-4">
-          {INPUT_ARTIFACTS.map((a) => (
-            <div key={a.plan} className="rounded-lg border border-border bg-background/40 p-4">
-              <div className="text-sm font-semibold text-foreground">{a.plan}</div>
-              <div className="text-xs text-muted-foreground mt-1.5">{a.artifacts}</div>
-              <div className="text-xs text-foreground/80 mt-2 italic">{a.interpretation}</div>
-            </div>
-          ))}
+        <div className="space-y-3">
+          {LEGEND.map((item) => {
+            const status = SYMBOL_STATUS[item.symbol];
+            const meta = status ? STATUS_META[status] : null;
+            return (
+              <div key={item.symbol} className="flex gap-3 rounded-lg border border-border bg-background/40 p-3">
+                <div className="shrink-0 w-7 flex justify-center pt-0.5">
+                  {meta ? (
+                    <meta.Icon className={cn("w-5 h-5", meta.className)} />
+                  ) : (
+                    <span className="text-lg leading-none">{item.symbol}</span>
+                  )}
+                </div>
+                <div>
+                  <div className="text-sm font-semibold text-foreground">{item.meaning}</div>
+                  <div className="text-xs text-muted-foreground mt-1 leading-relaxed">{item.use}</div>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </Card>
       <Card className="border-none shadow-sm bg-card p-6">
         <h3 className="font-serif text-xl text-foreground mb-4 flex items-center gap-2">
-          <FileText className="w-5 h-5 text-primary" /> Assumptions &amp; Notes
+          <FileText className="w-5 h-5 text-primary" /> Notes
         </h3>
-        <dl className="space-y-4">
-          {MATRIX_NOTES.map((n) => (
-            <div key={n.assumption}>
-              <dt className="text-sm font-semibold text-foreground">{n.assumption}</dt>
-              <dd className="text-sm text-muted-foreground mt-1 leading-relaxed">{n.description}</dd>
-            </div>
-          ))}
+        <dl className="space-y-5">
+          <div>
+            <dt className="text-sm font-semibold text-foreground">Revision principle</dt>
+            <dd className="text-sm text-muted-foreground mt-1 leading-relaxed">{REVISION_PRINCIPLE}</dd>
+          </div>
+          <div>
+            <dt className="text-sm font-semibold text-foreground">Source note</dt>
+            <dd className="text-sm text-muted-foreground mt-1 leading-relaxed">{SOURCE_NOTE}</dd>
+          </div>
         </dl>
       </Card>
     </div>
@@ -597,14 +567,41 @@ function InputsAndNotes() {
 const ANALYSIS_TABS = [
   { id: "matrix", label: "Coverage Matrix", icon: GitCompare },
   { id: "sources", label: "Destination Field Mapping", icon: Database },
-  { id: "inputs", label: "Inputs & Notes", icon: FolderOpen },
+  { id: "notes", label: "Notes & Legend", icon: FileText },
 ] as const;
+
+function LegendStrip() {
+  return (
+    <div className="flex flex-wrap gap-x-6 gap-y-2">
+      {LEGEND.map((item) => {
+        const status = SYMBOL_STATUS[item.symbol];
+        const meta = status ? STATUS_META[status] : null;
+        return (
+          <div key={item.symbol} className="flex items-center gap-2 text-xs text-muted-foreground">
+            {meta ? (
+              <meta.Icon className={cn("w-4 h-4", meta.className)} />
+            ) : (
+              <span className="text-sm">{item.symbol}</span>
+            )}
+            <span>{item.meaning}</span>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
 
 function AnalysisTab() {
   return (
     <div className="space-y-8">
-      <SummarySection />
-      <p className="text-sm text-muted-foreground leading-relaxed max-w-4xl">{MATRIX_LEGEND}</p>
+      <div className="space-y-1">
+        <h2 className="font-serif text-2xl text-foreground">{CROSSWALK_TITLE}</h2>
+        <p className="text-sm text-muted-foreground leading-relaxed max-w-4xl">
+          Cross-plan concept crosswalk: each normalized concept mapped against the destination layout of every
+          health plan, with the field name it lands on per plan and reviewer notes.
+        </p>
+      </div>
+      <LegendStrip />
       <Tabs defaultValue="matrix" className="w-full">
         <div className="border-b border-border mb-6 overflow-x-auto no-scrollbar">
           <TabsList className="h-auto p-0 bg-transparent flex justify-start gap-6">
@@ -624,10 +621,10 @@ function AnalysisTab() {
           <CoverageMatrix />
         </TabsContent>
         <TabsContent value="sources" className="animate-in fade-in duration-300">
-          <SourceFieldMapping />
+          <DestinationFieldMapping />
         </TabsContent>
-        <TabsContent value="inputs" className="animate-in fade-in duration-300">
-          <InputsAndNotes />
+        <TabsContent value="notes" className="animate-in fade-in duration-300">
+          <NotesAndLegend />
         </TabsContent>
       </Tabs>
     </div>
