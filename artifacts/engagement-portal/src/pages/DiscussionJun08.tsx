@@ -160,7 +160,7 @@ function tagClass(tag: string) {
 
 export default function DiscussionJun08() {
   return (
-    <div className="max-w-[1600px] mx-auto px-6 md:px-10 py-8 md:py-10 fade-in">
+    <div className="w-full px-6 md:px-10 py-8 md:py-10 fade-in">
       <header className="mb-12">
         <div className="flex items-center gap-3 text-sm font-medium text-muted-foreground uppercase tracking-widest mb-3">
           <span className="text-primary">Discovery · Discussion</span>
