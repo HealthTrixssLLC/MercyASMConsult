@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useRoute } from "wouter";
-import { FileText, Presentation, ClipboardList, MessagesSquare, Table2, Workflow, Database, Send, GitCompareArrows, AlertTriangle, LogOut } from "lucide-react";
+import { FileText, Presentation, ClipboardList, MessagesSquare, Table2, Workflow, Database, Send, GitCompareArrows, AlertTriangle, LineChart, LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/useAuth";
 import healthtrixssLogo from "@assets/image_1782296236638.png";
@@ -61,6 +61,7 @@ export const PHASE_GROUPS: PhaseGroup[] = [
     items: [
       { id: "discussion-2026-06-17", path: "/discussions/2026-06-17", title: "Current & Future", icon: Workflow, status: "active" },
       { id: "asm-analysis-current", path: "/asm-analysis-current", title: "ASM artifacts", icon: Database, status: "active" },
+      { id: "mao-data-gap", path: "/mao-data-gap", title: "MAO Data Gap Analysis", icon: LineChart, status: "active" },
     ],
   },
   {

@@ -15,6 +15,7 @@ import DiscussionJun12 from "@/pages/DiscussionJun12";
 import DiscussionJun17 from "@/pages/DiscussionJun17";
 import JayMaoGuidance from "@/pages/JayMaoGuidance";
 import HpLayoutSql from "@/pages/HpLayoutSql";
+import MaoDataGap from "@/pages/MaoDataGap";
 import SubmissionStrategy from "@/pages/SubmissionStrategy";
 import ReconciliationStrategy from "@/pages/ReconciliationStrategy";
 import Findings from "@/pages/Findings";
@@ -43,6 +44,7 @@ function Router() {
         <Route path="/discussions/2026-06-12" component={DiscussionJun12} />
         <Route path="/discussions/2026-06-17" component={DiscussionJun17} />
         <Route path="/asm-analysis-current" component={HpLayoutSql} />
+        <Route path="/mao-data-gap" component={MaoDataGap} />
         <Route path="/findings" component={Findings} />
         <Route path="/submission-strategy" component={SubmissionStrategy} />
         <Route path="/reconciliation-strategy" component={ReconciliationStrategy} />
