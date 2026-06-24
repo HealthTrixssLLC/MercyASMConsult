@@ -9,7 +9,7 @@ export default function Phase2() {
       </div>
       <h1 className="text-4xl font-serif text-foreground mb-4">Strategy & Design</h1>
       <p className="text-lg text-muted-foreground max-w-xl leading-relaxed mb-8">
-        This topic is currently locked. Content will be populated and made available for review upon the formal conclusion and sign-off of Topic 1.
+        This topic is currently locked. Content will be populated and made available for review upon the formal conclusion and sign-off of the Statement of Work.
       </p>
       <div className="h-px w-24 bg-border" />
       <span className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mt-8">

@@ -1,0 +1,408 @@
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Compass, Users, CalendarRange, ClipboardList, Building2, CheckCircle2, ArrowRight } from "lucide-react";
+
+const LIFECYCLE = [
+  "Compare CMS and Health Plan response against submission",
+  "Investigate rejects, edits, and member / clinical issues",
+  "Address issues and resubmit as needed",
+  "Outcome and impact",
+];
+
+const HEALTH_PLANS = [
+  "United Healthcare (UHC)",
+  "Aetna",
+  "Humana",
+  "Anthem",
+  "Blue Cross Blue Shield Arkansas",
+  "Blue Cross Blue Shield Oklahoma",
+  "Essence Health",
+];
+
+const STAKEHOLDERS = [
+  {
+    org: "Mercy",
+    label: "Client",
+    groups: [
+      { role: "Executive Sponsors", people: ["Gavin Helton", "Michael Sarli"] },
+      { role: "Project Lead", people: ["Sandra Weiler"] },
+      { role: "Primary Discovery Resources", people: ["Fred Chen", "Jennifer Oldfather", "Linda Reed", "Ronald Goode"] },
+      { role: "Supporting Participants", people: ["Amber Bruno", "Emily Hogan", "Kalli Castille", "Kate Barker", "Marie Collins Hespen", "Melissa Liehr"] },
+    ],
+  },
+  {
+    org: "Consulting Resources",
+    label: "HealthTrixss / Virtix Health",
+    groups: [
+      { role: "Project Lead", people: ["Kate McClure", "Kenny Misir", "Lou Steinberg", "Jay Ahlmer"] },
+      { role: "Supporting Participants", people: ["Samir Rawat", "Aaron Peterson (PTO)", "Vinod Gnawali", "Jay Baker"] },
+    ],
+  },
+];
+
+const WEEKS = [
+  {
+    num: 1,
+    range: "Jun 8 – Jun 12",
+    title: "Current-State Discovery",
+    activities: [
+      "Stakeholder interviews",
+      "ASM process walkthroughs (end-to-end)",
+      "ASM workflow, handoffs and roles review",
+      "Artifact and evidence collection",
+    ],
+    inputs: [
+      "Current ASM workflow & process documentation",
+      "SOPs",
+      "Existing extraction logic",
+      "Health plan inventory",
+      "Sample ASM files",
+      "Current validation approach",
+    ],
+    outcome: "Shared understanding of current and future-state operating model",
+  },
+  {
+    num: 2,
+    range: "Jun 15 – Jun 19",
+    title: "Validation & Reconciliation Assessment",
+    activities: [
+      "Review submission controls and validation logic",
+      "Analyze CMS and Health Plan response files",
+      "Reconciliation process review",
+      "Reject and exception management review",
+      "Resubmission process review",
+    ],
+    inputs: [
+      "Health plan acknowledgement files",
+      "Reject files",
+      "Acceptance files",
+      "MAO-002 / MAO-004",
+      "EDR files",
+      "Existing reconciliation processes",
+      "ICN linkage approach",
+      "Resubmission procedures",
+    ],
+    outcome: "Validation and reconciliation control assessment",
+  },
+  {
+    num: 3,
+    range: "Jun 22 – Jun 26",
+    title: "Traceability & Future-State Evaluation",
+    activities: [
+      "End-to-end data lineage and traceability review",
+      "Submission tracking and visibility assessment",
+      "Operational controls and auditability assessment",
+      "Health Plan-specific requirement alignment",
+      "Automation and optimization opportunities",
+    ],
+    inputs: [
+      "Existing reporting and tracking outputs",
+      "Data lineage or process flow documentation",
+      "Business rules and control documentation",
+      "Health Plan communication and escalation processes",
+      "Pain points and improvement opportunities",
+    ],
+    outcome: "Gap analysis and future-state observations",
+  },
+  {
+    num: 4,
+    range: "Jun 29 – Jul 3",
+    title: "Recommendations & Executive Readout",
+    activities: [
+      "Consolidate assessment findings",
+      "Identify and prioritize opportunities",
+      "Develop recommendations and roadmap",
+      "Prepare executive presentation and final report",
+      "Validate findings with stakeholders",
+    ],
+    inputs: [
+      "Review of findings",
+      "Prioritization guidance",
+      "Business objectives",
+      "Future-state constraints",
+      "Feedback on recommendations",
+    ],
+    outcome: "Executive-aligned roadmap and recommendations",
+  },
+];
+
+const WORKING_MODEL = [
+  { title: "Weekly Project Status Meeting", detail: "30 min" },
+  { title: "3 Discovery Working Sessions per Week", detail: "90 – 120 min each" },
+  { title: "Ad Hoc SME Interviews", detail: "As needed" },
+  { title: "Weekly Findings Review and Action Tracking", detail: "Ongoing" },
+];
+
+const ASSUMPTIONS = [
+  { label: "Primary Mercy Contact", value: "Sandra Weiler" },
+  { label: "Meeting Cadence", value: "3 working sessions per week" },
+  { label: "Artifact Sharing Process", value: "Teams channel managed by Sandra" },
+  { label: "Primary Discovery SMEs", value: "Fred Chen, Jennifer Oldfather, Linda Reed, Ronald Goode" },
+  { label: "First Working Session", value: "June 8, 2026" },
+  { label: "Health Plan Prioritization", value: "Confirm whether all plans are reviewed equally or if UHC is used as the initial baseline" },
+];
+
+export default function Kickoff() {
+  return (
+    <div className="max-w-6xl mx-auto p-8 md:p-12 fade-in">
+      <header className="mb-12">
+        <div className="flex items-center gap-3 text-sm font-medium text-muted-foreground uppercase tracking-widest mb-3">
+          <span className="text-primary">Active</span>
+          <span className="w-1 h-1 rounded-full bg-primary/30" />
+          <span>06 / 01 / 2026</span>
+        </div>
+        <h1 className="text-4xl md:text-5xl font-serif text-foreground mb-4">Kickoff</h1>
+        <p className="text-lg text-muted-foreground max-w-3xl leading-relaxed">
+          Mercy — ASM Discovery &amp; Assessment. Mercy is evaluating its ASM direct-submission operating model as it
+          transitions toward an Azure / Databricks future state. This kickoff aligns scope, stakeholders, and the
+          discovery cadence ahead of the first working session.
+        </p>
+      </header>
+
+      <Tabs defaultValue="overview" className="w-full">
+        <div className="border-b border-border mb-8 overflow-x-auto no-scrollbar">
+          <TabsList className="h-auto p-0 bg-transparent flex justify-start gap-6">
+            {[
+              { id: "overview", label: "Overview", icon: Compass },
+              { id: "stakeholders", label: "Stakeholders", icon: Users },
+              { id: "cadence", label: "Discovery Cadence", icon: CalendarRange },
+              { id: "working-model", label: "Working Model", icon: ClipboardList },
+            ].map((tab) => (
+              <TabsTrigger
+                key={tab.id}
+                value={tab.id}
+                className="pb-4 pt-2 px-1 rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:text-primary text-muted-foreground hover:text-foreground transition-colors flex gap-2 items-center text-sm md:text-base font-medium"
+              >
+                <tab.icon className="w-4 h-4" />
+                {tab.label}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+        </div>
+
+        <TabsContent value="overview" className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <div className="grid md:grid-cols-2 gap-8">
+            <Card className="border-none shadow-sm bg-card">
+              <CardHeader>
+                <CardTitle className="font-serif text-2xl">Introduction</CardTitle>
+              </CardHeader>
+              <CardContent className="text-muted-foreground leading-relaxed space-y-4">
+                <p>
+                  Mercy is evaluating its ASM direct-submission operating model as and when it is transitioning toward an
+                  Azure / Databricks future state.
+                </p>
+                <p>
+                  This engagement examines how that model performs today and where it can be strengthened as the
+                  underlying platform evolves.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-border shadow-sm bg-accent/5">
+              <CardHeader>
+                <CardTitle className="font-serif text-2xl">Project Scope</CardTitle>
+                <CardDescription>ASM Discovery &amp; Assessment</CardDescription>
+              </CardHeader>
+              <CardContent className="text-muted-foreground leading-relaxed">
+                <p>
+                  Evaluate the ASM direct-submission lifecycle — from ASM file generation through Health Plan validation,
+                  processing, and CMS response reconciliation — to identify process, control, traceability, operational,
+                  and future-state improvement opportunities.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+
+          <Card className="border-border shadow-sm">
+            <CardHeader>
+              <CardTitle className="font-serif text-xl">Submission Lifecycle Flow</CardTitle>
+              <CardDescription>The reconciliation loop the assessment follows end to end.</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="flex flex-col md:flex-row md:items-stretch gap-4">
+                {LIFECYCLE.map((step, i) => (
+                  <div key={i} className="flex md:flex-1 items-center gap-4">
+                    <div className="flex-1 flex gap-3 p-4 rounded-lg border border-border bg-muted/30 h-full">
+                      <div className="shrink-0 w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center text-primary font-serif text-sm">
+                        {i + 1}
+                      </div>
+                      <span className="text-sm text-foreground/80 leading-relaxed">{step}</span>
+                    </div>
+                    {i < LIFECYCLE.length - 1 && (
+                      <ArrowRight className="w-5 h-5 text-primary/40 shrink-0 rotate-90 md:rotate-0" />
+                    )}
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="stakeholders" className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+          {STAKEHOLDERS.map((party, i) => (
+            <Card key={i} className="border-border shadow-sm">
+              <CardHeader className="bg-muted/50 border-b border-border pb-4">
+                <div className="flex items-center justify-between gap-4">
+                  <div className="flex items-center gap-2">
+                    <Building2 className="w-5 h-5 text-primary" />
+                    <CardTitle className="font-serif text-xl">{party.org}</CardTitle>
+                  </div>
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary">
+                    {party.label}
+                  </span>
+                </div>
+              </CardHeader>
+              <CardContent className="pt-6">
+                <div className="grid sm:grid-cols-2 gap-6">
+                  {party.groups.map((group, j) => (
+                    <div key={j}>
+                      <div className="text-xs uppercase tracking-widest text-muted-foreground font-semibold mb-3">
+                        {group.role}
+                      </div>
+                      <ul className="space-y-2">
+                        {group.people.map((person, k) => (
+                          <li key={k} className="flex items-center gap-3 text-foreground/80">
+                            <span className="w-7 h-7 rounded-full bg-muted flex items-center justify-center font-serif text-xs text-primary shrink-0">
+                              {person.split(" ").map((n) => n[0]).slice(0, 2).join("")}
+                            </span>
+                            <span className="text-sm">{person}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </TabsContent>
+
+        <TabsContent value="cadence" className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <Card className="border-border shadow-sm bg-accent/5">
+            <CardHeader className="pb-3">
+              <CardTitle className="font-serif text-xl">Assessment Scope</CardTitle>
+              <CardDescription>A four-week discovery process across all participating Health Plans.</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-5">
+              <p className="text-muted-foreground leading-relaxed">
+                The review includes all participating Medicare Advantage Health Plans to evaluate validation,
+                reconciliation, traceability, and operational consistency across payer-specific requirements. All
+                participating Health Plans are covered.
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {HEALTH_PLANS.map((plan, i) => (
+                  <span key={i} className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-card border border-border text-foreground/80">
+                    {plan}
+                  </span>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          <div className="grid lg:grid-cols-2 gap-6">
+            {WEEKS.map((week) => (
+              <Card key={week.num} className="border-border shadow-sm flex flex-col">
+                <CardHeader className="border-b border-border pb-4">
+                  <div className="flex items-center gap-4">
+                    <div className="shrink-0 w-11 h-11 rounded-full bg-primary/10 flex items-center justify-center text-primary font-serif text-lg">
+                      {week.num}
+                    </div>
+                    <div>
+                      <div className="text-xs uppercase tracking-widest text-primary font-semibold">
+                        Week {week.num} · {week.range}
+                      </div>
+                      <CardTitle className="font-serif text-xl mt-0.5">{week.title}</CardTitle>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent className="pt-6 space-y-5 flex-1">
+                  <div>
+                    <div className="text-xs uppercase tracking-widest text-muted-foreground font-semibold mb-2">
+                      Key Activities
+                    </div>
+                    <ul className="space-y-2">
+                      {week.activities.map((a, i) => (
+                        <li key={i} className="flex gap-2.5 text-sm text-muted-foreground">
+                          <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0" />
+                          <span>{a}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <div className="text-xs uppercase tracking-widest text-muted-foreground font-semibold mb-2">
+                      Mercy Inputs
+                    </div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {week.inputs.map((inp, i) => (
+                        <span key={i} className="inline-flex items-center px-2 py-0.5 rounded text-xs bg-muted text-foreground/70">
+                          {inp}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </CardContent>
+                <div className="border-t border-border bg-muted/30 px-6 py-4 flex gap-3 items-start">
+                  <CheckCircle2 className="w-5 h-5 text-primary shrink-0 opacity-70 mt-0.5" />
+                  <div>
+                    <div className="text-xs uppercase tracking-widest text-muted-foreground font-semibold">
+                      Key Mercy Outcome
+                    </div>
+                    <p className="text-sm text-foreground/80 mt-0.5">{week.outcome}</p>
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </TabsContent>
+
+        <TabsContent value="working-model" className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <div className="grid md:grid-cols-2 gap-8">
+            <Card className="border-border shadow-sm">
+              <CardHeader className="bg-muted/50 border-b border-border pb-4">
+                <div className="flex items-center gap-2">
+                  <ClipboardList className="w-5 h-5 text-primary" />
+                  <CardTitle className="font-serif text-xl">Proposed Working Model</CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent className="pt-6">
+                <ul className="space-y-5">
+                  {WORKING_MODEL.map((item, i) => (
+                    <li key={i} className="flex gap-4">
+                      <div className="shrink-0 w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center text-primary font-serif text-sm">
+                        {i + 1}
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-foreground">{item.title}</h4>
+                        <p className="text-sm text-muted-foreground">{item.detail}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+
+            <Card className="border-border shadow-sm">
+              <CardHeader className="bg-accent/10 border-b border-border pb-4">
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-accent" />
+                  <CardTitle className="font-serif text-xl">Working Assumptions</CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent className="pt-2">
+                <div className="divide-y divide-border">
+                  {ASSUMPTIONS.map((item, i) => (
+                    <div key={i} className="py-4 flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4">
+                      <span className="text-sm font-semibold text-foreground sm:w-44 shrink-0">{item.label}</span>
+                      <span className="text-sm text-muted-foreground">{item.value}</span>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </TabsContent>
+      </Tabs>
+    </div>
+  );
+}

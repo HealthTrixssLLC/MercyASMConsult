@@ -1,12 +1,13 @@
 import React from "react";
 import { Link, useRoute } from "wouter";
-import { FileText, Calendar, ShieldAlert } from "lucide-react";
+import { FileText, Calendar, ShieldAlert, Presentation } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export const PHASES = [
-  { id: "1", title: "Statement of Work", subtitle: "Topic 1", icon: FileText, status: "active" },
-  { id: "2", title: "Strategy & Design", subtitle: "Topic 2", icon: Calendar, status: "upcoming" },
-  { id: "3", title: "Execution & Handover", subtitle: "Topic 3", icon: ShieldAlert, status: "upcoming" },
+  { id: "1", path: "/phase/1", title: "Statement of Work", icon: FileText, status: "active" },
+  { id: "kickoff", path: "/kickoff", title: "Kickoff", icon: Presentation, status: "active" },
+  { id: "2", path: "/phase/2", title: "Strategy & Design", icon: Calendar, status: "upcoming" },
+  { id: "3", path: "/phase/3", title: "Execution & Handover", icon: ShieldAlert, status: "upcoming" },
 ];
 
 function PhaseLink({
@@ -16,11 +17,11 @@ function PhaseLink({
   phase: (typeof PHASES)[number];
   onNavigate?: () => void;
 }) {
-  const [isActive] = useRoute(`/phase/${phase.id}`);
+  const [isActive] = useRoute(phase.path);
   const Icon = phase.icon;
   return (
     <Link
-      href={`/phase/${phase.id}`}
+      href={phase.path}
       className="block"
       onClick={onNavigate}
       aria-current={isActive ? "page" : undefined}
@@ -35,7 +36,7 @@ function PhaseLink({
       >
         <div className="flex items-center justify-between mb-1">
           <span className="text-[10px] uppercase tracking-wider font-semibold opacity-70">
-            {phase.subtitle}
+            {phase.status === "active" ? "Active" : "Upcoming"}
           </span>
           {phase.status === "active" ? (
             <div className="w-1.5 h-1.5 rounded-full bg-sidebar-primary shadow-[0_0_8px_rgba(245,158,11,0.8)]" />
