@@ -2,7 +2,8 @@ import { Link } from "wouter";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import asmLifecycleDiagram from "@assets/image_1782278717142.png";
+import architectureSlide from "@assets/image_1782285016281.png";
+import workflowSlide from "@assets/image_1782285022719.png";
 import {
   FileText,
   Network,
@@ -249,6 +250,25 @@ export default function DiscussionJun10() {
         </TabsContent>
 
         <TabsContent value="architecture" className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <Card className="border-border shadow-sm overflow-hidden">
+            <CardHeader>
+              <CardTitle className="font-serif text-xl">Current State vs Future State — Slide Presented by Sandra</CardTitle>
+              <CardDescription>
+                Sandra's slide contrasting the legacy Oracle system — multiple source tables and a separate code base
+                per payer — with the future-state Integrated Data Platform built on a single curated risk-adjustment table
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <figure className="rounded-lg border border-border bg-white p-4">
+                <img
+                  src={architectureSlide}
+                  alt="Sandra's slide: Current State (Legacy Oracle System) with multiple source tables and separate extract logic per payer, migrating to Future State (Integrated Data Platform) with a curated risk-adjustment table feeding payer-specific extracts"
+                  className="w-full h-auto"
+                />
+              </figure>
+            </CardContent>
+          </Card>
+
           <div className="grid md:grid-cols-2 gap-6">
             <Card className="border-border shadow-sm">
               <CardHeader>
@@ -315,17 +335,17 @@ export default function DiscussionJun10() {
         <TabsContent value="workflow" className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
           <Card className="border-border shadow-sm overflow-hidden">
             <CardHeader>
-              <CardTitle className="font-serif text-xl">ASM Lifecycle — Slide Presented by Sandra</CardTitle>
+              <CardTitle className="font-serif text-xl">End-to-End Workflow — Slide Presented by Sandra</CardTitle>
               <CardDescription>
-                The end-to-end ASM lifecycle slide Sandra Weiler walked the team through, spanning Mercy clinical
-                source, Health Plan processing, CMS submission, and the response-file reconciliation loop
+                Sandra's circular end-to-end workflow slide: a recurring sweep cycle (initial, mid-year, and final
+                submissions on attributed populations) keeping data inside the IDP for traceability
               </CardDescription>
             </CardHeader>
             <CardContent>
               <figure className="rounded-lg border border-border bg-white p-4">
                 <img
-                  src={asmLifecycleDiagram}
-                  alt="ASM lifecycle diagram presented by Sandra Weiler: Mercy as source of clinical information through Health Plan and CMS submission, with a response-file reconciliation loop"
+                  src={workflowSlide}
+                  alt="Sandra's end-to-end workflow slide: a circular cycle of align with payers, curate data for ASM sweeps in IDP, stage data in payer-specific format, pre-submission validation, root cause analysis and remediation, electronic file submission, ingest resubmission/error reports, MAO-004 and MOR ingestion and remediation, MMR ingestion, and report KPIs for transparency, repeating with initial, mid-year, and final submissions on attributed populations"
                   className="w-full h-auto"
                 />
               </figure>
