@@ -17,7 +17,7 @@ type Phase = {
 };
 
 export const PHASES: Phase[] = [
-  { id: "1", path: "/phase/1", title: "Statement of Work", icon: FileText, status: "active" },
+  { id: "1", path: "/", title: "Statement of Work", icon: FileText, status: "active" },
   { id: "kickoff-planning", path: "/kickoff-planning", title: "Kickoff Planning", icon: ClipboardList, status: "active" },
   { id: "kickoff", path: "/kickoff", title: "Kickoff", icon: Presentation, status: "active" },
   { id: "discussion-2026-06-08", path: "/discussions/2026-06-08", title: "Jun 8, 2026", icon: MessagesSquare, status: "active" },
