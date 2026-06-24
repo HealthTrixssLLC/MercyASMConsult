@@ -25,13 +25,11 @@ export function Shell({ children }: { children: React.ReactNode }) {
           </Sheet>
         </header>
         <header className="flex justify-center px-6 py-4 border-b bg-card shrink-0">
-          <div className="inline-flex flex-col items-stretch gap-2.5">
-            <div className="flex items-center justify-center">
-              <img src={mercyLogo} alt="Mercy" className="h-9 md:h-12 w-auto" />
-            </div>
-            <p className="w-full text-center uppercase font-semibold text-muted-foreground tracking-[0.18em] text-[12.6px] md:text-[16.2px]">
-              ASM Submission Process Review
+          <div className="flex items-center justify-center gap-3 md:gap-4">
+            <p className="uppercase font-semibold text-muted-foreground tracking-[0.18em] text-[12.6px] md:text-[16.2px]">
+              ASM Submission Process Review For
             </p>
+            <img src={mercyLogo} alt="Mercy" className="h-9 md:h-12 w-auto" />
           </div>
         </header>
         <main className="flex-1 overflow-auto">
