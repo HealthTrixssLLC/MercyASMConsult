@@ -28,26 +28,17 @@ function PhaseLink({
     >
       <div
         className={cn(
-          "group flex flex-col p-3 rounded-md transition-all duration-200 border border-transparent",
+          "group flex items-center gap-3 p-3 rounded-md transition-all duration-200 border border-transparent",
           isActive
             ? "bg-sidebar-accent text-sidebar-accent-foreground border-sidebar-border/50"
             : "text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
         )}
       >
-        <div className="flex items-center justify-between mb-1">
-          <span className="text-[10px] uppercase tracking-wider font-semibold opacity-70">
-            {phase.status === "active" ? "Active" : "Upcoming"}
-          </span>
-          {phase.status === "active" ? (
-            <div className="w-1.5 h-1.5 rounded-full bg-sidebar-primary shadow-[0_0_8px_rgba(245,158,11,0.8)]" />
-          ) : (
-            <div className="w-1.5 h-1.5 rounded-full bg-sidebar-foreground/20" />
-          )}
-        </div>
-        <div className="flex items-center gap-3">
-          <Icon className={cn("w-4 h-4", isActive ? "text-sidebar-primary" : "text-sidebar-foreground/40 group-hover:text-sidebar-foreground/70")} />
-          <span className="font-medium text-sm">{phase.title}</span>
-        </div>
+        <Icon className={cn("w-4 h-4 shrink-0", isActive ? "text-sidebar-primary" : "text-sidebar-foreground/40 group-hover:text-sidebar-foreground/70")} />
+        <span className="font-medium text-sm flex-1">{phase.title}</span>
+        {phase.status === "active" && (
+          <span className="w-1.5 h-1.5 rounded-full bg-sidebar-primary shadow-[0_0_8px_rgba(245,158,11,0.8)] shrink-0" />
+        )}
       </div>
     </Link>
   );
