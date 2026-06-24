@@ -46,12 +46,17 @@ const CURRENT_PROCESS = [
   {
     title: "Three file types",
     detail:
-      "Sweeps (adds — the bulk of volume), Adds, and Deletes. Adds and deletes stem from retro/chart reviews and are handled separately from sweeps.",
+      "Sweeps (adds — the bulk of volume), Adds, and Deletes. Adds and deletes stem from retro/chart reviews and provider audits, and are handled separately from sweeps.",
   },
   {
     title: "Adds & deletes today",
     detail:
-      "Retro chart reviews have been paused since Jan 2025 (prospective/concurrent coding now). Adds are corrected in Epic by Amber's team and picked up by the next sweep. Deletes come from periodic provider audits — Amber's team hands Linda a file, which she manually reformats and submits (low volume).",
+      "Retro chart reviews have been paused since Jan 2025 (prospective / concurrent coding now), so adds and deletes are infrequent — Amber confirmed none for a while, though a delete file is being prepared now from a provider audit (run a couple times a year). Adds are entered directly in Epic by Amber's team and picked up by the next sweep rather than sent to Linda as a file; only deletes are handed to her. Volume is low — at most about 10 on a file. The person who previously sent these files has left Mercy.",
+  },
+  {
+    title: "Receiving deletes from Amber's team",
+    detail:
+      "The hand-off is manual — not an automated feed and not a query. Amber's team tracks the data on a spreadsheet and sends Linda a file; she reformats it into the payer's required layout and submits it. If required fields (e.g., member ID or provider information) are missing from Amber's file, Linda pulls them from Epic. The exact transmission method and file layout were not specified in the session — Samir asked for a sample delete conversion to document them.",
   },
   {
     title: "Cadence",
@@ -141,6 +146,7 @@ const ACTIONS = [
   "Linda to provide United Healthcare SQL scripts (ambulatory + institutional).",
   "Linda to provide all payer file layouts and her validation scripts.",
   "Linda to provide at least one sample delete-file conversion, end to end.",
+  "Confirm the transmission method and file format / layout Amber's team uses to send deletes — today an undocumented spreadsheet hand-off.",
   "Samir to coordinate artifact access with Kate.",
   "Next session: Jennifer to walk through the reconciliation / validation build (starting with Aetna).",
   "Wednesday session repurposed — Linda unavailable; use the time for the reconciliation review.",
