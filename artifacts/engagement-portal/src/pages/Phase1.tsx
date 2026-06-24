@@ -7,7 +7,7 @@ export default function Phase1() {
     <div className="max-w-6xl mx-auto p-8 md:p-12 fade-in">
       <header className="mb-12">
         <div className="flex items-center gap-3 text-sm font-medium text-muted-foreground uppercase tracking-widest mb-3">
-          <span>Phase 1</span>
+          <span>Topic 1</span>
           <span className="w-1 h-1 rounded-full bg-primary/30" />
           <span className="text-primary">Active</span>
         </div>

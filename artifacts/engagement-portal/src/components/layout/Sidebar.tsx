@@ -4,9 +4,9 @@ import { FileText, Calendar, ShieldAlert } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export const PHASES = [
-  { id: "1", title: "Statement of Work", subtitle: "Phase 1", icon: FileText, status: "active" },
-  { id: "2", title: "Strategy & Design", subtitle: "Phase 2", icon: Calendar, status: "upcoming" },
-  { id: "3", title: "Execution & Handover", subtitle: "Phase 3", icon: ShieldAlert, status: "upcoming" },
+  { id: "1", title: "Statement of Work", subtitle: "Topic 1", icon: FileText, status: "active" },
+  { id: "2", title: "Strategy & Design", subtitle: "Topic 2", icon: Calendar, status: "upcoming" },
+  { id: "3", title: "Execution & Handover", subtitle: "Topic 3", icon: ShieldAlert, status: "upcoming" },
 ];
 
 function PhaseLink({
@@ -60,10 +60,10 @@ export function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
         <p className="text-xs text-sidebar-foreground/60 mt-1 uppercase tracking-widest font-medium">Engagement Portal</p>
       </div>
 
-      <nav className="flex-1 overflow-y-auto py-6 px-4 space-y-8" aria-label="Engagement phases">
+      <nav className="flex-1 overflow-y-auto py-6 px-4 space-y-8" aria-label="Engagement topics">
         <div className="space-y-2">
           <div className="text-xs font-semibold text-sidebar-foreground/40 uppercase tracking-widest mb-4 px-2">
-            Engagement Phases
+            Engagement Topics
           </div>
           {PHASES.map((phase) => (
             <PhaseLink key={phase.id} phase={phase} onNavigate={onNavigate} />
