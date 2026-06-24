@@ -2,6 +2,7 @@ import { Link } from "wouter";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import asmLifecycleDiagram from "@assets/image_1782278717142.png";
 import {
   FileText,
   Network,
@@ -312,6 +313,25 @@ export default function DiscussionJun10() {
         </TabsContent>
 
         <TabsContent value="workflow" className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <Card className="border-border shadow-sm overflow-hidden">
+            <CardHeader>
+              <CardTitle className="font-serif text-xl">ASM Lifecycle — Slide Presented by Sandra</CardTitle>
+              <CardDescription>
+                The end-to-end ASM lifecycle slide Sandra Weiler walked the team through, spanning Mercy clinical
+                source, Health Plan processing, CMS submission, and the response-file reconciliation loop
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <figure className="rounded-lg border border-border bg-white p-4">
+                <img
+                  src={asmLifecycleDiagram}
+                  alt="ASM lifecycle diagram presented by Sandra Weiler: Mercy as source of clinical information through Health Plan and CMS submission, with a response-file reconciliation loop"
+                  className="w-full h-auto"
+                />
+              </figure>
+            </CardContent>
+          </Card>
+
           <Card className="border-border shadow-sm">
             <CardHeader>
               <CardTitle className="font-serif text-xl">Future-State End-to-End ASM Workflow</CardTitle>
