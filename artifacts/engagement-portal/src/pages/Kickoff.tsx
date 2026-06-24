@@ -1,6 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Compass, Users, Building2 } from "lucide-react";
+import { Compass, Users, Building2, Workflow } from "lucide-react";
 import lifecycleDiagram from "@assets/image_1782278717142.png";
 
 const STAKEHOLDERS = [
@@ -46,6 +46,7 @@ export default function Kickoff() {
           <TabsList className="h-auto p-0 bg-transparent flex justify-start gap-6">
             {[
               { id: "overview", label: "Overview", icon: Compass },
+              { id: "lifecycle", label: "Submission Lifecycle Flow", icon: Workflow },
               { id: "stakeholders", label: "Stakeholders", icon: Users },
             ].map((tab) => (
               <TabsTrigger
@@ -92,7 +93,9 @@ export default function Kickoff() {
               </CardContent>
             </Card>
           </div>
+        </TabsContent>
 
+        <TabsContent value="lifecycle" className="animate-in fade-in slide-in-from-bottom-4 duration-500">
           <Card className="border-border shadow-sm">
             <CardHeader>
               <CardTitle className="font-serif text-xl">Submission Lifecycle Flow</CardTitle>
