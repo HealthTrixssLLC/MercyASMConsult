@@ -11,6 +11,7 @@ import {
   Layers,
   GitBranch,
   Mail,
+  CalendarDays,
 } from "lucide-react";
 import {
   LineChart,
@@ -214,8 +215,14 @@ export default function MaoDataGap() {
           <span>MAO-004 Data Gap Analysis</span>
         </div>
         <h1 className="text-3xl md:text-4xl font-serif text-foreground mb-4">MAO Data Gap Analysis</h1>
+        <div className="inline-flex items-center gap-2 rounded-full border border-border bg-muted/40 px-3 py-1 text-sm text-muted-foreground mb-4">
+          <CalendarDays className="w-4 h-4 text-primary" />
+          <span>
+            Analysis conducted <span className="font-medium text-foreground">June 17, 2026</span>
+          </span>
+        </div>
         <p className="text-base text-muted-foreground max-w-3xl leading-relaxed">
-          A diagnostic read of the MAO-004 counts Mercy requested on June 17, 2026. Normalizing distinct
+          A diagnostic read of the MAO-004 counts Mercy requested. Normalizing distinct
           diagnosis records by payer membership exposes how differently each plan submits its files — and why
           a payer&rsquo;s submission methodology must be understood <span className="italic">before</span> any
           completeness, trending, or missing-file conclusion can be trusted.
