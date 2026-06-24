@@ -1,0 +1,8 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "S0QgAQRebZjYV56nIxnvH"
+uri = "file://artifacts/engagement-portal/dist/engagement-portal-offline.zip"
+type = "unspecified"
+title = "HealthTrixss ASM Review — Offline Site (ZIP)"

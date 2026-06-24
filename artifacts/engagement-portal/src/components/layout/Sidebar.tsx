@@ -5,6 +5,8 @@ import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/useAuth";
 import healthtrixssLogo from "@assets/image_1782296236638.png";
 
+const STANDALONE = import.meta.env.VITE_STANDALONE === "true";
+
 type Phase = {
   id: string;
   path: string;
@@ -145,14 +147,16 @@ export function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
             <span className="text-[10px] text-sidebar-foreground/50">HealthTrixss, Inc.</span>
           </div>
         </div>
-        <button
-          type="button"
-          onClick={logout}
-          className="w-full flex items-center gap-2.5 py-2 px-2 rounded-md text-sidebar-foreground/60 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground transition-colors"
-        >
-          <LogOut className="w-3.5 h-3.5 shrink-0" />
-          <span className="text-[13px] font-medium">Sign out</span>
-        </button>
+        {!STANDALONE && (
+          <button
+            type="button"
+            onClick={logout}
+            className="w-full flex items-center gap-2.5 py-2 px-2 rounded-md text-sidebar-foreground/60 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground transition-colors"
+          >
+            <LogOut className="w-3.5 h-3.5 shrink-0" />
+            <span className="text-[13px] font-medium">Sign out</span>
+          </button>
+        )}
       </div>
     </div>
   );

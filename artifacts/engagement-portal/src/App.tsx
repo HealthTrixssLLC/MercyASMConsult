@@ -20,10 +20,12 @@ import ReconciliationStrategy from "@/pages/ReconciliationStrategy";
 
 const queryClient = new QueryClient();
 
+const STANDALONE = import.meta.env.VITE_STANDALONE === "true";
+
 function Router() {
   const { isAuthenticated } = useAuth();
 
-  if (!isAuthenticated) {
+  if (!STANDALONE && !isAuthenticated) {
     return <Login />;
   }
 
