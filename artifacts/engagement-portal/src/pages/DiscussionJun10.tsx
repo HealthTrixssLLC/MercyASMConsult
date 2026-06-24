@@ -263,7 +263,7 @@ export default function DiscussionJun10() {
                 <img
                   src={architectureSlide}
                   alt="Sandra's slide: Current State (Legacy Oracle System) with multiple source tables and separate extract logic per payer, migrating to Future State (Integrated Data Platform) with a curated risk-adjustment table feeding payer-specific extracts"
-                  className="w-full h-auto"
+                  className="mx-auto h-auto w-2/5"
                 />
               </figure>
             </CardContent>
@@ -346,7 +346,7 @@ export default function DiscussionJun10() {
                 <img
                   src={workflowSlide}
                   alt="Sandra's end-to-end workflow slide: a circular cycle of align with payers, curate data for ASM sweeps in IDP, stage data in payer-specific format, pre-submission validation, root cause analysis and remediation, electronic file submission, ingest resubmission/error reports, MAO-004 and MOR ingestion and remediation, MMR ingestion, and report KPIs for transparency, repeating with initial, mid-year, and final submissions on attributed populations"
-                  className="w-full h-auto"
+                  className="mx-auto h-auto w-2/5"
                 />
               </figure>
             </CardContent>
