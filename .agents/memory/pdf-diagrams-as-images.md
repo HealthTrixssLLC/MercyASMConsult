@@ -21,3 +21,17 @@ authoritative. They want their exact images integrated faithfully.
   bundles it; `attached_assets/` is NOT served directly).
 - Wrap in a click-to-open-full-size anchor (`target="_blank"`) and give a
   descriptive `alt` since these diagrams are dense.
+
+# Extracting embedded screenshots from an email PDF
+
+When a client emails analysis screenshots (Excel views, charts) inside an Outlook
+PDF and asks for the page narrative to be "backed by the screenshots", pull the
+*embedded* images rather than rendering whole pages:
+- `pdfimages -list input.pdf` to see embedded images (width/height tells you which
+  are real screenshots vs logos/icons/smasks — skip tiny ones and the HEALTHTRIXSS
+  logo strip).
+- `pdfimages -png input.pdf /tmp/out/s` extracts each as a PNG at native resolution.
+- Read the PNGs with the image tool to label them before use.
+- Copy the keepers into `attached_assets/` with descriptive names, import via the
+  `@assets` alias, embed with a click-to-open `<a target="_blank">` + descriptive
+  `alt` + caption (a small `Figure` component).

@@ -34,6 +34,9 @@ import {
   RECOMMENDATIONS,
   METHODOLOGY,
 } from "@/data/maoGapAnalysis";
+import normalizedShot from "@assets/mao_normalized_rows_per_member.png";
+import carryForwardShot from "@assets/mao_aetna_carryforward.png";
+import aetnaCorrectedShot from "@assets/mao_aetna_corrected.png";
 
 const TABS = [
   { id: "overview", label: "Executive Summary", icon: LayoutDashboard },
@@ -45,6 +48,25 @@ const TABS = [
 
 function fmt(n: number) {
   return n.toLocaleString("en-US");
+}
+
+function Figure({ src, alt, caption }: { src: string; alt: string; caption: string }) {
+  return (
+    <figure className="rounded-xl border border-border bg-muted/20 overflow-hidden">
+      <a href={src} target="_blank" rel="noopener noreferrer" className="block group">
+        <img
+          src={src}
+          alt={alt}
+          loading="lazy"
+          className="w-full h-auto bg-white transition-opacity group-hover:opacity-95"
+        />
+      </a>
+      <figcaption className="px-4 py-2.5 text-xs text-muted-foreground border-t border-border bg-card">
+        {caption}
+        <span className="ml-1.5 text-primary/70">— click to open full size</span>
+      </figcaption>
+    </figure>
+  );
 }
 
 function ChartTooltip({ active, payload, label }: any) {
@@ -179,6 +201,23 @@ export default function MaoDataGap() {
             </CardContent>
           </Card>
 
+          <Card className="border-none shadow-sm bg-card">
+            <CardHeader>
+              <CardTitle className="font-serif text-xl">Source evidence</CardTitle>
+              <CardDescription>
+                The exact workbook view shared with Mercy on June 17 — raw pivot, membership denominators, and
+                per-member normalization side by side. This is what the read above is built on.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Figure
+                src={normalizedShot}
+                alt="MAO-004 row counts by date-of-service month: raw pivot counts per payer, payer membership table, and rows-per-member normalization for Aetna, Humana, BCBS Oklahoma, and UHC with data bars."
+                caption="MAO-004 counts normalized by membership — Humana's data bars stay flat while Aetna, BCBSOK, and UHC taper from oldest DOS to newest."
+              />
+            </CardContent>
+          </Card>
+
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
               { label: "Distinct MAO-004 records", value: fmt(GRAND_TOTAL), sub: "across 4 reporting payers" },
@@ -287,7 +326,7 @@ export default function MaoDataGap() {
                   },
                   {
                     h: "Result",
-                    b: "Even within that one file, January-2025 DOS records were still present — eleven months of history carried forward inside a single January-2026 submission.",
+                    b: "Even within that one file, January-2025 DOS records were still present — over a year of prior date-of-service history carried forward inside a single early-2026 submission.",
                   },
                   {
                     h: "Conclusion",
@@ -315,6 +354,35 @@ export default function MaoDataGap() {
               </div>
             </CardContent>
           </Card>
+
+          <div className="grid lg:grid-cols-2 gap-6">
+            <Card className="border-none shadow-sm bg-card">
+              <CardHeader>
+                <CardTitle className="font-serif text-xl">Evidence — history carried forward</CardTitle>
+                <CardDescription>One DOS month (202501) appearing across many later source files</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Figure
+                  src={carryForwardShot}
+                  alt="Aetna MAO-004 data filtered to date-of-service month 202501, showing January-2025 records present across many different SRC_FILE_NM monthly files through mid-2026."
+                  caption="January-2025 DOS records reappear in file after file — including the latest submissions — confirming cumulative carry-forward."
+                />
+              </CardContent>
+            </Card>
+            <Card className="border-none shadow-sm bg-card">
+              <CardHeader>
+                <CardTitle className="font-serif text-xl">Evidence — the corrected trend</CardTitle>
+                <CardDescription>Aetna rows per member after removing double-counting</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Figure
+                  src={aetnaCorrectedShot}
+                  alt="Aetna-Corrected rows-per-member by date-of-service month: a stable ~9-11 per member through 2025 with a tapering recent-period tail reflecting claim lag."
+                  caption="De-duplicated, Aetna sits at a sensible ~9–11 rows per member; only the most recent months dip, consistent with claim lag."
+                />
+              </CardContent>
+            </Card>
+          </div>
         </TabsContent>
 
         {/* METHODOLOGY */}
