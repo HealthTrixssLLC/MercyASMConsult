@@ -16,7 +16,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
           <div className="flex items-center justify-center gap-6 md:gap-12">
             <img src={healthtrixssLogo} alt="HealthTrixss" className="h-[20px] md:h-[28px] w-auto" />
             <span className="h-9 w-px bg-border" />
-            <img src={mercyLogo} alt="Mercy" className="h-9 md:h-12 w-auto" />
+            <img src={mercyLogo} alt="Mercy" className="h-9 md:h-12 w-auto -translate-y-[3px]" />
           </div>
           <p className="w-full text-center uppercase font-semibold text-muted-foreground tracking-[0.18em] text-[12.6px] md:text-[16.2px]">
             ASM Submission Process Review
