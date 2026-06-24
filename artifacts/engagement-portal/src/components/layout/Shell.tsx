@@ -29,7 +29,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
             <p className="uppercase font-semibold text-muted-foreground tracking-[0.18em] text-[12.6px] md:text-[16.2px]">
               ASM Submission Process Review For
             </p>
-            <img src={mercyLogo} alt="Mercy" className="h-9 md:h-12 w-auto" />
+            <img src={mercyLogo} alt="Mercy" className="h-[21.6px] md:h-[28.8px] w-auto" />
           </div>
         </header>
         <main className="flex-1 overflow-auto">
