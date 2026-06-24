@@ -1,0 +1,71 @@
+Summary of Sandra and Jennifer’s Feedback on Samir’s Current-State and Future-State Analysis
+
+Sandra and Jennifer both generally validated Samir’s analysis. Their feedback was not that the model was off-track; rather, they helped refine it by adding operational detail, clarifying what is already being prototyped, and identifying where the future-state design needs to account for payer-response realities, workflow ownership, and reporting access.
+
+Overall Reaction
+
+Sandra and Jennifer both indicated that Samir’s current-state and future-state framing aligned with what Mercy is experiencing and what they are trying to build.
+
+Sandra explicitly confirmed Samir’s current-state summary, saying, “Yeah, that’s right,” after he described the code-centric, payer-specific, hard-coded SQL process, limited traceability, manual reconciliation, and high-maintenance operating model.
+
+Jennifer similarly confirmed the current-state pain points. When Samir described business rules embedded directly in payer-specific SQL, hard-coded CPT lists, plan IDs, filters, defaults, inconsistent logic, ad hoc reconciliation, and limited traceability, Jennifer responded with agreement and added that there is also limited visibility into which SQL is actually being run for a specific sweep.
+
+Sandra’s Feedback
+
+Sandra’s feedback was primarily strategic and architectural.
+
+She agreed with the current-state diagnosis but added one important missing detail: Jennifer currently has to re-ingest generated sweep files back into the environment in order to compare them against MAO files. Sandra clarified that this re-ingestion process is not automated and is still a work in progress, reinforcing the need for a more systematic reconciliation model.
+
+On the future-state architecture, Sandra said the proposed model aligned with what Mercy had been envisioning. She described the target concept as an end-to-end centralized approach to generation, submission, and validation, and stated that Samir’s depiction was clearer than the version they had been using internally.
+
+Sandra also emphasized that the model should explicitly account for both health plan responses and CMS responses through the payer. She wanted the architecture to call out that Mercy is not consistently receiving payer response information, and that this lack of response-file completeness is critical to ensuring end-to-end validation. She noted that Mercy receives MAO004 from four of seven payers and MAO002 from only one.
+
+She agreed with the idea of building reconciliation incrementally: first leverage the MAO004 data Mercy already receives, then expand to MAO002 and payer-specific response files over time. She also responded positively to the idea that the reconciliation engine could remain flexible and scalable by adding new response sources as they become available.
+
+Sandra also raised a future-state enhancement question: whether payer technical specifications could be integrated into the process between layout conversion and QA validation to confirm alignment with the most current payer specs. She acknowledged this may be more of a “run” step than an immediate “walk” step, but her goal was to reduce manual intervention wherever possible.
+
+Finally, Sandra wanted Jennifer’s prototype reviewed before presenting the broader future-state architecture to Linda. She asked that Jennifer be allowed to validate the model, show what she had already built, and help determine whether the prototype should be retained, revised, or replaced.
+
+Jennifer’s Feedback
+
+Jennifer’s feedback was more operational and implementation-focused.
+
+She confirmed that the current-state reconciliation problem is real. Today, she re-ingests payer-specific sweep files into a raw/ad hoc schema, strips out payer-specific fields where possible, maps similar fields into a common structure, and then uses that curated interim table to compare against MAO data.
+
+Jennifer also confirmed that the future state should avoid this re-ingestion cycle. She explained that Mercy’s intended direction is to pull from source logic into non-payer-specific tables, create curated tables containing the information needed to build sweep files, and then create staged data that can be separated by payer for export. Her goal is to avoid manual manipulation and avoid having to re-ingest files after export.
+
+When Samir proposed the future-state engine, run control, standardized Mercy-format staged export table, QA validation, and reverse reconciliation loop, Jennifer said the design matched what they had discussed previously. She specifically said the idea of staging the data and then checking response files to determine whether records were received “does make sense.”
+
+Jennifer also validated the distinction between a curated table and a staged table. Samir clarified that the curated table is a denormalized view of source data, while the staged table is the result after the engine has applied health-plan-specific logic but before payer layout conversion. Jennifer confirmed they were on the same page.
+
+Jennifer’s strongest additional point was that her current prototype is valuable but interim. She has built Databricks-based sweep KPIs and data-quality checks, including patient counts, new members versus prior submissions, diagnosis record counts, attribution, HCC presence, CMS rejection status, bill type validation, place-of-service checks, and MAO/MOR/MMR-related validation concepts. However, she acknowledged that the current model is still dependent on manually receiving files, moving them to storage, running pipelines, creating tables, and refreshing dashboards.
+
+She also noted an access issue: operations users do not have Databricks access, so the long-term reporting layer likely needs to move into Power BI or another accessible reporting/application layer.
+
+Jennifer also accepted that future reconciliation should not only compare submitted sweep files to MAO files, but eventually should also look back to Clarity to determine whether eligible source records were missed entirely. She acknowledged that the current interim work uses Linda’s process as the source of truth, but that broader source-to-submission validation is something Mercy will need later.
+
+At the end, Jennifer gave a clear validation of the engagement direction. She said she viewed Samir and the team as subject matter experts, that the analysis aligned with prior Mercy discussions, and that the team was helping “shore up” Mercy’s approach in a beneficial way.
+
+Consolidated Consultant Interpretation
+
+Sandra and Jennifer’s feedback confirms that Samir’s model is directionally right and should be treated as a validated working baseline.
+
+The strongest confirmed themes are:
+
+Current state is accurately characterized as payer-specific, code-centric, hard-coded, and difficult to reconcile.
+Manual re-ingestion of outbound files is a major current-state workaround.
+The future state should create a Mercy-format staged source of truth before payer layout conversion.
+Run control and run-level auditability are needed to separate executions, reruns, and latest-run logic.
+QA should validate staged Mercy-format data against export-ready payer views before submission.
+Reverse reconciliation should update staged data with MAO004, MAO002, and payer-response status over time.
+Jennifer’s current Databricks prototype is useful as an interim learning and KPI layer, but it is not scalable as the final solution.
+Future reporting must be accessible to operations, likely through Power BI, a web application, or another user-facing layer.
+Payer response-file completeness remains a major dependency and should be called out in the assessment.
+
+For the website or consulting portal, I would title this section:
+
+“Stakeholder Validation of Current & Future State Architecture”
+
+And the summary statement could be:
+
+Sandra and Jennifer validated the proposed current-state and future-state ASM architecture as a strong working baseline. Their feedback confirmed the core findings around payer-specific code, hard-coded logic, manual reconciliation, limited traceability, and the need for a centralized engine, standardized staging layer, run control, QA validation, and closed-loop response reconciliation. They also added important refinements around response-file completeness, operational reporting access, technical specification governance, and the need to treat Jennifer’s current Databricks work as an interim prototype rather than the final scalable solution.

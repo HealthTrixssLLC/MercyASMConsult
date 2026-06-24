@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useRoute } from "wouter";
-import { FileText, Calendar, ShieldAlert, Presentation, ClipboardList, MessagesSquare, Table2 } from "lucide-react";
+import { FileText, Calendar, ShieldAlert, Presentation, ClipboardList, MessagesSquare, Table2, Workflow } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type Phase = {
@@ -33,6 +33,7 @@ export const PHASES: Phase[] = [
     ],
   },
   { id: "discussion-2026-06-12", path: "/discussions/2026-06-12", title: "Jun 12, 2026", icon: MessagesSquare, status: "active" },
+  { id: "discussion-2026-06-17", path: "/discussions/2026-06-17", title: "Jun 17, 2026", icon: Workflow, status: "active" },
   { id: "2", path: "/phase/2", title: "Strategy & Design", icon: Calendar, status: "upcoming" },
   { id: "3", path: "/phase/3", title: "Execution & Handover", icon: ShieldAlert, status: "upcoming" },
 ];

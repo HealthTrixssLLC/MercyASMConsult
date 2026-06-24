@@ -1,1 +1,2 @@
 - [Parsing xlsx/docx](office-file-parsing.md) — no python3 & npm xlsx blocked at root; unzip the file and parse XML in code_execution, applying ALL numFmtIds incl. customs.
+- [Animated diagram a11y](animated-diagram-a11y.md) — any auto-advancing/always-on animation needs pause control + reduced-motion gating + text equivalent (WCAG 2.2.2).
