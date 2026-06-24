@@ -306,7 +306,7 @@ export default function DiscussionJun17() {
             <Card className="border-none shadow-sm bg-card">
               <CardHeader>
                 <CardTitle className="font-serif text-xl flex items-center gap-2">
-                  <Workflow className="w-5 h-5 text-primary" /> Where Mercy is going
+                  <Workflow className="w-5 h-5 text-primary" /> Where HealthTrixss recommends Mercy go
                 </CardTitle>
               </CardHeader>
               <CardContent>
