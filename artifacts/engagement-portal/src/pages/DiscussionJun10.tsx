@@ -7,7 +7,6 @@ import workflowSlide from "@assets/image_1782285022719.png";
 import {
   FileText,
   Network,
-  Workflow,
   MessagesSquare,
   AlertTriangle,
   Table2,
@@ -192,8 +191,7 @@ export default function DiscussionJun10() {
           <TabsList className="h-auto p-0 bg-transparent flex justify-start gap-6">
             {[
               { id: "summary", label: "Summary", icon: FileText },
-              { id: "architecture", label: "Architecture", icon: Network },
-              { id: "workflow", label: "End-to-End Workflow", icon: Workflow },
+              { id: "architecture", label: "Architecture & Workflow", icon: Network },
               { id: "themes", label: "Discussion Themes", icon: MessagesSquare },
               { id: "findings", label: "Meeting Specific Findings", icon: AlertTriangle },
               { id: "mao", label: "HealthTrixss MAO Guidance", icon: Table2 },
@@ -330,9 +328,7 @@ export default function DiscussionJun10() {
               <p className="text-foreground leading-relaxed font-serif text-lg">{ARCH_MESSAGE}</p>
             </CardContent>
           </Card>
-        </TabsContent>
 
-        <TabsContent value="workflow" className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
           <Card className="border-border shadow-sm overflow-hidden">
             <CardHeader>
               <CardTitle className="font-serif text-xl">End-to-End Workflow — Slide Presented by Sandra</CardTitle>
