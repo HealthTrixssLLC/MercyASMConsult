@@ -1,7 +1,7 @@
 import { Link } from "wouter";
 import { Check, X, ArrowUpRight, ClipboardList } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { FINDINGS, SESSION_COLUMNS, type FindingTag } from "@/data/findings";
+import { FINDINGS, SOURCE_COLUMNS, type FindingTag } from "@/data/findings";
 
 function tagClass(tag: FindingTag): string {
   switch (tag) {
@@ -37,7 +37,7 @@ function PresenceMark({ present }: { present: boolean }) {
 export default function Findings() {
   const total = FINDINGS.length;
   const recurring = FINDINGS.filter(
-    (f) => Number(f.sessions.jun08) + Number(f.sessions.jun10) + Number(f.sessions.jun12) > 1,
+    (f) => SOURCE_COLUMNS.reduce((n, c) => n + Number(f.sources[c.key]), 0) > 1,
   ).length;
 
   return (
@@ -50,9 +50,11 @@ export default function Findings() {
         </div>
         <h1 className="text-3xl md:text-4xl font-serif text-foreground mb-4">Findings</h1>
         <p className="text-base text-muted-foreground leading-relaxed max-w-3xl">
-          A single, de-duplicated index of every meeting-specific finding raised across the discovery sessions. Each
-          finding carries a stable ID, the session(s) it surfaced in, and a traceability link to the Gap &amp; Risk
-          register lane where it is being resolved.
+          A single, de-duplicated index of every finding raised across the engagement — from Pre Kickoff and Kickoff
+          planning, through the Jun 8 / 10 / 12 discovery sessions, to the ASM SQL / Layout analysis. A check means the
+          finding (or the risk or scope theme it stems from) surfaced in that source. Each finding carries a stable ID,
+          the sources it appeared in, and a traceability link to the Gap &amp; Risk register lane where it is being
+          resolved.
         </p>
       </header>
 
@@ -64,7 +66,7 @@ export default function Findings() {
         </div>
         <div className="inline-flex items-center gap-2 rounded-lg border border-border bg-card px-4 py-2 text-sm shadow-sm">
           <span className="font-semibold text-foreground">{recurring}</span>
-          <span className="text-muted-foreground">raised in more than one session</span>
+          <span className="text-muted-foreground">raised in more than one source</span>
         </div>
       </div>
 
@@ -78,12 +80,14 @@ export default function Findings() {
               <th className="sticky top-0 z-10 bg-secondary/60 px-4 py-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground align-bottom min-w-[20rem]">
                 Finding Detail
               </th>
-              {SESSION_COLUMNS.map((col) => (
+              {SOURCE_COLUMNS.map((col) => (
                 <th
                   key={col.key}
                   className="sticky top-0 z-10 bg-secondary/60 px-3 py-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground whitespace-nowrap align-bottom text-center"
                 >
-                  {col.label}
+                  <Link href={col.path} className="hover:text-primary hover:underline">
+                    {col.label}
+                  </Link>
                 </th>
               ))}
               <th className="sticky top-0 z-10 bg-secondary/60 px-4 py-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground align-bottom min-w-[22rem]">
@@ -114,9 +118,9 @@ export default function Findings() {
                   </div>
                   <p className="text-muted-foreground leading-relaxed">{f.detail}</p>
                 </td>
-                {SESSION_COLUMNS.map((col) => (
+                {SOURCE_COLUMNS.map((col) => (
                   <td key={col.key} className="px-3 py-4 text-center align-top">
-                    <PresenceMark present={f.sessions[col.key]} />
+                    <PresenceMark present={f.sources[col.key]} />
                   </td>
                 ))}
                 <td className="px-4 py-4 align-top">
@@ -137,12 +141,15 @@ export default function Findings() {
 
       <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-muted-foreground">
         <span className="flex items-center gap-1.5">
-          <Check className="w-3.5 h-3.5 text-emerald-600" strokeWidth={3} /> Raised in that session
+          <Check className="w-3.5 h-3.5 text-emerald-600" strokeWidth={3} /> Raised in that source
         </span>
         <span className="flex items-center gap-1.5">
-          <X className="w-3.5 h-3.5 text-muted-foreground/40" strokeWidth={3} /> Not raised in that session
+          <X className="w-3.5 h-3.5 text-muted-foreground/40" strokeWidth={3} /> Not raised in that source
         </span>
-        <span>Source: Meeting Specific Findings from the Jun 8 / 10 / 12, 2026 discovery sessions.</span>
+        <span>
+          Sources: Pre Kickoff &amp; Kickoff planning, the Jun 8 / 10 / 12, 2026 discovery sessions, and the ASM SQL /
+          Layout analysis. Column headers link to each source.
+        </span>
       </div>
     </div>
   );
