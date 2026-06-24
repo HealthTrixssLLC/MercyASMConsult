@@ -37,7 +37,7 @@ function DiagramImage({ src, alt }: { src: string; alt: string }) {
       href={src}
       target="_blank"
       rel="noopener noreferrer"
-      className="group relative block overflow-hidden rounded-lg border border-border bg-white"
+      className="group relative block w-4/5 overflow-hidden rounded-lg border border-border bg-white"
     >
       <img src={src} alt={alt} className="w-full h-auto" />
       <span className="absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-md bg-foreground/80 px-2.5 py-1 text-xs font-medium text-background opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
