@@ -24,7 +24,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
             </SheetContent>
           </Sheet>
         </header>
-        <header className="flex justify-center px-6 py-4 border-b bg-card shrink-0">
+        <header className="h-20 flex items-center justify-center px-6 border-b bg-card shrink-0">
           <div className="flex items-center justify-center gap-3 md:gap-4">
             <p className="uppercase font-semibold text-muted-foreground tracking-[0.18em] text-[12.6px] md:text-[16.2px]">
               ASM Submission Process Review For

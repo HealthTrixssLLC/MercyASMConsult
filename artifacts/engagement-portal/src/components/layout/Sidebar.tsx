@@ -124,7 +124,7 @@ export function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
   const { email, logout } = useAuth();
   return (
     <div className="flex flex-col h-full text-sidebar-foreground">
-      <div className="p-6 border-b border-sidebar-border/50">
+      <div className="h-20 flex items-center px-6 border-b border-sidebar-border/50">
         <img src={healthtrixssLogo} alt="HealthTrixss" className="h-7 w-auto" />
       </div>
       <nav className="flex-1 overflow-y-auto py-6 px-4 space-y-8" aria-label="Engagement topics">
