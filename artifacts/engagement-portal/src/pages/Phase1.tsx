@@ -1,4 +1,3 @@
-import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle2, Target, Crosshair, Users, Clock, AlertTriangle, Package } from "lucide-react";
@@ -14,7 +13,10 @@ export default function Phase1() {
         </div>
         <h1 className="text-4xl md:text-5xl font-serif text-foreground mb-4">Statement of Work</h1>
         <p className="text-lg text-muted-foreground max-w-3xl leading-relaxed">
-          This document defines the scope, objectives, and deliverables for the strategic transformation engagement between Atlas & Partners and the Client.
+          Discovery and Assessment of the client's encounter submission and Additional Submission Mechanism (ASM)
+          processes, performed by HealthTrixss in connection with CMS risk adjustment requirements and the client's
+          general RADV preparedness. The engagement is advisory in nature and conducted using commercially reasonable
+          efforts.
         </p>
       </header>
 
@@ -46,23 +48,28 @@ export default function Phase1() {
           <div className="grid md:grid-cols-2 gap-8">
             <Card className="border-none shadow-sm bg-card">
               <CardHeader>
-                <CardTitle className="font-serif text-2xl">Strategic Mandate</CardTitle>
+                <CardTitle className="font-serif text-2xl">Engagement Mandate</CardTitle>
               </CardHeader>
               <CardContent className="prose prose-slate prose-p:leading-relaxed max-w-none text-muted-foreground">
                 <p>
-                  The primary objective of this engagement is to redesign the client's operational operating model to achieve a 20% reduction in time-to-market for new product launches, while maintaining rigorous quality and compliance standards.
+                  HealthTrixss is engaged to evaluate the client's encounter submission and Additional Submission
+                  Mechanism (ASM) processes. The review is based on the documentation, data, system access, workflows,
+                  logic, policies, procedures, and other information made available during the engagement.
                 </p>
                 <p>
-                  We will evaluate current bottlenecks in the value chain, redesign cross-functional workflows, and implement a governance framework that empowers decentralized decision-making.
+                  The objective is to identify observations, risks, gaps, and recommendations relating to CMS risk
+                  adjustment requirements and the client's general RADV preparedness — delivered in a neutral and
+                  objective manner, and detailed enough to support implementation planning.
                 </p>
               </CardContent>
             </Card>
 
             <div className="space-y-4">
               {[
-                { title: "Operational Velocity", desc: "Reduce cycle times across product development phases." },
-                { title: "Organizational Agility", desc: "Design a flatter, more responsive team structure." },
-                { title: "Cost Optimization", desc: "Identify 15% in operational cost savings through process elimination." }
+                { title: "Assess Submission Processes", desc: "Review encounter submission and ASM workflows, logic, policies, and procedures end to end." },
+                { title: "Identify Gaps & Risks", desc: "Surface process, workflow, or technology gaps measured against CMS risk adjustment requirements." },
+                { title: "Evaluate RADV Preparedness", desc: "Assess general readiness with reference to CMS RADV audit standards." },
+                { title: "Recommend Next Steps", desc: "Provide actionable, prioritized recommendations to inform implementation planning." }
               ].map((obj, i) => (
                 <div key={i} className="flex gap-4 p-5 rounded-lg border border-border bg-card/50">
                   <div className="shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-serif text-lg">
@@ -76,6 +83,21 @@ export default function Phase1() {
               ))}
             </div>
           </div>
+
+          <Card className="border-border shadow-sm bg-accent/5">
+            <CardHeader className="pb-3">
+              <CardTitle className="font-serif text-xl">RAF Neutrality &amp; Independent Assessment</CardTitle>
+              <CardDescription>A guiding principle that frames every objective above.</CardDescription>
+            </CardHeader>
+            <CardContent className="text-muted-foreground leading-relaxed">
+              <p>
+                The assessment is not intended to increase, decrease, or otherwise influence risk adjustment factor (RAF)
+                scores. Its purpose is to identify process, workflow, or technology gaps that may affect the accuracy and
+                compliance of encounter submissions, evaluated with reference to applicable CMS requirements for Medicare
+                Advantage risk adjustment and encounter data submissions.
+              </p>
+            </CardContent>
+          </Card>
         </TabsContent>
 
         <TabsContent value="scope" className="animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -90,11 +112,11 @@ export default function Phase1() {
               <CardContent className="pt-6">
                 <ul className="space-y-4">
                   {[
-                    "Assessment of current state product development lifecycle",
-                    "Design of target operating model (TOM)",
-                    "Governance structure redesign and RACI matrices",
-                    "Implementation roadmap and change management strategy",
-                    "Executive coaching for top 10 leadership team members"
+                    "Discovery and assessment of encounter submission and ASM processes",
+                    "Review of available documentation, data, system access, workflows, logic, policies, and procedures",
+                    "Identification of observations, risks, gaps, and recommendations relating to CMS risk adjustment requirements",
+                    "Evaluation of general RADV preparedness with reference to CMS RADV audit standards",
+                    "Neutral, objective assessment of process, workflow, and technology gaps affecting submission accuracy and compliance"
                   ].map((item, i) => (
                     <li key={i} className="flex gap-3 text-muted-foreground">
                       <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 shrink-0" />
@@ -115,11 +137,11 @@ export default function Phase1() {
               <CardContent className="pt-6">
                 <ul className="space-y-4">
                   {[
-                    "Implementation of new IT systems or enterprise software",
-                    "Detailed financial auditing or forensic accounting",
-                    "Legal entity restructuring or M&A advisory",
-                    "Direct management of client personnel",
-                    "Real estate footprint optimization"
+                    "Clinical coding review or diagnosis validation",
+                    "Implementation of changes to the client's risk adjustment submissions",
+                    "Activities intended to increase, decrease, or influence RAF scores",
+                    "Independent audit or verification of the accuracy or completeness of information provided",
+                    "Any warranty or guarantee of a compliance outcome or CMS RADV audit result"
                   ].map((item, i) => (
                     <li key={i} className="flex gap-3 text-muted-foreground">
                       <span className="w-1.5 h-1.5 rounded-full bg-destructive mt-2 shrink-0" />
@@ -136,25 +158,25 @@ export default function Phase1() {
           <Card className="border-border shadow-sm">
             <div className="divide-y divide-border">
               {[
-                { role: "Project Sponsor", name: "Sarah Jenkins", title: "Chief Operating Officer", type: "Client" },
-                { role: "Engagement Partner", name: "Eleanor Davis", title: "Senior Partner", type: "Atlas" },
-                { role: "Project Lead", name: "Michael Chang", title: "Engagement Manager", type: "Atlas" },
-                { role: "Subject Matter Expert", name: "Dr. Robert Vance", title: "VP Product Strategy", type: "Client" },
-              ].map((person, i) => (
+                { abbr: "HT", org: "HealthTrixss, Inc.", role: "Service Provider", resp: "Performs the discovery and assessment Services; delivers observations, findings, and recommendations.", type: "Provider" },
+                { abbr: "VH", org: "Virtix Health, LLC", role: "Prime Contractor", resp: "Contracting party under the Subcontractor Services Agreement; HealthTrixss is engaged as subcontractor.", type: "Prime" },
+                { abbr: "M", org: "Mercy", role: "Client", resp: "Subject organization; provides access, data, and approvals, and owns all resulting deliverables.", type: "Client" },
+                { abbr: "CMS", org: "Centers for Medicare & Medicaid Services", role: "Regulatory Reference", resp: "Risk adjustment and RADV audit standards used as the reference framework for the assessment.", type: "Reference" },
+              ].map((party, i) => (
                 <div key={i} className="p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center font-serif text-lg text-primary">
-                      {person.name.split(" ").map(n => n[0]).join("")}
+                    <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center font-serif text-base text-primary shrink-0">
+                      {party.abbr}
                     </div>
                     <div>
-                      <h4 className="font-semibold text-foreground text-lg">{person.name}</h4>
-                      <p className="text-sm text-muted-foreground">{person.title}</p>
+                      <h4 className="font-semibold text-foreground text-lg">{party.org}</h4>
+                      <p className="text-sm text-muted-foreground max-w-xl">{party.resp}</p>
                     </div>
                   </div>
-                  <div className="flex flex-col sm:items-end gap-1">
-                    <span className="text-xs uppercase tracking-widest text-muted-foreground font-semibold">{person.role}</span>
+                  <div className="flex flex-col sm:items-end gap-1 shrink-0">
+                    <span className="text-xs uppercase tracking-widest text-muted-foreground font-semibold">{party.role}</span>
                     <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary">
-                      {person.type}
+                      {party.type}
                     </span>
                   </div>
                 </div>
@@ -166,10 +188,12 @@ export default function Phase1() {
         <TabsContent value="timeline" className="animate-in fade-in slide-in-from-bottom-4 duration-500">
            <div className="relative border-l border-border ml-6 md:ml-8 space-y-12 py-6">
             {[
-              { week: "Weeks 1-3", phase: "Discovery & Assessment", desc: "Conduct 40+ stakeholder interviews, baseline current operational metrics, and map existing value chain." },
-              { week: "Weeks 4-6", phase: "Target State Design", desc: "Develop the Target Operating Model (TOM), including new organizational structures and process workflows." },
-              { week: "Weeks 7-9", phase: "Validation & Refinement", desc: "Iterate design with steering committee, finalize RACI, and build the implementation roadmap." },
-              { week: "Week 10", phase: "Final Readout", desc: "Present final deliverables to the Board of Directors and transition to execution phase." }
+              { week: "Effective Date", phase: "Kickoff & Access Provisioning", desc: "Services begin upon the Effective Date. The client provisions required access, credentials, data feeds, payer details, and approvals needed to perform the assessment." },
+              { week: "Discovery", phase: "Discovery & Assessment", desc: "Review of documentation, data, system access, workflows, logic, policies, and procedures to identify observations, risks, and gaps relating to CMS risk adjustment requirements and RADV preparedness." },
+              { week: "Draft", phase: "Draft Deliverables & Readout", desc: "HealthTrixss provides the deliverables in draft form and conducts a readout session with the client." },
+              { week: "10 Business Days", phase: "Client Review", desc: "The client provides one consolidated round of comments within ten business days of receiving the draft deliverables." },
+              { week: "Final", phase: "Final Deliverables", desc: "HealthTrixss addresses mutually agreed comments and issues the final deliverables." },
+              { week: "10 Business Days", phase: "Acceptance", desc: "The client provides written acceptance or identifies material deficiencies within ten business days; absent notice, the deliverables are deemed accepted." }
             ].map((milestone, i) => (
               <div key={i} className="relative pl-8">
                 <div className="absolute w-4 h-4 bg-background border-2 border-primary rounded-full -left-[9px] top-1" />
@@ -180,22 +204,22 @@ export default function Phase1() {
             ))}
            </div>
         </TabsContent>
-        
+
         <TabsContent value="assumptions" className="animate-in fade-in slide-in-from-bottom-4 duration-500">
           <Card className="border-border shadow-sm">
             <CardHeader>
-              <CardTitle className="font-serif text-2xl">Key Engagement Assumptions</CardTitle>
-              <CardDescription>Conditions necessary for the successful delivery of this engagement.</CardDescription>
+              <CardTitle className="font-serif text-2xl">Assumptions, Dependencies &amp; Client Responsibilities</CardTitle>
+              <CardDescription>Conditions the engagement relies on for successful delivery.</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="grid sm:grid-cols-2 gap-6">
                 {[
-                  "Timely access to key stakeholders (within 48 hours of request)",
-                  "Client team will dedicate up to 20% capacity for working sessions",
-                  "Existing data sets are accurate and will be provided in usable formats",
-                  "No major organizational restructuring will occur during the 10-week period",
-                  "Steering committee decisions will be final and adhere to the project timeline",
-                  "Workspace and relevant systems access will be provisioned on Day 1"
+                  "Information and documentation provided by the client will be relied upon; neither HealthTrixss nor Virtix Health will independently audit or verify its accuracy or completeness.",
+                  "HealthTrixss and Virtix Health are not responsible for errors or omissions resulting from incomplete or inaccurate information provided by the client.",
+                  "Timely access to required credentials, data feeds, payer details, and approvals will be provided by the client.",
+                  "Services are advisory in nature and performed using commercially reasonable efforts.",
+                  "Services are limited to discovery and assessment — no clinical coding review, diagnosis validation, or implementation of submission changes.",
+                  "All deliverables are owned exclusively by the client; HealthTrixss retains only general knowledge, skills, methodologies, and know-how, excluding client confidential information."
                 ].map((assumption, i) => (
                   <div key={i} className="flex gap-3 p-4 bg-muted/30 rounded-lg">
                     <CheckCircle2 className="w-5 h-5 text-primary shrink-0 opacity-70" />
@@ -210,10 +234,11 @@ export default function Phase1() {
         <TabsContent value="risks" className="animate-in fade-in slide-in-from-bottom-4 duration-500">
           <div className="space-y-4">
             {[
-              { risk: "Stakeholder Availability", sev: "High", mit: "Establish pre-scheduled weekly touchpoints and executive mandate for participation." },
-              { risk: "Data Incompleteness", sev: "Medium", mit: "Use industry benchmarks to fill gaps; clearly document data caveats in findings." },
-              { risk: "Scope Creep", sev: "Medium", mit: "Strictly adhere to the change request process outlined in the Master Services Agreement." },
-              { risk: "Resistance to Change", sev: "High", mit: "Involve key detractors early in the design process to ensure co-creation and buy-in." }
+              { risk: "Delayed Access or Approvals", sev: "High", mit: "Establish an access plan at kickoff. A delay in receiving required access, credentials, data feeds, payer details, or approvals may trigger a thirty-day written notice of intent to terminate the Services." },
+              { risk: "Incomplete or Inaccurate Information", sev: "High", mit: "Reliance on client-provided information is documented; caveats are noted in findings, with no independent verification performed." },
+              { risk: "Misinterpretation as RAF Influence", sev: "Medium", mit: "RAF neutrality is maintained throughout; the advisory, gap-focused scope is communicated clearly to all parties." },
+              { risk: "Scope Expansion", sev: "Medium", mit: "Services remain strictly limited to discovery and assessment; any expansion is handled through a formal amendment." },
+              { risk: "Acceptance Delays", sev: "Low", mit: "Defined ten-business-day review windows apply, with deliverables deemed accepted absent timely written notice." }
             ].map((item, i) => (
               <Card key={i} className="border-border shadow-sm">
                 <div className="p-6 flex flex-col md:flex-row gap-6 items-start md:items-center">
@@ -224,7 +249,7 @@ export default function Phase1() {
                   <div className="shrink-0 flex items-center gap-2">
                     <span className="text-xs uppercase tracking-widest text-muted-foreground font-semibold">Severity</span>
                     <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold ${
-                      item.sev === 'High' ? 'bg-destructive/10 text-destructive' : 'bg-amber-500/10 text-amber-700'
+                      item.sev === 'High' ? 'bg-destructive/10 text-destructive' : item.sev === 'Medium' ? 'bg-amber-500/10 text-amber-700' : 'bg-emerald-500/10 text-emerald-700'
                     }`}>
                       {item.sev}
                     </span>
@@ -236,13 +261,23 @@ export default function Phase1() {
         </TabsContent>
 
         <TabsContent value="deliverables" className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <div className="mb-6 flex items-start gap-3 p-4 rounded-lg border border-border bg-accent/5 text-sm text-muted-foreground">
+            <Package className="w-5 h-5 text-accent shrink-0 mt-0.5" />
+            <p>
+              All deliverables, work product, documentation, analyses, and reports are owned exclusively by the client.
+              Deliverables reflect industry-standard consulting practices and are sufficiently detailed to support
+              implementation planning. Each is first issued in draft form alongside a readout session, then finalized
+              after one consolidated round of client comments.
+            </p>
+          </div>
           <div className="grid md:grid-cols-3 gap-6">
             {[
-              { title: "Current State Diagnostic", type: "Presentation", desc: "Detailed synthesis of stakeholder interviews, process bottlenecks, and baseline metrics." },
-              { title: "Target Operating Model", type: "Framework", desc: "Comprehensive blueprint of the future state organizational structure and governance." },
-              { title: "RACI Matrices", type: "Spreadsheet", desc: "Detailed roles and responsibilities mapped to the new operational workflows." },
-              { title: "Implementation Roadmap", type: "Plan", desc: "Phased execution plan detailing immediate quick wins and long-term strategic shifts." },
-              { title: "Executive Readout", type: "Presentation", desc: "Final summary deck tailored for the Board of Directors and C-suite." }
+              { title: "Current-State Assessment", type: "Report", desc: "Synthesis of encounter submission and ASM processes, capturing workflows, logic, policies, and procedures as observed." },
+              { title: "Gap & Risk Analysis", type: "Report", desc: "Observations, risks, and gaps mapped against CMS risk adjustment requirements for encounter data submissions." },
+              { title: "RADV Preparedness Assessment", type: "Report", desc: "Evaluation of general RADV readiness with reference to applicable CMS RADV audit standards." },
+              { title: "Recommendations", type: "Roadmap", desc: "Prioritized, actionable recommendations detailed enough to support the client's implementation planning." },
+              { title: "Readout Session", type: "Presentation", desc: "Facilitated walkthrough of the draft deliverables and key findings with client stakeholders." },
+              { title: "Final Deliverables Package", type: "Package", desc: "Consolidated final deliverables incorporating mutually agreed client comments, owned exclusively by the client." }
             ].map((del, i) => (
               <Card key={i} className="border-border shadow-sm flex flex-col h-full hover:border-primary/50 transition-colors cursor-default">
                 <CardHeader className="pb-4">

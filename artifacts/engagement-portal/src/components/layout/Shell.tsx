@@ -22,7 +22,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
               <SidebarContent onNavigate={() => setMobileOpen(false)} />
             </SheetContent>
           </Sheet>
-          <span className="font-serif text-lg">Atlas & Partners</span>
+          <span className="font-serif text-lg">HealthTrixss</span>
         </header>
         <main className="flex-1 overflow-auto">
           {children}

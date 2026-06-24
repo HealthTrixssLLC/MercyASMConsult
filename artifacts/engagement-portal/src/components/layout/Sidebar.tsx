@@ -56,7 +56,7 @@ export function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
   return (
     <div className="flex flex-col h-full text-sidebar-foreground">
       <div className="p-6 border-b border-sidebar-border/50">
-        <h2 className="font-serif text-xl tracking-tight text-sidebar-primary">Atlas & Partners</h2>
+        <h2 className="font-serif text-xl tracking-tight text-sidebar-primary">HealthTrixss</h2>
         <p className="text-xs text-sidebar-foreground/60 mt-1 uppercase tracking-widest font-medium">Engagement Portal</p>
       </div>
 
@@ -73,12 +73,12 @@ export function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
 
       <div className="p-4 border-t border-sidebar-border/50 mt-auto">
         <div className="flex items-center gap-3 p-2 rounded-md hover:bg-sidebar-accent/50 transition-colors cursor-pointer">
-          <div className="w-8 h-8 rounded bg-sidebar-accent flex items-center justify-center text-sidebar-primary font-serif italic text-sm">
-            ED
+          <div className="w-8 h-8 rounded bg-sidebar-accent flex items-center justify-center text-sidebar-primary font-serif text-sm">
+            HT
           </div>
           <div className="flex flex-col">
-            <span className="text-xs font-medium">Eleanor Davis</span>
-            <span className="text-[10px] text-sidebar-foreground/50">Engagement Partner</span>
+            <span className="text-xs font-medium">Engagement Team</span>
+            <span className="text-[10px] text-sidebar-foreground/50">HealthTrixss, Inc.</span>
           </div>
         </div>
       </div>
