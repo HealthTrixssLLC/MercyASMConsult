@@ -1,13 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Compass, Users, Building2, ChevronRight, Scale, Search, RefreshCw, Target } from "lucide-react";
-
-const LIFECYCLE = [
-  { title: "Compare", desc: "CMS and Health Plan response against submission", icon: Scale },
-  { title: "Investigate", desc: "Rejects, edits, and member / clinical issues", icon: Search },
-  { title: "Address & Resubmit", desc: "Address issues and resubmit as needed", icon: RefreshCw },
-  { title: "Outcome & Impact", desc: "Track resulting outcome and impact", icon: Target },
-];
+import { Compass, Users, Building2 } from "lucide-react";
+import lifecycleDiagram from "@assets/image_1782278717142.png";
 
 const STAKEHOLDERS = [
   {
@@ -102,34 +96,18 @@ export default function Kickoff() {
           <Card className="border-border shadow-sm">
             <CardHeader>
               <CardTitle className="font-serif text-xl">Submission Lifecycle Flow</CardTitle>
-              <CardDescription>The reconciliation loop the assessment follows end to end.</CardDescription>
+              <CardDescription>
+                The end-to-end ASM direct-submission lifecycle — from clinical source through Health Plan and CMS, into
+                the response reconciliation loop.
+              </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="flex flex-col md:flex-row md:items-stretch">
-                {LIFECYCLE.map((step, i) => {
-                  const Icon = step.icon;
-                  return (
-                    <div key={i} className="flex flex-col md:flex-row md:flex-1 md:items-stretch">
-                      <div className="flex-1 flex flex-col items-center text-center gap-3 p-5 rounded-xl bg-sidebar text-sidebar-foreground shadow-sm">
-                        <div className="w-12 h-12 rounded-full bg-primary/15 flex items-center justify-center text-primary shrink-0">
-                          <Icon className="w-6 h-6" />
-                        </div>
-                        <div className="text-[10px] uppercase tracking-widest font-semibold text-primary">
-                          Step {i + 1}
-                        </div>
-                        <div>
-                          <div className="font-serif text-base text-sidebar-primary mb-1">{step.title}</div>
-                          <p className="text-xs text-sidebar-foreground/70 leading-relaxed">{step.desc}</p>
-                        </div>
-                      </div>
-                      {i < LIFECYCLE.length - 1 && (
-                        <div className="flex items-center justify-center py-2 md:py-0 md:px-1 shrink-0">
-                          <ChevronRight className="w-6 h-6 text-primary rotate-90 md:rotate-0" />
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
+              <div className="rounded-lg border border-border bg-white p-4 md:p-6 overflow-x-auto">
+                <img
+                  src={lifecycleDiagram}
+                  alt="ASM Discovery & Assessment lifecycle diagram: Mercy clinical source flows through provider encounter and ASM generation paths to the Health Plan and CMS, with a response reconciliation loop of compare, investigate, address and resubmit, and outcome."
+                  className="w-full min-w-[720px] h-auto"
+                />
               </div>
             </CardContent>
           </Card>
