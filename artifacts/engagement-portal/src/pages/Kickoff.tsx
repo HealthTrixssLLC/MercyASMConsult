@@ -1,12 +1,12 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Compass, Users, Building2, ArrowRight } from "lucide-react";
+import { Compass, Users, Building2, ChevronRight, Scale, Search, RefreshCw, Target } from "lucide-react";
 
 const LIFECYCLE = [
-  "Compare CMS and Health Plan response against submission",
-  "Investigate rejects, edits, and member / clinical issues",
-  "Address issues and resubmit as needed",
-  "Outcome and impact",
+  { title: "Compare", desc: "CMS and Health Plan response against submission", icon: Scale },
+  { title: "Investigate", desc: "Rejects, edits, and member / clinical issues", icon: Search },
+  { title: "Address & Resubmit", desc: "Address issues and resubmit as needed", icon: RefreshCw },
+  { title: "Outcome & Impact", desc: "Track resulting outcome and impact", icon: Target },
 ];
 
 const STAKEHOLDERS = [
@@ -105,20 +105,31 @@ export default function Kickoff() {
               <CardDescription>The reconciliation loop the assessment follows end to end.</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="flex flex-col md:flex-row md:items-stretch gap-4">
-                {LIFECYCLE.map((step, i) => (
-                  <div key={i} className="flex md:flex-1 items-center gap-4">
-                    <div className="flex-1 flex gap-3 p-4 rounded-lg border border-border bg-muted/30 h-full">
-                      <div className="shrink-0 w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center text-primary font-serif text-sm">
-                        {i + 1}
+              <div className="flex flex-col md:flex-row md:items-stretch">
+                {LIFECYCLE.map((step, i) => {
+                  const Icon = step.icon;
+                  return (
+                    <div key={i} className="flex flex-col md:flex-row md:flex-1 md:items-stretch">
+                      <div className="flex-1 flex flex-col items-center text-center gap-3 p-5 rounded-xl bg-sidebar text-sidebar-foreground shadow-sm">
+                        <div className="w-12 h-12 rounded-full bg-primary/15 flex items-center justify-center text-primary shrink-0">
+                          <Icon className="w-6 h-6" />
+                        </div>
+                        <div className="text-[10px] uppercase tracking-widest font-semibold text-primary">
+                          Step {i + 1}
+                        </div>
+                        <div>
+                          <div className="font-serif text-base text-sidebar-primary mb-1">{step.title}</div>
+                          <p className="text-xs text-sidebar-foreground/70 leading-relaxed">{step.desc}</p>
+                        </div>
                       </div>
-                      <span className="text-sm text-foreground/80 leading-relaxed">{step}</span>
+                      {i < LIFECYCLE.length - 1 && (
+                        <div className="flex items-center justify-center py-2 md:py-0 md:px-1 shrink-0">
+                          <ChevronRight className="w-6 h-6 text-primary rotate-90 md:rotate-0" />
+                        </div>
+                      )}
                     </div>
-                    {i < LIFECYCLE.length - 1 && (
-                      <ArrowRight className="w-5 h-5 text-primary/40 shrink-0 rotate-90 md:rotate-0" />
-                    )}
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </CardContent>
           </Card>
