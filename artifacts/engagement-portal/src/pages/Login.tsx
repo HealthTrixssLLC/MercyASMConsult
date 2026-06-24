@@ -34,7 +34,7 @@ export default function Login() {
           />
           <h1 className="font-serif text-2xl tracking-tight text-sidebar-primary">HealthTrixss</h1>
           <p className="text-xs text-sidebar-foreground/60 mt-1 uppercase tracking-widest font-medium">
-            Engagement Portal
+            ASM Submission Process Review
           </p>
         </div>
 
