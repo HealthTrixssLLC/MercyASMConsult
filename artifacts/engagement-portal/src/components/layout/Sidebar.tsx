@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useRoute } from "wouter";
-import { FileText, Calendar, ShieldAlert, Presentation, ClipboardList, MessagesSquare, Table2, Workflow, Database, Send, GitCompareArrows } from "lucide-react";
+import { FileText, Presentation, ClipboardList, MessagesSquare, Table2, Workflow, Database, Send, GitCompareArrows } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type Phase = {
@@ -37,8 +37,6 @@ export const PHASES: Phase[] = [
   { id: "asm-analysis-current", path: "/asm-analysis-current", title: "ASM Analysis Current", icon: Database, status: "active" },
   { id: "submission-strategy", path: "/submission-strategy", title: "Submission Strategy", icon: Send, status: "active" },
   { id: "reconciliation-strategy", path: "/reconciliation-strategy", title: "Reconciliation Strategy", icon: GitCompareArrows, status: "active" },
-  { id: "2", path: "/phase/2", title: "Strategy & Design", icon: Calendar, status: "upcoming" },
-  { id: "3", path: "/phase/3", title: "Execution & Handover", icon: ShieldAlert, status: "upcoming" },
 ];
 
 function SubLink({
