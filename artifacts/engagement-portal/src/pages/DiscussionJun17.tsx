@@ -255,12 +255,12 @@ export default function DiscussionJun17() {
             </CardHeader>
             <CardContent className="space-y-5">
               <p className="text-base text-muted-foreground leading-relaxed">
-                Mercy is “cooking the same meal with slightly different recipes in ten different kitchens” — the same
-                risk-adjustment submission process is rebuilt as hard-coded, payer-specific SQL for each health plan.
-                The proposed future state collapses that into a single parameterized engine that produces one
-                standardized, Mercy-format staged source of truth, applies payer layouts last, validates systematically
-                before submission, and closes the loop by reconciling health-plan and CMS responses back to the same
-                staged grain.
+                Mercy is currently maintaining multiple payer-specific versions of the same ASM submission process, with
+                business rules embedded directly in separate SQL logic for each health plan. The proposed future state
+                consolidates this into a single parameterized ASM engine that produces a standardized Mercy-format staged
+                source of truth, applies payer-specific layouts only at the final export step, validates records
+                systematically before submission, and reconciles health plan and CMS responses back to the same staged
+                record grain.
               </p>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {QUICK_FACTS.map((fact) => (
