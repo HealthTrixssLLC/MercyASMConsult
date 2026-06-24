@@ -32,6 +32,7 @@ export const PHASES: Phase[] = [
       },
     ],
   },
+  { id: "discussion-2026-06-12", path: "/discussions/2026-06-12", title: "Jun 12, 2026", icon: MessagesSquare, status: "active" },
   { id: "2", path: "/phase/2", title: "Strategy & Design", icon: Calendar, status: "upcoming" },
   { id: "3", path: "/phase/3", title: "Execution & Handover", icon: ShieldAlert, status: "upcoming" },
 ];
