@@ -38,7 +38,7 @@ function PhaseLink({
             {phase.subtitle}
           </span>
           {phase.status === "active" ? (
-            <div className="w-1.5 h-1.5 rounded-full bg-sidebar-primary shadow-[0_0_8px_rgba(212,175,55,0.8)]" />
+            <div className="w-1.5 h-1.5 rounded-full bg-sidebar-primary shadow-[0_0_8px_rgba(245,158,11,0.8)]" />
           ) : (
             <div className="w-1.5 h-1.5 rounded-full bg-sidebar-foreground/20" />
           )}
