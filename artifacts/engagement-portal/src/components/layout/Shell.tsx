@@ -26,10 +26,10 @@ export function Shell({ children }: { children: React.ReactNode }) {
             </Sheet>
             <span className="font-serif text-lg">HealthTrixss</span>
           </div>
-          <img src={mercyLogo} alt="Mercy" className="h-7 w-auto" />
+          <img src={mercyLogo} alt="Mercy" className="h-9 w-auto" />
         </header>
-        <header className="hidden md:flex items-center justify-end px-6 md:px-10 h-16 border-b bg-card">
-          <img src={mercyLogo} alt="Mercy" className="h-8 w-auto" />
+        <header className="hidden md:flex items-center justify-end px-6 md:px-10 h-20 border-b bg-card">
+          <img src={mercyLogo} alt="Mercy" className="h-12 w-auto" />
         </header>
         <main className="flex-1 overflow-auto">
           {children}
