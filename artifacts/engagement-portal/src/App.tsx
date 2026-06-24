@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
 import { Shell } from "@/components/layout/Shell";
 import Phase1 from "@/pages/Phase1";
+import KickoffPlanning from "@/pages/KickoffPlanning";
 import Kickoff from "@/pages/Kickoff";
 import Phase2 from "@/pages/Phase2";
 import Phase3 from "@/pages/Phase3";
@@ -17,6 +18,7 @@ function Router() {
       <Switch>
         <Route path="/" component={() => <Redirect to="/phase/1" />} />
         <Route path="/phase/1" component={Phase1} />
+        <Route path="/kickoff-planning" component={KickoffPlanning} />
         <Route path="/kickoff" component={Kickoff} />
         <Route path="/phase/2" component={Phase2} />
         <Route path="/phase/3" component={Phase3} />

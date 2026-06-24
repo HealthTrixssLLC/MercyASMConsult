@@ -1,0 +1,271 @@
+Executive Summary
+
+The primary outcome of the meeting was alignment that the engagement is not a traditional current-state assessment. Mercy is actively migrating its ASM/Sweeps process from Oracle to Azure/Databricks and simultaneously implementing a new validation framework. As a result, the assessment must evaluate both the current operating process and the intended future-state architecture, rather than focusing solely on historical operations.
+
+The team also confirmed that the review should encompass all participating Medicare Advantage health plans, not just a single payer, to ensure payer-specific compliance and alignment across the entire sweeps process.
+
+Key Findings
+1. Scope Expanded Beyond "Current State"
+
+Sandra repeatedly emphasized that Mercy is mid-migration:
+
+Oracle → Azure/Databricks
+Legacy extraction process → redesigned architecture
+No formal validation process → new validation framework
+
+This means discovery must examine:
+
+Current State
+Existing sweeps process
+Existing file layouts
+Existing payer submissions
+Target State
+Databricks implementation
+Curated/semantic data layer
+New validation process
+Future operational model
+
+Consulting implication:
+The engagement should be positioned as a Current State + Transitional Future State Assessment.
+
+This aligns very closely with the architecture discussions we've had regarding:
+
+Clarity normalized sources
+Curated data layer
+Generalized ASM engine
+Validation layer
+Reverse reconciliation process
+2. Oracle Environment Is Out of Scope
+
+A major clarification:
+
+Mercy does not want HealthTrix to evaluate the historical Oracle implementation.
+
+Instead:
+
+Review Databricks notebooks
+Review migrated SQL logic
+Review future-state design documentation
+Review current output files
+
+Sandra explicitly stated that the Oracle implementation is no longer the target environment.
+
+Risk
+
+This creates a potential blind spot:
+
+If migration introduced transformation issues, logic changes, or data loss, those issues may not be fully visible.
+
+Samir appropriately raised this concern.
+
+Finding:
+Migration validation risk exists because source-to-target conversion is outside assessment scope.
+
+3. Assessment Must Cover Entire ASM Lifecycle
+
+Initially there was discussion around supplemental encounter submission.
+
+By the end of the discussion, scope expanded to include:
+
+Upstream
+Source systems
+Data extraction
+Incremental processing
+Logic generation
+Middle
+Payer-specific file creation
+Layout transformations
+Validation process
+Downstream
+Health plan acknowledgements
+Rejections
+MAO processing
+CMS acceptance tracking
+
+This is much broader than simply reviewing submission files.
+
+4. Validation Process Is a Major Focus Area
+
+Sandra repeatedly emphasized validation.
+
+Several themes emerged:
+
+Desired Future State
+Validate before submission
+Validate payer acceptance
+Validate CMS acceptance
+Reduce member matching issues
+Improve traceability
+Potential Inputs
+MAO files
+Health plan reject files
+CMS return files
+Acknowledgement files
+
+This strongly supports the future-state recommendation of:
+
+Closed-loop reconciliation and submission inventory management.
+
+5. Current Process Relies on Multiple Payer-Specific Formats
+
+Discussion confirmed:
+
+Each payer has:
+
+Unique file layouts
+Different field ordering
+Different validation rules
+Different acknowledgement processes
+Different rejection formats
+
+Examples mentioned:
+
+United Healthcare
+Humana
+Aetna
+BCBS plans
+Essence
+
+This reinforces one of the strongest future-state recommendations:
+
+Canonical Internal Model
+
+Maintain:
+
+Single Mercy-format staging layer
+
+Then:
+
+Payer-specific export transformations
+
+This prevents payer logic from contaminating core extraction logic.
+
+6. Monthly Submission Opportunity Identified
+
+Interesting observation from Kate:
+
+Current Mercy process:
+
+Periodic sweeps
+
+Recommended target state:
+
+Monthly submissions
+
+Benefits discussed:
+
+Easier monitoring
+Faster error detection
+More opportunities for CMS acceptance
+Better operational management
+
+This should likely be documented as:
+
+Opportunity
+
+Evaluate monthly ASM submission cadence versus periodic sweep processing.
+
+7. Knowledge Risk Identified
+
+A significant operational risk surfaced.
+
+Aaron Peterson:
+
+Key contributor
+Deep process knowledge
+On paternity leave during engagement
+
+Sandra indicated answers may take longer because of this.
+
+Finding
+
+Key process knowledge may be concentrated among a limited number of resources.
+
+Risk
+
+Knowledge transfer and documentation dependency.
+
+8. Documentation Exists but May Not Reflect Future State
+
+Sandra stated:
+
+Most process documentation exists.
+SOPs are changing.
+Design documents may be more relevant than SOPs.
+Consulting Implication
+
+Discovery should collect both:
+
+Operational SOPs
+Future-state design artifacts
+
+And compare them for alignment.
+
+Stakeholders Identified
+Primary Mercy Leads
+Sandra Weiler
+Kate McClure
+Executive Sponsors
+Dr. Helton
+Mike Sartley (VP Population Health Economics)
+Additional Teams
+EDAO
+Population Health
+Operational Clinical Excellence
+Development Team
+Data Quality Engineering
+
+These are likely your stakeholder map for the Discovery phase.
+
+Risks Identified
+High Risk
+
+Migration Risk
+
+Oracle → Azure transition underway
+High Risk
+
+Knowledge Risk
+
+Aaron unavailable
+Medium Risk
+
+Schedule Risk
+
+Quarterly planning approval uncertainty
+Medium Risk
+
+Data Conversion Risk
+
+20+ source tables consolidated into curated layer
+Medium Risk
+
+Traceability Risk
+
+Acceptance tracking process appears immature
+Recommended Discovery Themes
+
+If I were building the consulting portal, this kickoff would naturally become part of your Phase 2 – Discovery & Stakeholder Alignment page.
+
+Suggested tabs:
+
+Kickoff Summary
+Engagement objectives
+Scope confirmation
+Stakeholder Alignment
+Teams
+Roles
+Sponsors
+Scope Clarifications
+Current state vs future state
+Included processes
+Excluded processes
+Risks & Dependencies
+Migration
+Resource availability
+Timeline uncertainty
+Initial Hypotheses
+Need for generalized ASM engine
+Need for validation framework
+Need for reconciliation process
+Need for governance and traceability

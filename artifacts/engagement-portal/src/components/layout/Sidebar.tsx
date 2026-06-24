@@ -1,10 +1,11 @@
 import React from "react";
 import { Link, useRoute } from "wouter";
-import { FileText, Calendar, ShieldAlert, Presentation } from "lucide-react";
+import { FileText, Calendar, ShieldAlert, Presentation, ClipboardList } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export const PHASES = [
   { id: "1", path: "/phase/1", title: "Statement of Work", icon: FileText, status: "active" },
+  { id: "kickoff-planning", path: "/kickoff-planning", title: "Kickoff Planning", icon: ClipboardList, status: "active" },
   { id: "kickoff", path: "/kickoff", title: "Kickoff", icon: Presentation, status: "active" },
   { id: "2", path: "/phase/2", title: "Strategy & Design", icon: Calendar, status: "upcoming" },
   { id: "3", path: "/phase/3", title: "Execution & Handover", icon: ShieldAlert, status: "upcoming" },
