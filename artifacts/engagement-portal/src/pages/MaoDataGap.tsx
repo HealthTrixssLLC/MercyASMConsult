@@ -23,6 +23,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import {
+  type MonthPoint,
   ROWS_PER_MEMBER,
   RAW_RECORD_CNT,
   PAYER_SERIES,
@@ -40,7 +41,7 @@ import aetnaCorrectedShot from "@assets/mao_aetna_corrected.png";
 
 const TABS = [
   { id: "overview", label: "Executive Summary", icon: LayoutDashboard },
-  { id: "behavior", label: "Submission Behavior", icon: LineChartIcon },
+  { id: "behavior", label: "MAO Data Slicing behavior", icon: LineChartIcon },
   { id: "validation", label: "Aetna Validation", icon: FlaskConical },
   { id: "methodology", label: "Methodology", icon: ListChecks },
   { id: "gaprisk", label: "Gap Risk & Recommendations", icon: ShieldCheck },
@@ -48,6 +49,68 @@ const TABS = [
 
 function fmt(n: number) {
   return n.toLocaleString("en-US");
+}
+
+function PayerGrid({ data, decimals = 0 }: { data: MonthPoint[]; decimals?: number }) {
+  return (
+    <div className="overflow-x-auto rounded-xl border border-border">
+      <table className="w-full text-sm border-collapse">
+        <thead>
+          <tr className="bg-muted/50">
+            <th className="text-left font-semibold px-4 py-2.5 sticky left-0 bg-muted/50 whitespace-nowrap">
+              DOS Month
+            </th>
+            {PAYER_SERIES.map((p) => (
+              <th key={p.key} className="text-right font-semibold px-4 py-2.5 whitespace-nowrap">
+                {p.label}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {data.map((row, i) => (
+            <tr key={row.ym} className={i % 2 ? "bg-muted/20" : "bg-card"}>
+              <td className="px-4 py-2 font-medium text-foreground sticky left-0 bg-inherit whitespace-nowrap">
+                {row.label}
+              </td>
+              {PAYER_SERIES.map((p) => (
+                <td key={p.key} className="px-4 py-2 text-right tabular-nums text-muted-foreground">
+                  {decimals ? (row[p.key] as number).toFixed(decimals) : fmt(row[p.key] as number)}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function MembershipGrid() {
+  return (
+    <div className="overflow-x-auto rounded-xl border border-border">
+      <table className="w-full text-sm border-collapse">
+        <thead>
+          <tr className="bg-muted/50">
+            <th className="text-left font-semibold px-4 py-2.5 whitespace-nowrap">Payer Membership</th>
+            <th className="text-right font-semibold px-4 py-2.5 whitespace-nowrap">Dec&nbsp;2025</th>
+            <th className="text-right font-semibold px-4 py-2.5 whitespace-nowrap">Current</th>
+          </tr>
+        </thead>
+        <tbody>
+          {MEMBERSHIP.map((row, i) => (
+            <tr key={row.payer} className={i % 2 ? "bg-muted/20" : "bg-card"}>
+              <td className="px-4 py-2 font-medium text-foreground whitespace-nowrap">{row.payer}</td>
+              <td className="px-4 py-2 text-right tabular-nums text-muted-foreground">
+                {row.dec2025 === null ? "—" : fmt(row.dec2025)}
+              </td>
+              <td className="px-4 py-2 text-right tabular-nums text-muted-foreground">{fmt(row.current)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
 }
 
 function Figure({ src, alt, caption }: { src: string; alt: string; caption: string }) {
@@ -267,6 +330,9 @@ export default function MaoDataGap() {
             </CardHeader>
             <CardContent>
               <PayerChart data={ROWS_PER_MEMBER} yLabel="Rows per member" />
+              <div className="mt-6">
+                <PayerGrid data={ROWS_PER_MEMBER} decimals={2} />
+              </div>
               <div className="grid md:grid-cols-2 gap-4 mt-6">
                 <div className="rounded-lg border border-emerald-500/30 bg-emerald-500/5 p-4">
                   <div className="flex items-center gap-2 text-emerald-700 font-medium mb-1">
@@ -302,6 +368,21 @@ export default function MaoDataGap() {
             </CardHeader>
             <CardContent>
               <PayerChart data={RAW_RECORD_CNT} yLabel="Distinct records" />
+              <div className="mt-6">
+                <PayerGrid data={RAW_RECORD_CNT} />
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-none shadow-sm bg-card">
+            <CardHeader>
+              <CardTitle className="font-serif text-xl">Membership denominators</CardTitle>
+              <CardDescription>
+                Approximate membership per payer used to normalize the raw counts into rows per member.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <MembershipGrid />
             </CardContent>
           </Card>
         </TabsContent>
