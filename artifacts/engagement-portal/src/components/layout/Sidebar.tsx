@@ -16,31 +16,61 @@ type Phase = {
   children?: { id: string; path: string; title: string; icon: typeof FileText }[];
 };
 
-export const PHASES: Phase[] = [
-  { id: "1", path: "/", title: "Statement of Work", icon: FileText, status: "active" },
-  { id: "kickoff-planning", path: "/kickoff-planning", title: "Kickoff Planning", icon: ClipboardList, status: "active" },
-  { id: "kickoff", path: "/kickoff", title: "Kickoff", icon: Presentation, status: "active" },
-  { id: "discussion-2026-06-08", path: "/discussions/2026-06-08", title: "Jun 8, 2026", icon: MessagesSquare, status: "active" },
+type PhaseGroup = {
+  id: string;
+  title: string;
+  items: Phase[];
+};
+
+export const PHASE_GROUPS: PhaseGroup[] = [
   {
-    id: "discussion-2026-06-10",
-    path: "/discussions/2026-06-10",
-    title: "Jun 10, 2026",
-    icon: MessagesSquare,
-    status: "active",
-    children: [
-      {
-        id: "mao-guidance",
-        path: "/discussions/2026-06-10/mao-guidance",
-        title: "HealthTrixss MAO Guidance",
-        icon: Table2,
-      },
+    id: "planning",
+    title: "Planning",
+    items: [
+      { id: "1", path: "/", title: "Project SOW", icon: FileText, status: "active" },
+      { id: "kickoff-planning", path: "/kickoff-planning", title: "Pre Kickoff", icon: ClipboardList, status: "active" },
+      { id: "kickoff", path: "/kickoff", title: "Kickoff", icon: Presentation, status: "active" },
     ],
   },
-  { id: "discussion-2026-06-12", path: "/discussions/2026-06-12", title: "Jun 12, 2026", icon: MessagesSquare, status: "active" },
-  { id: "discussion-2026-06-17", path: "/discussions/2026-06-17", title: "June 17, 2026 - Current & Future State Analysis", icon: Workflow, status: "active" },
-  { id: "asm-analysis-current", path: "/asm-analysis-current", title: "ASM Artifacts Analysis", icon: Database, status: "active" },
-  { id: "submission-strategy", path: "/submission-strategy", title: "Submission Strategy", icon: Send, status: "active" },
-  { id: "reconciliation-strategy", path: "/reconciliation-strategy", title: "Reconciliation Strategy", icon: GitCompareArrows, status: "active" },
+  {
+    id: "discovery",
+    title: "Discovery Sessions",
+    items: [
+      { id: "discussion-2026-06-08", path: "/discussions/2026-06-08", title: "Jun 8, 2026", icon: MessagesSquare, status: "active" },
+      {
+        id: "discussion-2026-06-10",
+        path: "/discussions/2026-06-10",
+        title: "Jun 10, 2026",
+        icon: MessagesSquare,
+        status: "active",
+        children: [
+          {
+            id: "mao-guidance",
+            path: "/discussions/2026-06-10/mao-guidance",
+            title: "HealthTrixss MAO Guidance",
+            icon: Table2,
+          },
+        ],
+      },
+      { id: "discussion-2026-06-12", path: "/discussions/2026-06-12", title: "Jun 12, 2026", icon: MessagesSquare, status: "active" },
+    ],
+  },
+  {
+    id: "analysis",
+    title: "Analysis and Design",
+    items: [
+      { id: "discussion-2026-06-17", path: "/discussions/2026-06-17", title: "Current & Future", icon: Workflow, status: "active" },
+      { id: "asm-analysis-current", path: "/asm-analysis-current", title: "ASM artifacts", icon: Database, status: "active" },
+    ],
+  },
+  {
+    id: "gap-risk",
+    title: "Gap and Risk Register",
+    items: [
+      { id: "submission-strategy", path: "/submission-strategy", title: "Submission Lane", icon: Send, status: "active" },
+      { id: "reconciliation-strategy", path: "/reconciliation-strategy", title: "Reconciliation Lane", icon: GitCompareArrows, status: "active" },
+    ],
+  },
 ];
 
 function SubLink({
@@ -83,7 +113,7 @@ function PhaseLink({
   phase,
   onNavigate,
 }: {
-  phase: (typeof PHASES)[number];
+  phase: Phase;
   onNavigate?: () => void;
 }) {
   const [isMatch] = useRoute(phase.path);
@@ -131,12 +161,19 @@ export function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
       <div className="h-20 flex items-center px-6 border-b border-sidebar-border/50">
         <img src={healthtrixssLogo} alt="HealthTrixss" className="h-7 w-auto" />
       </div>
-      <nav className="flex-1 overflow-y-auto py-6 px-4 space-y-8" aria-label="Engagement topics">
-        <div className="space-y-2">
-          {PHASES.map((phase) => (
-            <PhaseLink key={phase.id} phase={phase} onNavigate={onNavigate} />
-          ))}
-        </div>
+      <nav className="flex-1 overflow-y-auto py-6 px-4 space-y-6" aria-label="Engagement topics">
+        {PHASE_GROUPS.map((group) => (
+          <div key={group.id} className="space-y-2">
+            <h3 className="px-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-sidebar-foreground/40">
+              {group.title}
+            </h3>
+            <div className="space-y-1">
+              {group.items.map((phase) => (
+                <PhaseLink key={phase.id} phase={phase} onNavigate={onNavigate} />
+              ))}
+            </div>
+          </div>
+        ))}
       </nav>
 
       <div className="p-4 border-t border-sidebar-border/50 mt-auto space-y-2">
