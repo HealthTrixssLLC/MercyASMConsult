@@ -4,13 +4,13 @@ import { CheckCircle2, Target, Crosshair, Users, Clock, AlertTriangle, Package }
 
 export default function Phase1() {
   return (
-    <div className="max-w-6xl mx-auto p-8 md:p-12 fade-in">
+    <div className="max-w-[1600px] mx-auto px-6 md:px-10 py-8 md:py-10 fade-in">
       <header className="mb-12">
         <div className="flex items-center gap-3 text-sm font-medium text-muted-foreground uppercase tracking-widest mb-3">
           <span className="text-primary">Active</span>
         </div>
-        <h1 className="text-4xl md:text-5xl font-serif text-foreground mb-4">Statement of Work</h1>
-        <p className="text-lg text-muted-foreground max-w-3xl leading-relaxed">
+        <h1 className="text-3xl md:text-4xl font-serif text-foreground mb-4">Statement of Work</h1>
+        <p className="text-base text-muted-foreground max-w-3xl leading-relaxed">
           Discovery and Assessment of the client's encounter submission and Additional Submission Mechanism (ASM)
           processes, performed by HealthTrixss in connection with CMS risk adjustment requirements and the client's
           general RADV preparedness. The engagement is advisory in nature and conducted using commercially reasonable

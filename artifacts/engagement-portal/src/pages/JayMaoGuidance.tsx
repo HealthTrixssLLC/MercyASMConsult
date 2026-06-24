@@ -54,7 +54,7 @@ export default function JayMaoGuidance() {
   const allOrdered = [...GUIDANCE_SHEETS, ...MODEL_SHEETS];
 
   return (
-    <div className="max-w-7xl mx-auto p-8 md:p-12 fade-in">
+    <div className="max-w-[1600px] mx-auto px-6 md:px-10 py-8 md:py-10 fade-in">
       <header className="mb-10">
         <Link
           href="/discussions/2026-06-10"
@@ -68,8 +68,8 @@ export default function JayMaoGuidance() {
           <span className="w-1 h-1 rounded-full bg-primary/30" />
           <span>MAO-004 Corrective-Action Playbook</span>
         </div>
-        <h1 className="text-4xl md:text-5xl font-serif text-foreground mb-4">HealthTrixss MAO Guidance</h1>
-        <p className="text-lg text-muted-foreground max-w-3xl leading-relaxed">
+        <h1 className="text-3xl md:text-4xl font-serif text-foreground mb-4">HealthTrixss MAO Guidance</h1>
+        <p className="text-base text-muted-foreground max-w-3xl leading-relaxed">
           The MAO-004 provider corrective-action workbook Jay Baker shared at the close of the June 10 session,
           reproduced in full. Every sheet, row, and value from the original workbook is preserved below — nothing is
           summarized or omitted.

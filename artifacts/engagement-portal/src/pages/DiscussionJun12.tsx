@@ -198,17 +198,17 @@ function FileCell({ received }: { received: boolean }) {
 
 export default function DiscussionJun12() {
   return (
-    <div className="max-w-6xl mx-auto p-8 md:p-12 fade-in">
+    <div className="max-w-[1600px] mx-auto px-6 md:px-10 py-8 md:py-10 fade-in">
       <header className="mb-12">
         <div className="flex items-center gap-3 text-sm font-medium text-muted-foreground uppercase tracking-widest mb-3">
           <span className="text-primary">Discovery · Discussion</span>
           <span className="w-1 h-1 rounded-full bg-primary/30" />
           <span>06 / 12 / 2026</span>
         </div>
-        <h1 className="text-4xl md:text-5xl font-serif text-foreground mb-4">
+        <h1 className="text-3xl md:text-4xl font-serif text-foreground mb-4">
           ASM Process Review — Current-State Logic & Reconciliation
         </h1>
-        <p className="text-lg text-muted-foreground max-w-3xl leading-relaxed">
+        <p className="text-base text-muted-foreground max-w-3xl leading-relaxed">
           June 12 moved from future-state architecture into a detailed working review of the actual current-state UHC
           SQL / query logic, payer file availability, MAO-002 / MAO-004 reconciliation, and known operational gaps. The
           team reviewed which response files Mercy actually receives, walked through Linda's UHC extract logic, and

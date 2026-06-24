@@ -221,17 +221,17 @@ const TABS: { id: string; label: string; icon: LucideIcon }[] = [
 
 export default function DiscussionJun17() {
   return (
-    <div className="max-w-6xl mx-auto p-8 md:p-12 fade-in">
+    <div className="max-w-[1600px] mx-auto px-6 md:px-10 py-8 md:py-10 fade-in">
       <header className="mb-12">
         <div className="flex items-center gap-3 text-sm font-medium text-muted-foreground uppercase tracking-widest mb-3">
           <span className="text-primary">Discovery · Architecture</span>
           <span className="w-1 h-1 rounded-full bg-primary/30" />
           <span>06 / 17 / 2026</span>
         </div>
-        <h1 className="text-4xl md:text-5xl font-serif text-foreground mb-4">
+        <h1 className="text-3xl md:text-4xl font-serif text-foreground mb-4">
           Samir's Current &amp; Future State Analysis
         </h1>
-        <p className="text-lg text-muted-foreground max-w-3xl leading-relaxed">
+        <p className="text-base text-muted-foreground max-w-3xl leading-relaxed">
           A solution-architect read of Mercy's ASM process — from today's decentralized, payer-specific, hard-coded
           extracts to a centralized, configurable engine with a standardized Mercy-format staging layer, run control,
           systematic QA, and a closed-loop reconciliation and analytics model. Reviewed and validated the same day with

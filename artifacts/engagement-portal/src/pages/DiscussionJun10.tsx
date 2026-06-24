@@ -171,15 +171,15 @@ function tagClass(tag: string) {
 
 export default function DiscussionJun10() {
   return (
-    <div className="max-w-6xl mx-auto p-8 md:p-12 fade-in">
+    <div className="max-w-[1600px] mx-auto px-6 md:px-10 py-8 md:py-10 fade-in">
       <header className="mb-12">
         <div className="flex items-center gap-3 text-sm font-medium text-muted-foreground uppercase tracking-widest mb-3">
           <span className="text-primary">Discovery · Discussion</span>
           <span className="w-1 h-1 rounded-full bg-primary/30" />
           <span>06 / 10 / 2026</span>
         </div>
-        <h1 className="text-4xl md:text-5xl font-serif text-foreground mb-4">ASM Process Review — Future-State Design</h1>
-        <p className="text-lg text-muted-foreground max-w-3xl leading-relaxed">
+        <h1 className="text-3xl md:text-4xl font-serif text-foreground mb-4">ASM Process Review — Future-State Design</h1>
+        <p className="text-base text-muted-foreground max-w-3xl leading-relaxed">
           Unlike the June 9 kickoff discussion, which focused on scope and objectives, June 10 shifted into a detailed
           review of Mercy's proposed future-state ASM architecture. Sandra Weiler walked the team through a current-vs-future
           design and a future-state end-to-end workflow, and the discussion centered on curation, validation,

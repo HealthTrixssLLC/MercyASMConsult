@@ -160,15 +160,15 @@ function tagClass(tag: string) {
 
 export default function DiscussionJun08() {
   return (
-    <div className="max-w-6xl mx-auto p-8 md:p-12 fade-in">
+    <div className="max-w-[1600px] mx-auto px-6 md:px-10 py-8 md:py-10 fade-in">
       <header className="mb-12">
         <div className="flex items-center gap-3 text-sm font-medium text-muted-foreground uppercase tracking-widest mb-3">
           <span className="text-primary">Discovery · Discussion</span>
           <span className="w-1 h-1 rounded-full bg-primary/30" />
           <span>06 / 08 / 2026</span>
         </div>
-        <h1 className="text-4xl md:text-5xl font-serif text-foreground mb-4">ASM Process Review</h1>
-        <p className="text-lg text-muted-foreground max-w-3xl leading-relaxed">
+        <h1 className="text-3xl md:text-4xl font-serif text-foreground mb-4">ASM Process Review</h1>
+        <p className="text-base text-muted-foreground max-w-3xl leading-relaxed">
           First discovery working session of the four-week review. The team walked the end-to-end ASM (alternative
           submission method) process — how sweep files are created, formatted, submitted, and reconciled — starting with
           United Healthcare as the representative first pass, with the goal of covering all health plans.

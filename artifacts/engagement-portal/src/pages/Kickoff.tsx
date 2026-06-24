@@ -26,15 +26,15 @@ const STAKEHOLDERS = [
 
 export default function Kickoff() {
   return (
-    <div className="max-w-6xl mx-auto p-8 md:p-12 fade-in">
+    <div className="max-w-[1600px] mx-auto px-6 md:px-10 py-8 md:py-10 fade-in">
       <header className="mb-12">
         <div className="flex items-center gap-3 text-sm font-medium text-muted-foreground uppercase tracking-widest mb-3">
           <span className="text-primary">Active</span>
           <span className="w-1 h-1 rounded-full bg-primary/30" />
           <span>06 / 01 / 2026</span>
         </div>
-        <h1 className="text-4xl md:text-5xl font-serif text-foreground mb-4">Kickoff</h1>
-        <p className="text-lg text-muted-foreground max-w-3xl leading-relaxed">
+        <h1 className="text-3xl md:text-4xl font-serif text-foreground mb-4">Kickoff</h1>
+        <p className="text-base text-muted-foreground max-w-3xl leading-relaxed">
           Mercy — ASM Discovery &amp; Assessment. Mercy is evaluating its ASM direct-submission operating model as it
           transitions toward an Azure / Databricks future state. This kickoff aligns scope and stakeholders ahead of the
           discovery work.

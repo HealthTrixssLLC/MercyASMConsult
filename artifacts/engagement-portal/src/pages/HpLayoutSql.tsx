@@ -640,15 +640,15 @@ const TABS = [
 
 export default function HpLayoutSql() {
   return (
-    <div className="max-w-6xl mx-auto p-8 md:p-12 fade-in">
+    <div className="max-w-[1600px] mx-auto px-6 md:px-10 py-8 md:py-10 fade-in">
       <header className="mb-10">
         <div className="flex items-center gap-3 text-sm font-medium text-muted-foreground uppercase tracking-widest mb-3">
           <span className="text-primary">Reference · Health Plan Specs</span>
           <span className="w-1 h-1 rounded-full bg-primary/30" />
           <span>Current State</span>
         </div>
-        <h1 className="text-4xl md:text-5xl font-serif text-foreground mb-4">ASM Analysis Current</h1>
-        <p className="text-lg text-muted-foreground max-w-3xl leading-relaxed">
+        <h1 className="text-3xl md:text-4xl font-serif text-foreground mb-4">ASM Analysis Current</h1>
+        <p className="text-base text-muted-foreground max-w-3xl leading-relaxed">
           Current-state inventory of each health plan's submission SQL and file layout / spec, alongside a
           cross-plan concept analysis comparing how each payer layout maps to a recommended Mercy-format
           canonical model.

@@ -108,15 +108,15 @@ function severityClass(severity: string) {
 
 export default function KickoffPlanning() {
   return (
-    <div className="max-w-6xl mx-auto p-8 md:p-12 fade-in">
+    <div className="max-w-[1600px] mx-auto px-6 md:px-10 py-8 md:py-10 fade-in">
       <header className="mb-12">
         <div className="flex items-center gap-3 text-sm font-medium text-muted-foreground uppercase tracking-widest mb-3">
           <span className="text-primary">Pre-Kickoff</span>
           <span className="w-1 h-1 rounded-full bg-primary/30" />
           <span>04 / 27 / 2026</span>
         </div>
-        <h1 className="text-4xl md:text-5xl font-serif text-foreground mb-4">Kickoff Planning</h1>
-        <p className="text-lg text-muted-foreground max-w-3xl leading-relaxed">
+        <h1 className="text-3xl md:text-4xl font-serif text-foreground mb-4">Kickoff Planning</h1>
+        <p className="text-base text-muted-foreground max-w-3xl leading-relaxed">
           Gist of the pre-kickoff planning discussion between Mercy and the consulting team. The key alignment: this is
           not a traditional current-state assessment — Mercy is mid-migration from Oracle to Azure / Databricks while
           standing up a new validation framework, so the work spans both current and transitional future state.
