@@ -1,10 +1,9 @@
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useEffect, useState } from "react";
+import { Card } from "@/components/ui/card";
 import {
   Database,
   FileSpreadsheet,
   FileText,
-  FileCode2,
   Download,
   Copy,
   Check,
@@ -16,6 +15,8 @@ import {
 import { cn } from "@/lib/utils";
 
 const BASE = import.meta.env.BASE_URL;
+const LAYOUT_DIR = `${BASE}files/hp/layout/`;
+const SQL_DIR = `${BASE}files/hp/sql/`;
 
 type LayoutKind = "xlsx" | "csv" | "docx";
 type LayoutFile = { label: string; file: string; kind: LayoutKind };
@@ -28,9 +29,6 @@ type HealthPlan = {
   layouts: LayoutFile[];
   sql: SqlFile[];
 };
-
-const LAYOUT_DIR = `${BASE}files/hp/layout/`;
-const SQL_DIR = `${BASE}files/hp/sql/`;
 
 const HEALTH_PLANS: HealthPlan[] = [
   {
@@ -118,11 +116,11 @@ const HEALTH_PLANS: HealthPlan[] = [
     id: "bcbsok",
     name: "Blue Cross Blue Shield of Oklahoma (BCBSOK)",
     icon: Building2,
+    layouts: [],
     sql: [
       { label: "Institutional", file: "bcbsok-institutional.sql" },
       { label: "Ambulatory", file: "bcbsok-ambulatory.sql" },
     ],
-    layouts: [],
   },
   {
     id: "cms-edps",
@@ -146,6 +144,21 @@ const KIND_META: Record<LayoutKind, { icon: LucideIcon; tag: string }> = {
   docx: { icon: FileText, tag: "DOCX" },
 };
 
+const sqlCache = new Map<string, string>();
+async function loadSql(url: string): Promise<string | null> {
+  const cached = sqlCache.get(url);
+  if (cached !== undefined) return cached;
+  try {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(String(res.status));
+    const text = await res.text();
+    sqlCache.set(url, text);
+    return text;
+  } catch {
+    return null;
+  }
+}
+
 function LayoutChip({ layout }: { layout: LayoutFile }) {
   const meta = KIND_META[layout.kind];
   const Icon = meta.icon;
@@ -153,54 +166,31 @@ function LayoutChip({ layout }: { layout: LayoutFile }) {
     <a
       href={`${LAYOUT_DIR}${layout.file}`}
       download
-      className="group flex items-center gap-3 rounded-lg border border-border bg-background/40 px-4 py-3 transition-colors hover:border-primary/40 hover:bg-primary/5"
+      className="group flex items-center gap-2.5 rounded-md border border-border bg-background/40 px-3 py-2 transition-colors hover:border-primary/40 hover:bg-primary/5"
     >
-      <Icon className="w-5 h-5 text-primary shrink-0" />
-      <div className="flex-1 min-w-0">
-        <div className="text-sm font-medium text-foreground truncate">{layout.label}</div>
-        <div className="text-[11px] uppercase tracking-widest text-muted-foreground">{meta.tag}</div>
-      </div>
-      <Download className="w-4 h-4 text-muted-foreground/50 group-hover:text-primary shrink-0" />
+      <Icon className="w-4 h-4 text-primary shrink-0" />
+      <span className="flex-1 min-w-0 text-sm font-medium text-foreground truncate">{layout.label}</span>
+      <span className="text-[10px] uppercase tracking-widest text-muted-foreground shrink-0">{meta.tag}</span>
+      <Download className="w-3.5 h-3.5 text-muted-foreground/50 group-hover:text-primary shrink-0" />
     </a>
   );
 }
 
-function SqlViewer({ sql }: { sql: SqlFile }) {
-  const [open, setOpen] = useState(false);
-  const [content, setContent] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+function SqlRowItem({
+  sql,
+  open,
+  onToggle,
+}: {
+  sql: SqlFile;
+  open: boolean;
+  onToggle: () => void;
+}) {
   const [copied, setCopied] = useState(false);
-
   const url = `${SQL_DIR}${sql.file}`;
-
-  async function ensureLoaded(): Promise<string | null> {
-    if (content !== null) return content;
-    setLoading(true);
-    setError(false);
-    try {
-      const res = await fetch(url);
-      if (!res.ok) throw new Error(String(res.status));
-      const text = await res.text();
-      setContent(text);
-      return text;
-    } catch {
-      setError(true);
-      return null;
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  function toggle() {
-    const next = !open;
-    setOpen(next);
-    if (next) void ensureLoaded();
-  }
 
   async function copy(e: React.MouseEvent) {
     e.stopPropagation();
-    const text = await ensureLoaded();
+    const text = await loadSql(url);
     if (text === null) return;
     try {
       await navigator.clipboard.writeText(text);
@@ -212,61 +202,136 @@ function SqlViewer({ sql }: { sql: SqlFile }) {
   }
 
   return (
-    <div className="rounded-lg border border-border overflow-hidden">
-      <div
-        role="button"
-        tabIndex={0}
-        aria-expanded={open}
-        onClick={toggle}
-        onKeyDown={(e) => {
-          if (e.key === "Enter" || e.key === " ") {
-            e.preventDefault();
-            toggle();
-          }
-        }}
-        className="flex items-center gap-3 px-4 py-3 bg-background/40 cursor-pointer hover:bg-background/70 transition-colors"
+    <div
+      role="button"
+      tabIndex={0}
+      aria-expanded={open}
+      onClick={onToggle}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onToggle();
+        }
+      }}
+      className={cn(
+        "flex items-center gap-2 rounded-md border px-3 py-2 cursor-pointer transition-colors",
+        open
+          ? "border-primary/50 bg-primary/5"
+          : "border-border bg-background/40 hover:border-primary/40 hover:bg-primary/5"
+      )}
+    >
+      <Database className="w-4 h-4 text-primary shrink-0" />
+      <span className="flex-1 text-sm font-medium text-foreground">{sql.label}</span>
+      <button
+        onClick={copy}
+        onKeyDown={(e) => e.stopPropagation()}
+        className="inline-flex items-center gap-1 rounded px-1.5 py-1 text-xs font-medium text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors"
       >
-        <Database className="w-4 h-4 text-primary shrink-0" />
-        <span className="flex-1 text-sm font-medium text-foreground">{sql.label}</span>
-        <button
-          onClick={copy}
-          className="inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium text-muted-foreground hover:text-primary hover:bg-primary/5 transition-colors"
-        >
-          {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
-          {copied ? "Copied" : "Copy"}
-        </button>
-        <a
-          href={url}
-          download
-          onClick={(e) => e.stopPropagation()}
-          className="inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium text-muted-foreground hover:text-primary hover:bg-primary/5 transition-colors"
-        >
-          <Download className="w-3.5 h-3.5" />
-          Download
-        </a>
-        <ChevronDown
-          className={cn(
-            "w-4 h-4 text-muted-foreground/60 transition-transform shrink-0",
-            open && "rotate-180"
-          )}
-        />
+        {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+        <span className="hidden sm:inline">{copied ? "Copied" : "Copy"}</span>
+      </button>
+      <a
+        href={url}
+        download
+        onClick={(e) => e.stopPropagation()}
+        onKeyDown={(e) => e.stopPropagation()}
+        className="inline-flex items-center gap-1 rounded px-1.5 py-1 text-xs font-medium text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors"
+      >
+        <Download className="w-3.5 h-3.5" />
+      </a>
+      <ChevronDown className={cn("w-4 h-4 text-muted-foreground/60 transition-transform shrink-0", open && "rotate-180")} />
+    </div>
+  );
+}
+
+function SqlCode({ file }: { file: string }) {
+  const [content, setContent] = useState<string | null>(null);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    let active = true;
+    setContent(null);
+    setError(false);
+    loadSql(`${SQL_DIR}${file}`).then((text) => {
+      if (!active) return;
+      if (text === null) setError(true);
+      else setContent(text);
+    });
+    return () => {
+      active = false;
+    };
+  }, [file]);
+
+  if (error) {
+    return (
+      <div className="px-5 py-5 text-sm text-destructive">
+        Unable to load this file. Use the download link in the row above.
       </div>
-      {open && (
-        <div className="border-t border-border bg-[#0f1117]">
-          {loading && <div className="px-4 py-6 text-sm text-muted-foreground">Loading…</div>}
-          {error && (
-            <div className="px-4 py-6 text-sm text-destructive">
-              Unable to load this file. Use the download link above.
+    );
+  }
+  if (content === null) {
+    return <div className="px-5 py-5 text-sm text-slate-400">Loading…</div>;
+  }
+  return (
+    <pre className="max-h-[30rem] overflow-auto px-5 py-4 text-[12.5px] leading-relaxed text-slate-200 font-mono whitespace-pre">
+      {content}
+    </pre>
+  );
+}
+
+function PlanRow({ plan }: { plan: HealthPlan }) {
+  const [openFile, setOpenFile] = useState<string | null>(null);
+
+  return (
+    <>
+      <tr className="border-t border-border align-top">
+        <td className="py-4 pr-4 align-top">
+          <div className="flex items-start gap-2">
+            <plan.icon className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+            <div>
+              <div className="font-medium text-foreground leading-snug">{plan.name}</div>
+              {plan.note && <p className="text-xs text-muted-foreground mt-1">{plan.note}</p>}
+            </div>
+          </div>
+        </td>
+        <td className="py-4 px-4 align-top">
+          {plan.sql.length === 0 ? (
+            <span className="text-sm text-muted-foreground/50">—</span>
+          ) : (
+            <div className="space-y-2">
+              {plan.sql.map((s) => (
+                <SqlRowItem
+                  key={s.file}
+                  sql={s}
+                  open={openFile === s.file}
+                  onToggle={() => setOpenFile(openFile === s.file ? null : s.file)}
+                />
+              ))}
             </div>
           )}
-          {content !== null && !error && (
-            <pre className="max-h-[28rem] overflow-auto px-4 py-4 text-[12.5px] leading-relaxed text-slate-200 font-mono whitespace-pre">
-              {content}
-            </pre>
+        </td>
+        <td className="py-4 pl-4 align-top">
+          {plan.layouts.length === 0 ? (
+            <span className="text-sm text-muted-foreground/50">—</span>
+          ) : (
+            <div className="space-y-2">
+              {plan.layouts.map((l) => (
+                <LayoutChip key={l.file} layout={l} />
+              ))}
+            </div>
           )}
-        </div>
+        </td>
+      </tr>
+      {openFile && (
+        <tr>
+          <td colSpan={3} className="p-0">
+            <div className="rounded-lg border border-border bg-[#0f1117] mb-2 overflow-hidden">
+              <SqlCode file={openFile} />
+            </div>
+          </td>
+        </tr>
       )}
-    </div>
+    </>
   );
 }
 
@@ -277,61 +342,34 @@ export default function HpLayoutSql() {
         <div className="flex items-center gap-3 text-sm font-medium text-muted-foreground uppercase tracking-widest mb-3">
           <span className="text-primary">Reference · Health Plan Specs</span>
           <span className="w-1 h-1 rounded-full bg-primary/30" />
-          <span>Source Files</span>
+          <span>Current State</span>
         </div>
-        <h1 className="text-4xl md:text-5xl font-serif text-foreground mb-4">
-          HP Layout and Submission SQL
-        </h1>
+        <h1 className="text-4xl md:text-5xl font-serif text-foreground mb-4">ASM Analysis Current</h1>
         <p className="text-lg text-muted-foreground max-w-3xl leading-relaxed">
-          Health plan&ndash;specific file layout specifications and current submission SQL, organized by
-          payer. Layout specs are available to download; submission SQL can be viewed inline, copied, or
-          downloaded. More files will be added as they are provided.
+          Current-state inventory of each health plan's submission SQL and file layout / spec. Submission SQL can be
+          viewed inline, copied, or downloaded; layout specs are available to download. More files will be added as they
+          are provided.
         </p>
       </header>
 
-      <div className="space-y-6">
-        {HEALTH_PLANS.map((plan) => {
-          const Icon = plan.icon;
-          return (
-            <Card key={plan.id} className="border-none shadow-sm bg-card">
-              <CardHeader>
-                <CardTitle className="font-serif text-2xl flex items-center gap-2.5">
-                  <Icon className="w-5 h-5 text-primary" /> {plan.name}
-                </CardTitle>
-                {plan.note && (
-                  <p className="text-sm text-muted-foreground pt-1">{plan.note}</p>
-                )}
-              </CardHeader>
-              <CardContent className="space-y-6">
-                {plan.layouts.length > 0 && (
-                  <section>
-                    <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3">
-                      <FileSpreadsheet className="w-3.5 h-3.5" /> File Layout / Spec
-                    </div>
-                    <div className="grid sm:grid-cols-2 gap-3">
-                      {plan.layouts.map((layout) => (
-                        <LayoutChip key={layout.file} layout={layout} />
-                      ))}
-                    </div>
-                  </section>
-                )}
-                {plan.sql.length > 0 && (
-                  <section>
-                    <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3">
-                      <FileCode2 className="w-3.5 h-3.5" /> Submission SQL
-                    </div>
-                    <div className="space-y-3">
-                      {plan.sql.map((sql) => (
-                        <SqlViewer key={sql.file} sql={sql} />
-                      ))}
-                    </div>
-                  </section>
-                )}
-              </CardContent>
-            </Card>
-          );
-        })}
-      </div>
+      <Card className="border-none shadow-sm bg-card overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse text-left">
+            <thead>
+              <tr className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                <th className="py-3 pl-6 pr-4 w-[24%]">Health Plan</th>
+                <th className="py-3 px-4 w-[40%]">Submission SQL</th>
+                <th className="py-3 pl-4 pr-6 w-[36%]">File Layout / Spec</th>
+              </tr>
+            </thead>
+            <tbody className="[&>tr>td:first-child]:pl-6 [&>tr>td:last-child]:pr-6">
+              {HEALTH_PLANS.map((plan) => (
+                <PlanRow key={plan.id} plan={plan} />
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </Card>
     </div>
   );
 }

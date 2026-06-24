@@ -31,7 +31,7 @@ function Router() {
         <Route path="/discussions/2026-06-10" component={DiscussionJun10} />
         <Route path="/discussions/2026-06-12" component={DiscussionJun12} />
         <Route path="/discussions/2026-06-17" component={DiscussionJun17} />
-        <Route path="/hp-layout-sql" component={HpLayoutSql} />
+        <Route path="/asm-analysis-current" component={HpLayoutSql} />
         <Route path="/phase/2" component={Phase2} />
         <Route path="/phase/3" component={Phase3} />
         <Route component={NotFound} />
