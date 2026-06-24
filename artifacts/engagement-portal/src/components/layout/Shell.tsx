@@ -4,7 +4,6 @@ import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import mercyLogo from "@assets/image_1782296085670.png";
-import healthtrixssLogo from "@assets/image_1782296236638.png";
 
 export function Shell({ children }: { children: React.ReactNode }) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -13,10 +12,8 @@ export function Shell({ children }: { children: React.ReactNode }) {
     <div className="flex flex-col h-[100dvh] w-full overflow-hidden bg-background">
       <header className="flex justify-center px-6 py-4 border-b bg-card shrink-0">
         <div className="inline-flex flex-col items-stretch gap-2.5">
-          <div className="flex items-center justify-center gap-6 md:gap-12">
-            <img src={healthtrixssLogo} alt="HealthTrixss" className="h-[20px] md:h-[28px] w-auto" />
-            <span className="h-9 w-px bg-border" />
-            <img src={mercyLogo} alt="Mercy" className="h-9 md:h-12 w-auto -translate-y-[3px]" />
+          <div className="flex items-center justify-center">
+            <img src={mercyLogo} alt="Mercy" className="h-9 md:h-12 w-auto" />
           </div>
           <p className="w-full text-center uppercase font-semibold text-muted-foreground tracking-[0.18em] text-[12.6px] md:text-[16.2px]">
             ASM Submission Process Review
