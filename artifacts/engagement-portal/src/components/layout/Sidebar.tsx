@@ -1,7 +1,8 @@
 import React from "react";
 import { Link, useRoute } from "wouter";
-import { FileText, Presentation, ClipboardList, MessagesSquare, Table2, Workflow, Database, Send, GitCompareArrows } from "lucide-react";
+import { FileText, Presentation, ClipboardList, MessagesSquare, Table2, Workflow, Database, Send, GitCompareArrows, LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/hooks/useAuth";
 
 type Phase = {
   id: string;
@@ -119,6 +120,7 @@ function PhaseLink({
 }
 
 export function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
+  const { email, logout } = useAuth();
   return (
     <div className="flex flex-col h-full text-sidebar-foreground">
       <div className="p-6 border-b border-sidebar-border/50">
@@ -137,16 +139,24 @@ export function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
         </div>
       </nav>
 
-      <div className="p-4 border-t border-sidebar-border/50 mt-auto">
-        <div className="flex items-center gap-3 p-2 rounded-md hover:bg-sidebar-accent/50 transition-colors cursor-pointer">
-          <div className="w-8 h-8 rounded bg-sidebar-accent flex items-center justify-center text-sidebar-primary font-serif text-sm">
+      <div className="p-4 border-t border-sidebar-border/50 mt-auto space-y-2">
+        <div className="flex items-center gap-3 p-2 rounded-md">
+          <div className="w-8 h-8 rounded bg-sidebar-accent flex items-center justify-center text-sidebar-primary font-serif text-sm shrink-0">
             HT
           </div>
-          <div className="flex flex-col">
-            <span className="text-xs font-medium">Engagement Team</span>
+          <div className="flex flex-col min-w-0">
+            <span className="text-xs font-medium truncate">{email ?? "Engagement Team"}</span>
             <span className="text-[10px] text-sidebar-foreground/50">HealthTrixss, Inc.</span>
           </div>
         </div>
+        <button
+          type="button"
+          onClick={logout}
+          className="w-full flex items-center gap-2.5 py-2 px-2 rounded-md text-sidebar-foreground/60 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground transition-colors"
+        >
+          <LogOut className="w-3.5 h-3.5 shrink-0" />
+          <span className="text-[13px] font-medium">Sign out</span>
+        </button>
       </div>
     </div>
   );
