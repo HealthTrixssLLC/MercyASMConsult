@@ -14,7 +14,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
       <header className="flex justify-center px-6 py-4 border-b bg-card shrink-0">
         <div className="inline-flex flex-col items-stretch gap-2.5">
           <div className="flex items-center justify-center gap-6 md:gap-12">
-            <img src={healthtrixssLogo} alt="HealthTrixss" className="h-[22px] md:h-[31px] w-auto" />
+            <img src={healthtrixssLogo} alt="HealthTrixss" className="h-[20px] md:h-[28px] w-auto" />
             <span className="h-9 w-px bg-border" />
             <img src={mercyLogo} alt="Mercy" className="h-9 md:h-12 w-auto" />
           </div>
