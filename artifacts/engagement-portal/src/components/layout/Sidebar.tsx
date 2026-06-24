@@ -123,10 +123,6 @@ export function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
   const { email, logout } = useAuth();
   return (
     <div className="flex flex-col h-full text-sidebar-foreground">
-      <div className="p-6 border-b border-sidebar-border/50">
-        <p className="text-xs text-sidebar-foreground/60 uppercase tracking-widest font-medium">ASM Submission Process Review</p>
-      </div>
-
       <nav className="flex-1 overflow-y-auto py-6 px-4 space-y-8" aria-label="Engagement topics">
         <div className="space-y-2">
           <div className="text-xs font-semibold text-sidebar-foreground/40 uppercase tracking-widest mb-4 px-2">

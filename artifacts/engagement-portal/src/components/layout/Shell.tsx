@@ -11,10 +11,17 @@ export function Shell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="flex flex-col h-[100dvh] w-full overflow-hidden bg-background">
-      <header className="flex items-center justify-center gap-6 md:gap-12 px-6 h-20 border-b bg-card shrink-0">
-        <img src={healthtrixssLogo} alt="HealthTrixss" className="h-[22px] md:h-[31px] w-auto" />
-        <span className="h-9 w-px bg-border" />
-        <img src={mercyLogo} alt="Mercy" className="h-9 md:h-12 w-auto" />
+      <header className="flex justify-center px-6 py-4 border-b bg-card shrink-0">
+        <div className="inline-flex flex-col items-stretch gap-2.5">
+          <div className="flex items-center justify-center gap-6 md:gap-12">
+            <img src={healthtrixssLogo} alt="HealthTrixss" className="h-[22px] md:h-[31px] w-auto" />
+            <span className="h-9 w-px bg-border" />
+            <img src={mercyLogo} alt="Mercy" className="h-9 md:h-12 w-auto" />
+          </div>
+          <p className="w-full text-center uppercase font-semibold text-muted-foreground tracking-[0.18em] text-sm md:text-lg">
+            ASM Submission Process Review
+          </p>
+        </div>
       </header>
       <div className="flex flex-1 overflow-hidden">
         <Sidebar />
