@@ -37,7 +37,6 @@ export function Shell({ children }: { children: React.ReactNode }) {
                 <SidebarContent onNavigate={() => setMobileOpen(false)} />
               </SheetContent>
             </Sheet>
-            <span className="text-sm uppercase tracking-widest font-medium text-muted-foreground">Engagement Topics</span>
           </header>
           <main className="flex-1 overflow-auto">
             {children}

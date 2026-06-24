@@ -125,9 +125,6 @@ export function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
     <div className="flex flex-col h-full text-sidebar-foreground">
       <nav className="flex-1 overflow-y-auto py-6 px-4 space-y-8" aria-label="Engagement topics">
         <div className="space-y-2">
-          <div className="text-xs font-semibold text-sidebar-foreground/40 uppercase tracking-widest mb-4 px-2">
-            Engagement Topics
-          </div>
           {PHASES.map((phase) => (
             <PhaseLink key={phase.id} phase={phase} onNavigate={onNavigate} />
           ))}
