@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Consulting Engagement Portal"
+version = "1.0.0"
+id = "artifacts/engagement-portal"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 19691
+
+[services.development]
+run = "pnpm --filter @workspace/engagement-portal run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/engagement-portal", "run", "build" ]
+publicDir = "artifacts/engagement-portal/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "19691"
+BASE_PATH = "/"

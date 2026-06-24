@@ -1,6 +1,6 @@
-# [Project name]
+# Consulting Engagement Portal
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+A structured, phase-by-phase web portal that presents a consulting engagement — left-side phase navigation with tabbed content per phase. Phase 1 (Statement of Work) is fully built; later phases are added sequentially.
 
 ## Run & Operate
 
