@@ -86,7 +86,9 @@ function PhaseLink({
   phase: (typeof PHASES)[number];
   onNavigate?: () => void;
 }) {
-  const [isActive] = useRoute(phase.path);
+  const [isMatch] = useRoute(phase.path);
+  const [isPhase1Alias] = useRoute("/phase/1");
+  const isActive = isMatch || (phase.path === "/" && isPhase1Alias);
   const Icon = phase.icon;
   return (
     <div>
