@@ -4,6 +4,7 @@ import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import mercyLogo from "@assets/image_1782296085670.png";
+import healthtrixssLogo from "@assets/image_1782296236638.png";
 
 export function Shell({ children }: { children: React.ReactNode }) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -24,7 +25,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
                 <SidebarContent onNavigate={() => setMobileOpen(false)} />
               </SheetContent>
             </Sheet>
-            <span className="font-serif text-lg">HealthTrixss</span>
+            <img src={healthtrixssLogo} alt="HealthTrixss" className="h-6 w-auto" />
           </div>
           <img src={mercyLogo} alt="Mercy" className="h-9 w-auto" />
         </header>
