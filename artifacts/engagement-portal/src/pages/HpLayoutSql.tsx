@@ -596,7 +596,7 @@ function InputsAndNotes() {
 
 const ANALYSIS_TABS = [
   { id: "matrix", label: "Coverage Matrix", icon: GitCompare },
-  { id: "sources", label: "Source Field Mapping", icon: Database },
+  { id: "sources", label: "Destination Field Mapping", icon: Database },
   { id: "inputs", label: "Inputs & Notes", icon: FolderOpen },
 ] as const;
 
